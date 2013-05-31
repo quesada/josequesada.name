@@ -1,0 +1,114 @@
+/*
+Alternative Style: Web Sleek
+*/
+
+
+/* Base Layout 
+++ This is how the main site is structured. This includes wraps to
+hold everything together in a clean and efficient way. These styles
+are all used in the header.php, as they are repeated throughout everypage.
+*/
+
+#header {
+width: 747px;
+height: 139px;
+margin: 0 auto;
+background-image: url(images/headers/white.gif);
+background-color: #fff;
+margin-bottom: 10px;
+font-size: 10px;
+}
+
+ul.menu li a {
+	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
+	color: #555;
+	margin: 0;
+	}
+
+ul.menu li a:hover {
+	background: #e2e2e2;
+	color: #222 !important;
+	text-decoration: none;
+	}
+
+ul.menu li.current_page_item a,
+ul.menu li.current_page_item a:hover {
+	color: #555 !important;
+	background: #e2e2e2;
+	text-decoration: none;
+	}
+
+/* Index
+++ In this case, we'll be splitting into two columns, but because
+our recent comments feature is located in the sidebar, all of that will
+be styled in the sidebar section below. This is where classes such as headlines
+and post links are defined.
+*/
+
+#hppost h2 {
+font-size: 16px;
+color: #333;
+font-weight: bold;
+background-color: #fff;
+border: 0px;
+text-decoration: none;
+font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+#hppost h2 a {
+color: #666;
+font-weight: bold;
+text-decoration: none;
+background-color: #fff;
+border: 0px;
+}
+
+#hppost h2 a:hover {
+background-color: #fff;
+text-decoration: none;
+}
+
+/* Entry & Post Styling
+++ This is where we will be styling the paragraph elements and their link states, to eliminate image borders and allow you to set different image link styles. In Web 2, the font sizes have been increased, just like the large-font web styles of today. To change the font size, edit the entry class right below.
+*/
+
+#hppost .entry {
+font-size: 14px;
+line-height: 20px;
+color: #555;
+}
+
+#hppost .entry p a {
+color: #333;
+text-decoration: none;
+background-color: #F8F7DE;
+}
+
+#hppost .entry p a:hover {
+color: #000;
+background-color: #FFFBE6;
+}
+
+/* Sidebar Web 2 // Extra Gradiants and Icons */
+
+#sidebar {
+width: 210px;
+padding: 5px;
+font-size: 10px;
+line-height: 12px;
+color: #666;
+float: right;
+background-color: #F5F5F5;
+} 
+
+/* Cal */
+
+#wp-calendar {
+	background-color:#F1F1EF; 		
+	border-top:1px solid #FFFFFF;	
+	font-size:9px;
+	vertical-align:middle;
+	text-align:center;
+        width: 210px;
+        margin-bottom: 12px;
+}

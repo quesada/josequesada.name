@@ -1,0 +1,39 @@
+<style>
+a         {text-decoration: none}
+a:hover   {color: 0000FF}
+a:link    {color: #3A8ABA}
+a:visited {color: #7c05c1}
+a:visited {color: #3A8ABA}
+
+ p { font-family : palatino linotype, serif;
+     font-size : 12pt;
+     font-style: normal;
+     font-weight: normal;
+     color: 727272;
+		line-height: 135%
+		text-align: justify}
+
+	  h1 { font-family : palatino linotype, serif;
+	  font-size : 15pt;
+     font-style: normal;
+     font-weight: normal;
+     color: 727272;
+     line-height: 100%}
+
+ h3 { font-family : palatino linotype, serif;
+     font-size : 14pt;
+     font-style: normal;
+     font-weight: normal;
+     color: 727272;
+     line-height: 100%}
+
+ ul { font-family : palatino linotype, serif;
+     font-size : 12pt;
+     font-style: normal;
+     font-weight: normal;
+     color: 727272;
+     line-height: 135%}
+  </style>
+
+</HEAD>
+

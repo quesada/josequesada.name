@@ -1,0 +1,586 @@
+/*
+Theme Name: Prebuilt
+Theme URI: http://www.devlounge.net
+Description: A theme built by Astereostudio and Devlounge.
+Version: 2.0.1
+Author: Astereostudio & Devlounge
+*/
+
+
+/* Base Layout 
+++ This is how the main site is structured. This includes wraps to
+hold everything together in a clean and efficient way. These styles
+are all used in the header.php, as they are repeated throughout everypage.
+*/
+
+body {
+margin-top: 10px;
+}
+
+a img {border: none; } 
+
+#wrap {
+width: 750px;
+height: 100%;
+background-color: #fff;
+margin: 0 auto;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 12px;
+}
+
+#header {
+width: 747px;
+height: 139px;
+margin: 0 auto;
+background-image: url(images/headers/default.gif);
+background-color: #ca1717;
+margin-bottom: 10px;
+font-size: 10px;
+}
+
+ul.menu {
+	margin: 0;
+	padding: 0;
+	bottom: 0;
+	left: 20px;
+	}
+
+ul.menu li {
+	display: inline;
+	margin: 0;
+	}
+
+ul.menu,
+ul.menu li a {
+	padding: 5px 15px 6px;
+	}
+
+ul.menu li a {
+	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
+	color: white;
+	margin: 0;
+	}
+
+ul.menu li a:hover {
+	background: #333;
+	color: #eee !important;
+	text-decoration: none;
+	}
+
+ul.menu li.current_page_item a,
+ul.menu li.current_page_item a:hover {
+	color: #333 !important;
+	background: white;
+	text-decoration: none;
+	}
+
+/* Index
+++ In this case, we'll be splitting into two columns, but because
+our recent comments feature is located in the sidebar, all of that will
+be styled in the sidebar section below. This is where classes such as headlines
+and post links are defined.
+*/
+
+#hppost {
+width: 500px;
+padding-left: 5px;
+padding-right: 10px;
+float: left;
+border-right: 1px solid #efefef;
+}
+
+#hppost h2 {
+font-size: 14px;
+padding-left: 5px;
+padding-top: 4px;
+padding-bottom: 4px;
+color: #ca1717;
+background-color: #f7f7f7;
+border-top: 1px solid #eee;
+border-bottom: 1px solid #eee;
+}
+
+#hppost h2 a {
+color: #ca1717;
+font-weight: normal;
+text-decoration: none;
+border-bottom: 1px dotted #666;
+}
+
+#hppost h2 a:hover {
+color: #222;
+border-bottom: 1px dotted #222;
+}
+
+/* Entry & Post Styling
+++ This is where we will be styling the paragraph elements and their link states, to eliminate image borders and allow you to set different image link styles.
+*/
+
+#hppost .entry {
+font-size: 12px;
+line-height: 16px;
+color: #555;
+}
+
+#hppost .entry p a {
+color: #666;
+text-decoration: none;
+}
+
+#hppost .entry p a:hover {
+color: #222;
+}
+
+/* Sidebar
+++ The sidebar is where you can put anything you'd like to display
+on the sides (heh, get it?), of each page. In this case, Prebuilt's
+sitebar comes with built in support for the "Recent Comments" plugin,
+along with pulling Gravatars for that person. To style these elements,
+we introduce the sidebar classes.
+*/
+
+#sidebar {
+width: 220px;
+font-size: 10px;
+line-height: 12px;
+color: #666;
+float: right;
+} 
+
+#sidebar h2 {
+font-size: 12px;
+font-weight: bold;
+margin-bottom: 8px;
+}
+
+#sidebar a {
+color: #666;
+text-decoration: none;
+border-bottom: 1px dotted #666;
+}
+
+#sidebar a:hover {
+color: #222;
+border-bottom: 1px dotted #222;
+}
+
+#sidebar ul{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+        margin-bottom: 12px;
+}
+#sidebar ul li{
+	margin-bottom:0.6em;
+	padding:0.3em;
+}
+
+/* Comments
+++ Here we are setting the styles, colors, and etc for the post comments. Prior to prebuilt 2, we didn't even add any css for this (forgot really), so now go have fun and customize away!
+*/
+
+#commentarea {
+width: 100%;
+padding-left: 5px;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 11px;
+margin-top: 15px;
+}
+
+#precomments {
+width: 100%;
+}
+
+#precomments img {
+vertical-align: text-bottom;
+border: 0px;
+}
+
+.comleft {
+width: 75%;
+float: left;
+}
+
+.comright {
+width: 20%;
+float: right;
+}
+
+h3#comments {
+font-size:14px;
+font-family: Verdana, Helvetica, Arial, Sans-Serif;
+color: #666;
+margin: 0px;
+}
+
+#commentsheader {
+background-image: url(images/reply.gif);
+height: 55px;
+width: 300px;
+}
+
+.commentsblock{
+	margin:0.5em;
+	padding:1em;
+
+}
+.commentsblock textarea{
+	width:250px;
+}
+.commentsblock input, .commentsblock textarea{
+	border:1px solid #d1d1d1;
+}
+.commentsblock textarea:focus{
+	background:#eee;
+	border:1px solid #a1a1a1;
+}
+.commentsblock textarea:focus, .commentsblock input:focus{
+	background:#eee;
+	border:1px solid #a1a1a1;
+}
+.commentauthor{
+	display:block;
+	font-size:1.5em;
+}
+
+ol.commentlist{
+	color:#777;
+	font-size:11px;
+	list-style-type:none;
+        font-family: Verdana, Helvetica, Arial, Sans-Serif;
+	margin:0;
+	margin-top:1.5em;
+	padding: 0px;
+        width: 80%;
+}
+
+ol.commentlist a {
+			color: #555;
+			text-decoration: none;
+			border-bottom: 1px dotted #ca1717;
+			display: inline;
+ }
+			
+		ol.commentlist a:hover {
+			color: #222;
+			text-decoration: none; 
+}
+
+.cauthor {
+font-weight: bold;
+font-size: 12px;
+}
+
+.cauthor a {
+color: #555;
+                        font-size: 12px;
+                        font-weight: bold;
+			text-decoration: none;
+			border-bottom: 1px dotted #ca1717;
+}
+
+.cauthor a:hover {
+color: #222;
+text-decoration: none; 
+}
+
+.commentlist li{
+	margin-bottom:0.5em;
+	padding:0.5em 1em;
+}
+
+.alt{
+	background:#fff;
+	padding:0.5em;
+}
+
+.alt2{
+	background: #fff url('images/postdata.gif') 15px center no-repeat;
+	border-top: 2px solid #FFD324;
+	border-bottom: 2px solid #FFD324;
+	margin: 10px auto;
+	padding: 5px 20px 5px 45px;
+}
+
+.comment-even, .comment-preview {
+	background-color: #F8FAFC;
+}
+
+.comment-odd {
+	background-color: #fff; /* Change this colour to add "Flip flopping" backgrounds */
+}
+
+.authorcomment { /* Author background color */
+	background-color: #f7f7f7;
+}
+
+/* Comment/Trackback Favatars & Gravatars */
+.comment-favatar {
+	-moz-opacity:0.5;
+	opacity: 0.5;
+	
+	background: center center;
+	float: right;
+	margin: 2px 0 0 0; 
+	width: 16px;
+	height: 16px;
+}
+.comment-favatar:hover {
+	-moz-opacity:1;
+	opacity: 1;
+}
+.trackback-favatar {
+	background: center center;
+	width: 16px;
+	height: 16px;
+	float: left;
+	margin: 2px 6px 0 2px;
+	cursor: pointer;
+}
+.comment-gravatar img {
+	float: right;
+	padding: 2px;
+	margin: 0;
+	border: 1px solid #A5A5A3;
+	width: 30px;
+	height: 30px;
+	background: #fff url(wp-content/gravatars/avatar.jpg) no-repeat center center;
+}
+
+#commentform textarea {
+	width: 90%;
+}
+
+.gravatar {
+	margin-right: -5px;
+	float: right;
+	border: 0px;
+	}
+
+ol.commentlist blockquote {
+	background: #F8FAFC url("images/blockquote.gif") no-repeat left top;
+	border: 1px solid #ebebeb;
+	padding:1px;
+        line-height: normal;
+	font-size: 10px;
+}
+
+.whopostedthis {
+font-weight: bold;
+font-size: 11px;
+}
+
+
+/* Middle Spacer
+++ This is where we have some quick styling to create
+a space between content above and the extras below. We are now just leaving a nice white cap, to increase whitespace and spacing.
+*/
+
+#secdivide {
+width: 746px;
+height: 30px;
+margin: 0 auto;
+background-color: #fff;
+margin-top:8px;
+margin-bottom: 8px;
+}
+
+/* Flickr Intergration
+++ This styles your flickt images, called in via rss
+in the flickrss plugin. You can style your images
+however, giving them borders, rollover colors, etc.
+*/
+
+#flickr {
+width: 744px;
+border: 1px dotted #e2e2e2;
+margin: 0 auto;
+margin-bottom: 10px;
+}
+
+#flickr ul, #flickr ul li { 
+padding: 0; 
+margin: 0; 
+border: 0; 
+}
+
+#flickr a img { 
+border: 2px #f7f7f7 solid; 
+padding: 3px; 
+margin: 10px 3px 10px 3px;
+}
+
+#flickr a:hover img { 
+border: 2px #f7f7f7 solid;
+} 
+
+#flickr ul { list-style: none; }
+#flickr ul li { display: inline; }
+
+/* Extras
+++ This is for category listings, search, archives, etc.
+We have set this area up you it can be filled with whatever you may want to put here.
+*/
+
+#extras {
+width: 746px;
+height: 100%;
+padding-bottom: 5px;
+margin: 0 auto;
+list-style-type: none;
+background-color: #f7f7f7;
+margin-bottom: 10px;
+}
+
+#extras .holder {
+padding: 5px;
+}
+
+#extras .aboutphoto {
+width: 100px;
+height: 80px;
+float: left;
+padding-left: 20px;
+margin-right: 20px;
+}
+
+#extras .abouttxt {
+font-size: 10px;
+padding-right: 20px;
+}
+
+
+
+#extras h2 {
+font-weight: bold;
+font-size: 12px;
+margin-bottom: 5px;
+}
+
+#extras a {
+color: #555;
+text-decoration: none;
+}
+
+#extras a:hover {
+color: #000;
+}
+
+#extras ul {
+list-style-type: none;
+margin: 0px;
+padding: 0px;
+}
+
+#extras ul li {
+margin: 0px;
+padding: 0px;
+list-style-type: none;
+}
+
+.extrasinside {
+padding: 5px;
+font-size: 10px;
+line-height: 12px;
+color: #555;
+}
+
+/* Footer
+++ The footer is where it all comes together and comes to a close. Styling this is fairly simple, because there's not much to do.
+*/
+
+#footer {
+width: 747px;
+margin: 0 auto;
+font-size: 10px;
+color: #555;
+padding-top: 5px;
+border-top: 1px solid #ccc;
+}
+
+#footer a {
+color: #555;
+text-decoration: none;
+font-weight: bold;
+border-bottom: 1px dotted #ca1717;
+}
+
+#footer a:hover {
+border-bottom: 1px dotted #333;
+}
+
+/* Cal
+++ We tweaked out the calander so it looks alot smoother than the default widget one. Here's how it works. It's been set to light greys so it matches all our color schemes.
+*/
+
+#wp-calendar {
+	background-color:#F1F1EF; 		
+	border-top:1px solid #FFFFFF;	
+	font-size:9px;
+	vertical-align:middle;
+	text-align:center;
+        width: 210px;
+        margin-bottom: 12px;
+}
+
+#wp-calendar a {
+border: 0px;
+text-decoration: none;
+}
+
+#wp-calendar a:hover {
+border: 0px;
+text-decoration: none;
+}
+
+#wp-calendar #next a {
+	padding-right: 10px;
+	text-align: right;
+}
+
+#wp-calendar #prev a {
+	padding-left: 10px;
+	text-align: left;
+}
+
+#wp-calendar a {
+	display: block;
+	text-decoration: none;
+}
+
+#wp-calendar a:hover {
+	background: #f7f7f7;
+	color: #222;
+}
+
+#wp-calendar caption {
+	color: #999;
+	font-size: 10px;
+	text-align: center;
+	padding: 2px;
+}
+
+#wp-calendar td {
+	color:#333333;
+	font: normal 9px 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+	letter-spacing: normal;
+	padding: 2px 0;
+	text-align: center;
+	background-color: #FFFFFF;
+}
+
+#wp-calendar td.pad:hover {
+	font-size:9px;
+	color:#222;
+	background-color: #e2e2e2;
+}
+
+#wp-calendar td:hover, #wp-calendar #today {
+	background: #ccc;
+	color: #222;
+}
+
+#wp-calendar th {
+	font-style: normal;
+	text-transform: capitalize;
+}

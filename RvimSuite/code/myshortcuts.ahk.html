@@ -1,0 +1,1187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>my autohtokey shortcuts</title>
+<meta name="Generator" content="Vim/7.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+.PreProc { color: #cd00cd; }
+.Statement { color: #804040; font-weight: bold; }
+.Type { color: #2e8b57; font-weight: bold; }
+.Constant { color: #c00058; }
+.Special { color: #6a5acd; }
+pre { color: #000000; background-color: #ffdab9; }
+body { color: #000000; background-color: #ffdab9; }
+.Comment { color: #406090; }
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="Comment">; avoid RSI (alt tab) by mapping most freq app to keys</span>
+<span class="Comment">; alt D go to acrobat</span>
+<span class="Comment">; alt+s save file in acrobat</span>
+<span class="Comment">; alt V go to vim (telefonos)</span>
+<span class="Comment">; alt C goes to locate: to slick</span>
+<span class="Comment">; alt X goes to d opus</span>
+<span class="Comment">; control down minimizes</span>
+<span class="Comment">; control shift S goes to next song in MM</span>
+<span class="Comment">; control Space in vim formants 80 col paragraph</span>
+<span class="Comment">; alt v is Apps key</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">; iswitchw: altc pops up a window to change win applications active with the</span>
+<span class="Comment">; letter of its first name. Very good replacement for alt + tab when there are</span>
+<span class="Comment">; many applications.</span>
+<span class="Comment">; example alt + c o goes to opera</span>
+<span class="Comment">; (a long wanted shortcut)</span>
+<span class="Comment">; example alt + c a goes to adobe</span>
+<span class="Comment">; example alt + g o goes to gvim</span>
+<span class="Comment">; iswitchw - Incrementally switch between windows using substrings</span>
+<span class="Comment">;</span>
+<span class="Comment">; Required AutoHotkey version: 1.0.25+</span>
+<span class="Comment">;</span>
+<span class="Comment">; When this script is triggered via its hotkey the list of titles of</span>
+<span class="Comment">; all visible windows appears. The list can be narrowed quickly to a</span>
+<span class="Comment">; particular window by typing a substring of a window title.</span>
+<span class="Comment">;</span>
+<span class="Comment">; When the list is narrowed the desired window can be selected using</span>
+<span class="Comment">; the cursor keys and Enter. If the substring matches exactly one</span>
+<span class="Comment">; window that window is activated immediately (configurable, see the</span>
+<span class="Comment">; &quot;autoactivateifonlyone&quot; variable).</span>
+<span class="Comment">;</span>
+<span class="Comment">; The window selection can be cancelled with Esc.</span>
+<span class="Comment">;</span>
+<span class="Comment">; The switcher window can be moved horizontally with the left/right</span>
+<span class="Comment">; arrow keys if it blocks the view of windows under it.</span>
+<span class="Comment">;</span>
+<span class="Comment">; The switcher can also be operated with the mouse, although it is</span>
+<span class="Comment">; meant to be used from the keyboard. A mouse click activates the</span>
+<span class="Comment">; currently selected window. Mouse users may want to change the</span>
+<span class="Comment">; activation key to one of the mouse keys.</span>
+<span class="Comment">;</span>
+<span class="Comment">; If enabled possible completions are offered when the same unique</span>
+<span class="Comment">; substring is found in the title of more than one window.</span>
+<span class="Comment">;</span>
+<span class="Comment">; For example, the user typed the string &quot;co&quot; and the list is</span>
+<span class="Comment">; narrowed to two windows: &quot;Windows Commander&quot; and &quot;Command Prompt&quot;.</span>
+<span class="Comment">; In this case the &quot;command&quot; substring can be completed automatically,</span>
+<span class="Comment">; so the script offers this completion in square brackets which the</span>
+<span class="Comment">; user can accept with the TAB key:</span>
+<span class="Comment">;</span>
+<span class="Comment">;     co[mmand]</span>
+<span class="Comment">;</span>
+<span class="Comment">; This feature can be confusing for novice users, so it is disabled</span>
+<span class="Comment">; by default.</span>
+<span class="Comment">;</span>
+<span class="Comment">;</span>
+<span class="Comment">; For the idea of this script the credit goes to the creators of the</span>
+<span class="Comment">; iswitchb package for the Emacs editor</span>
+<span class="Comment">;</span>
+<span class="Comment">;</span>
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; User configuration</span>
+<span class="Comment">;</span>
+
+<span class="Comment">; set this to yes if you want to select the only matching window</span>
+<span class="Comment">; automatically</span>
+autoactivateifonlyone = yes
+
+<span class="Comment">; set this to yes if you want to enable tab completion (see above)</span>
+<span class="Comment">; it has no effect if firstlettermatch (see below) is enabled</span>
+tabcompletion = yes
+
+<span class="Comment">; set this to yes to enable digit shortcuts when there are ten or</span>
+<span class="Comment">; less items in the list</span>
+digitshortcuts = yes
+
+<span class="Comment">; set this to yes to enable first letter match mode where the typed</span>
+<span class="Comment">; search string must match the first letter of words in the</span>
+<span class="Comment">; window title (only alphanumeric characters are taken into account)</span>
+<span class="Comment">;</span>
+<span class="Comment">; For example, the search string &quot;ad&quot; matches both of these titles:</span>
+<span class="Comment">;</span>
+<span class="Comment">;  AutoHotkey - Documentation</span>
+<span class="Comment">;  Anne's Diary</span>
+<span class="Comment">;</span>
+firstlettermatch = yes
+
+<span class="Comment">; set this to yes to enable activating the currently selected</span>
+<span class="Comment">; window in the background</span>
+activateselectioninbg =
+
+<span class="Comment">; number of milliseconds to wait for the user become idle, before</span>
+<span class="Comment">; activating the currently selected window in the background</span>
+<span class="Comment">;</span>
+<span class="Comment">; it has no effect if activateselectioninbg is off</span>
+<span class="Comment">;</span>
+<span class="Comment">; if set to blank the current selection is activated immediately</span>
+<span class="Comment">; without delay</span>
+bgactivationdelay = 300
+
+<span class="Comment">; show process name before window title.</span>
+showprocessname = yes
+
+<span class="Comment">; Close switcher window if the user activates an other window.</span>
+<span class="Comment">; It does not work well if activateselectioninbg is enabled, so</span>
+<span class="Comment">; currently they cannot be enabled together.</span>
+closeifinactivated =
+
+<span class="Statement">if</span> activateselectioninbg &lt;&gt;
+<span class="Statement">    if</span> closeifinactivated &lt;&gt;
+    {
+<span class="Type">        msgbox,</span> activateselectioninbg and closeifinactivated cannot be enabled together
+<span class="Type">        </span><span class="Statement">exitapp</span>
+    }
+
+<span class="Comment">; List of subtsrings separated with pipe (|) characters (e.g. carpe|diem).</span>
+<span class="Comment">; Window titles containing any of the listed substrings are filtered out</span>
+<span class="Comment">; from the list of windows.</span>
+filterlist =
+
+<span class="Comment">; Set this yes to update the list of windows every time the contents of the</span>
+<span class="Comment">; listbox is updated. This is usually not necessary and it is an overhead which</span>
+<span class="Comment">; slows down the update of the listbox, so this feature is disabled by default.</span>
+dynamicwindowlist =
+
+<span class="Comment">; path to sound file played when the user types a substring which</span>
+<span class="Comment">; does not match any of the windows</span>
+<span class="Comment">;</span>
+<span class="Comment">; set this to blank if you don't want a sound</span>
+<span class="Comment">;</span>
+nomatchsound = <span class="Constant">%windir%</span>\Media\ding.wav
+
+<span class="Statement">if</span> nomatchsound &lt;&gt;
+<span class="Statement">    ifnotexist,</span> <span class="Constant">%nomatchsound%</span>
+<span class="Type">        msgbox,</span> Sound file <span class="Constant">%nomatchsound%</span> not found. No sound will be played.
+
+
+<span class="Comment">; Global variables</span>
+<span class="Comment">;</span>
+<span class="Comment">;     numallwin      - the number of windows on the desktop</span>
+<span class="Comment">;     allwinarray    - array containing the titles of windows on the desktop</span>
+<span class="Comment">;                      dynamicwindowlist is disabled</span>
+<span class="Comment">;     allwinidarray  - window ids corresponding to the titles in allwinarray</span>
+<span class="Comment">;     numwin         - the number of windows in the listbox</span>
+<span class="Comment">;     idarray        - array containing window ids for the listbox items</span>
+<span class="Comment">;     orig_active_id - the window ID of the originally active window</span>
+<span class="Comment">;                      (when the switcher is activated)</span>
+<span class="Comment">;     prev_active_id - the window ID of the last window activated in the</span>
+<span class="Comment">;                      background (only if activateselectioninbg is enabled)</span>
+<span class="Comment">;     switcher_id    - the window ID of the switcher window</span>
+<span class="Comment">;     filters        - array of filters for filtering out titles</span>
+<span class="Comment">;                      from the window list</span>
+<span class="Comment">;</span>
+<span class="Comment">;----------------------------------------------------------------------</span>
+
+<span class="Type">AutoTrim,</span> off
+
+<span class="Type">Gui,</span> Add, ListBox, vindex gListBoxClick x6 y11 w300 h250 AltSubmit
+<span class="Type">Gui,</span> Add, Text, x6 y264 w50 h20, Search<span class="Special">`:</span>
+<span class="Type">Gui,</span> Add, Edit, x66 y261 w240 h20,
+
+<span class="Statement">if</span> filterlist &lt;&gt;
+{
+<span class="Type">    </span><span class="Statement">loop</span><span class="Type">,</span> parse, filterlist, |
+    {
+        filters<span class="Constant">%a_index% = %A_LoopField%</span>
+    }
+}
+
+<span class="Statement">!c::</span>
+
+search =
+numallwin = 0
+<span class="Type">GuiControl,</span>, Edit1
+<span class="Type">GoSub,</span> RefreshWindowList
+
+<span class="Type">WinGet,</span> orig_active_id, ID, A
+prev_active_id = <span class="Constant">%orig_active_id%</span>
+
+<span class="Type">Gui,</span> Show, Center h294 w313, Window Switcher
+
+<span class="Comment">; If we determine the ID of the switcher window here then</span>
+<span class="Comment">; why doesn't it appear in the window list when the script is</span>
+<span class="Comment">; run the first time? (Note that RefreshWindowList has already</span>
+<span class="Comment">; been called above).</span>
+<span class="Comment">; Answer: Because when this code runs first the switcher window</span>
+<span class="Comment">; does not exist yet when RefreshWindowList is called.</span>
+<span class="Type">WinGet,</span> switcher_id, ID, A
+<span class="Type">WinSet,</span> AlwaysOnTop, On, <span class="Special">ahk_id</span> <span class="Constant">%switcher_id%</span>
+
+<span class="Statement">Loop</span>
+{
+<span class="Statement">    if</span> closeifinactivated &lt;&gt;
+<span class="Type">        settimer,</span> CloseIfInactive, 200
+
+<span class="Type">    Input,</span> input, L1, <span class="Special">{enter}{esc}{backspace}{up}{down}{pgup}{pgdn}{tab}{left}{right}</span>
+
+<span class="Statement">    if</span> closeifinactivated &lt;&gt;
+<span class="Type">        settimer,</span> CloseIfInactive, off
+
+<span class="Statement">    if</span> ErrorLevel = EndKey:enter
+    {
+<span class="Type">        GoSub,</span> ActivateWindow
+<span class="Type">        break</span>
+    }
+
+<span class="Statement">    if</span> ErrorLevel = EndKey:escape
+    {
+<span class="Type">        Gui,</span> cancel
+
+        <span class="Comment">; restore the originally active window if</span>
+        <span class="Comment">; activateselectioninbg is enabled</span>
+<span class="Statement">        if</span> activateselectioninbg &lt;&gt;
+<span class="Type">            WinActivate,</span> <span class="Special">ahk_id</span> <span class="Constant">%orig_active_id%</span>
+
+<span class="Type">        break</span>
+    }
+
+<span class="Statement">    if</span> ErrorLevel = EndKey:backspace
+    {
+<span class="Type">        GoSub,</span> DeleteSearchChar
+<span class="Type">        continue</span>
+    }
+
+<span class="Statement">    if</span> ErrorLevel = EndKey:tab
+<span class="Statement">        if</span> completion =
+<span class="Type">            continue</span>
+<span class="Type">        </span><span class="Statement">else</span>
+            input = <span class="Constant">%completion%</span>
+
+    <span class="Comment">; pass these keys to the selector window</span>
+
+<span class="Statement">    if</span> ErrorLevel = EndKey:up
+    {
+<span class="Type">        Send,</span> <span class="Special">{up}</span>
+        GoSuB ActivateWindowInBackgroundIfEnabled
+<span class="Type">        continue</span>
+    }
+
+<span class="Statement">    if</span> ErrorLevel = EndKey:down
+    {
+<span class="Type">        Send,</span> <span class="Special">{down}</span>
+        GoSuB ActivateWindowInBackgroundIfEnabled
+<span class="Type">        continue</span>
+    }
+
+<span class="Statement">    if</span> ErrorLevel = EndKey:pgup
+    {
+<span class="Type">        Send,</span> <span class="Special">{pgup}</span>
+        GoSuB ActivateWindowInBackgroundIfEnabled
+<span class="Type">        continue</span>
+    }
+
+<span class="Statement">    if</span> ErrorLevel = EndKey:pgdn
+    {
+<span class="Type">        Send,</span> <span class="Special">{pgdn}</span>
+        GoSuB ActivateWindowInBackgroundIfEnabled
+<span class="Type">        continue</span>
+    }
+
+<span class="Statement">    if</span> ErrorLevel = EndKey:left
+    {
+        direction = -1
+        GoSuB MoveSwitcher
+<span class="Type">        continue</span>
+    }
+
+<span class="Statement">    if</span> ErrorLevel = EndKey:right
+    {
+        direction = 1
+        GoSuB MoveSwitcher
+<span class="Type">        continue</span>
+    }
+
+    <span class="Comment">; FIXME: probably other error level cases</span>
+    <span class="Comment">; should be handled here (interruption?)</span>
+
+    <span class="Comment">; invoke digit shortcuts if applicable</span>
+<span class="Statement">    if</span> digitshortcuts &lt;&gt;
+<span class="Statement">        if</span> numwin &lt;= 10
+<span class="Statement">            if</span> input in 1,2,3,4,5,6,7,8,9,0
+            {
+<span class="Statement">                if</span> input = 0
+                    input = 10
+
+<span class="Statement">                if</span> numwin &lt; <span class="Constant">%input%</span>
+                {
+<span class="Statement">                    if</span> nomatchsound &lt;&gt;
+<span class="Type">                        SoundPlay,</span> <span class="Constant">%nomatchsound%</span>
+<span class="Type">                    continue</span>
+                }
+
+<span class="Type">                GuiControl,</span> choose, ListBox1, <span class="Constant">%input%</span>
+<span class="Type">                GoSub,</span> ActivateWindow
+<span class="Type">                break</span>
+            }
+
+    <span class="Comment">; process typed character</span>
+
+    search = <span class="Constant">%search%%input%</span>
+<span class="Type">    GuiControl,</span>, Edit1, <span class="Constant">%search%</span>
+<span class="Type">    GoSub,</span> RefreshWindowList
+}
+
+<span class="Type">Gosub,</span> CleanExit
+
+<span class="Statement">return</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; Refresh the list of windows according to the search criteria</span>
+<span class="Comment">;</span>
+<span class="Comment">; Sets: numwin  - see the documentation of global variables</span>
+<span class="Comment">;       idarray - see the documentation of global variables</span>
+<span class="Comment">;</span>
+<span class="Statement">RefreshWindowList:</span>
+    <span class="Comment">; refresh the list of windows if necessary</span>
+
+<span class="Statement">    if</span> ( dynamicwindowlist = &quot;yes&quot; or numallwin = 0 )
+    {
+        numallwin = 0
+
+<span class="Type">        WinGet,</span> id, list, , , Program Manager
+<span class="Type">        </span><span class="Statement">Loop</span><span class="Type">,</span> <span class="Constant">%id%</span>
+        {
+<span class="Type">            StringTrimRight,</span> this_id, id<span class="Constant">%a_index%</span>, 0
+<span class="Type">            WinGetTitle,</span> title, <span class="Special">ahk_id</span> <span class="Constant">%this_id%</span>
+
+            <span class="Comment">; FIXME: windows with empty titles?</span>
+<span class="Statement">            if</span> title =
+<span class="Type">                continue</span>
+
+            <span class="Comment">; don't add the switcher window</span>
+<span class="Statement">            if</span> switcher_id = <span class="Constant">%this_id%</span>
+<span class="Type">                continue</span>
+
+            <span class="Comment">; show process name if enabled</span>
+<span class="Statement">            if</span> showprocessname &lt;&gt;
+            {
+<span class="Type">                WinGet,</span> procname, ProcessName, <span class="Special">ahk_id</span> <span class="Constant">%this_id%</span>
+
+<span class="Type">                stringgetpos,</span> pos, procname, .
+<span class="Statement">                if</span> ErrorLevel &lt;&gt; 1
+                {
+<span class="Type">                    stringleft,</span> procname, procname, <span class="Constant">%pos%</span>
+                }
+
+<span class="Type">                stringupper,</span> procname, procname
+                title = <span class="Constant">%procname%: %title%</span>
+            }
+
+            <span class="Comment">; don't add titles which match any of the filters</span>
+<span class="Statement">            if</span> filterlist &lt;&gt;
+            {
+                filtered =
+
+<span class="Type">                </span><span class="Statement">loop</span>
+                {
+<span class="Type">                    stringtrimright,</span> filter, filters<span class="Constant">%a_index%</span>, 0
+<span class="Statement">                    if</span> filter =
+<span class="Type">                      break</span>
+<span class="Type">                    </span><span class="Statement">else</span>
+<span class="Statement">                        ifinstring,</span> title, <span class="Constant">%filter%</span>
+                        {
+                           filtered = yes
+<span class="Type">                           break</span>
+                        }
+                }
+
+<span class="Statement">                if</span> filtered = yes
+<span class="Type">                    continue</span>
+            }
+
+            <span class="Comment">; replace pipe (|) characters in the window title,</span>
+            <span class="Comment">; because Gui Add uses it for separating listbox items</span>
+<span class="Type">            StringReplace,</span> title, title, |, -, all
+
+            numallwin += 1
+            allwinarray<span class="Constant">%numallwin% = %title%</span>
+            allwinidarray<span class="Constant">%numallwin% = %this_id%</span>
+        }
+    }
+
+    <span class="Comment">; filter the window list according to the search criteria</span>
+
+    winlist =
+    numwin = 0
+
+<span class="Type">    </span><span class="Statement">Loop</span><span class="Type">,</span> <span class="Constant">%numallwin%</span>
+    {
+<span class="Type">        StringTrimRight,</span> title, allwinarray<span class="Constant">%a_index%</span>, 0
+<span class="Type">        StringTrimRight,</span> this_id, allwinidarray<span class="Constant">%a_index%</span>, 0
+
+        <span class="Comment">; don't add the windows not matching the search string</span>
+        <span class="Comment">; if there is a search string</span>
+<span class="Statement">        if</span> search &lt;&gt;
+<span class="Statement">            if</span> firstlettermatch =
+            {
+<span class="Statement">                if</span> title not contains <span class="Constant">%search%</span>,
+<span class="Type">                    continue</span>
+            }
+<span class="Type">            </span><span class="Statement">else</span>
+            {
+<span class="Type">                stringlen,</span> search_len, search
+
+                index = 1
+                match =
+
+<span class="Type">                </span><span class="Statement">loop</span><span class="Type">,</span> parse, title, <span class="Constant">%A_Space%</span>
+                {
+<span class="Type">                    stringleft,</span> first_letter, A_LoopField, 1
+
+                    <span class="Comment">; only words beginning with an alphanumeric</span>
+                    <span class="Comment">; character are taken into account</span>
+<span class="Statement">                    if</span> first_letter not in 1,2,3,4,5,6,7,8,9,0,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+<span class="Type">                        continue</span>
+
+<span class="Type">                    stringmid,</span> search_char, search, <span class="Constant">%index%</span>, 1
+
+<span class="Statement">                    if</span> first_letter &lt;&gt; <span class="Constant">%search_char%</span>
+<span class="Type">                        break</span>
+
+                    index += 1
+
+                    <span class="Comment">; no more search characters</span>
+<span class="Statement">                    if</span> index &gt; <span class="Constant">%search_len%</span>
+                    {
+                        match = yes
+<span class="Type">                        break</span>
+                    }
+                }
+
+<span class="Statement">                if</span> match =
+                    continue    <span class="Comment">; no match</span>
+            }
+
+<span class="Statement">        if</span> winlist &lt;&gt;
+            winlist = <span class="Constant">%winlist%</span>|
+        winlist = <span class="Constant">%winlist%%title%</span><span class="Special">`r</span><span class="Constant">%this_id%</span>
+
+        numwin += 1
+        winarray<span class="Constant">%numwin% = %title%</span>
+    }
+
+    <span class="Comment">; if the pattern didn't match any window</span>
+<span class="Statement">    if</span> numwin = 0
+        <span class="Comment">; if the search string is empty then we can't do much</span>
+<span class="Statement">        if</span> search =
+        {
+<span class="Type">            Gui,</span> cancel
+<span class="Type">            Gosub,</span> CleanExit
+        }
+        <span class="Comment">; delete the last character</span>
+<span class="Type">        </span><span class="Statement">else</span>
+        {
+<span class="Statement">            if</span> nomatchsound &lt;&gt;
+<span class="Type">                SoundPlay,</span> <span class="Constant">%nomatchsound%</span>
+
+<span class="Type">            GoSub,</span> DeleteSearchChar
+<span class="Type">            </span><span class="Statement">return</span>
+        }
+
+    <span class="Comment">; sort the list alphabetically</span>
+<span class="Type">    Sort,</span> winlist, D|
+
+    <span class="Comment">; add digit shortcuts if there are ten or less windows</span>
+    <span class="Comment">; in the list and digit shortcuts are enabled</span>
+<span class="Statement">    if</span> digitshortcuts &lt;&gt;
+<span class="Statement">        if</span> numwin &lt;= 10
+        {
+            digitlist =
+            digit = 1
+<span class="Type">            </span><span class="Statement">loop</span><span class="Type">,</span> parse, winlist, |
+            {
+                <span class="Comment">; FIXME: windows with empty title?</span>
+<span class="Statement">                if</span> A_LoopField &lt;&gt;
+                {
+<span class="Statement">                    if</span> digitlist &lt;&gt;
+                        digitlist = <span class="Constant">%digitlist%</span>|
+                    digitlist = <span class="Constant">%digitlist%%digit%%A_Space%%A_Space%%A_Space%%A_LoopField%</span>
+
+                    digit += 1
+<span class="Statement">                    if</span> digit = 10
+                        digit = 0
+                }
+            }
+            winlist = <span class="Constant">%digitlist%</span>
+        }
+
+    <span class="Comment">; strip window IDs from the sorted list</span>
+    titlelist =
+    arrayindex = 1
+
+<span class="Type">    </span><span class="Statement">loop</span><span class="Type">,</span> parse, winlist, |
+    {
+<span class="Type">        stringgetpos,</span> pos, A_LoopField, <span class="Special">`r</span>
+
+<span class="Type">        stringleft,</span> title, A_LoopField, <span class="Constant">%pos%</span>
+        titlelist = <span class="Constant">%titlelist%|%title%</span>
+
+        pos += 2 <span class="Comment">; skip the separator char</span>
+<span class="Type">        stringmid,</span> id, A_LoopField, <span class="Constant">%pos%</span>, 10000
+        idarray<span class="Constant">%arrayindex% = %id%</span>
+        ++arrayindex
+    }
+
+    <span class="Comment">; show the list</span>
+<span class="Type">    GuiControl,</span>, ListBox1, <span class="Constant">%titlelist%</span>
+<span class="Type">    GuiControl,</span> Choose, ListBox1, 1
+
+<span class="Statement">    if</span> numwin = 1
+<span class="Statement">        if</span> autoactivateifonlyone &lt;&gt;
+        {
+<span class="Type">            GoSub,</span> ActivateWindow
+<span class="Type">            Gosub,</span> CleanExit
+        }
+
+    GoSub ActivateWindowInBackgroundIfEnabled
+
+    completion =
+
+<span class="Statement">    if</span> tabcompletion =
+<span class="Type">        </span><span class="Statement">return</span>
+
+    <span class="Comment">; completion is not implemented for first letter match mode</span>
+<span class="Statement">    if</span> firstlettermatch &lt;&gt;
+<span class="Type">        </span><span class="Statement">return</span>
+
+    <span class="Comment">; determine possible completion if there is</span>
+    <span class="Comment">; a search string and there are more than one</span>
+    <span class="Comment">; window in the list</span>
+
+<span class="Statement">    if</span> search =
+<span class="Type">        </span><span class="Statement">return</span>
+
+<span class="Statement">    if</span> numwin = 1
+<span class="Type">        </span><span class="Statement">return</span>
+
+<span class="Type">    </span><span class="Statement">loop</span>
+    {
+        nextchar =
+
+<span class="Type">        </span><span class="Statement">loop</span><span class="Type">,</span> <span class="Constant">%numwin%</span>
+        {
+<span class="Type">            stringtrimleft,</span> title, winarray<span class="Constant">%a_index%</span>, 0
+
+<span class="Statement">            if</span> nextchar =
+            {
+                substr = <span class="Constant">%search%%completion%</span>
+<span class="Type">                stringlen,</span> substr_len, substr
+<span class="Type">                stringgetpos,</span> pos, title, <span class="Constant">%substr%</span>
+
+<span class="Statement">                if</span> pos = -1
+<span class="Type">                    break</span>
+
+                pos += <span class="Constant">%substr_len%</span>
+
+                <span class="Comment">; if the substring matches the end of the</span>
+                <span class="Comment">; string then no more characters can be completed</span>
+<span class="Type">                stringlen,</span> title_len, title
+<span class="Statement">                if</span> pos &gt;= <span class="Constant">%title_len%</span>
+                {
+                    pos = -1
+<span class="Type">                    break</span>
+                }
+
+                <span class="Comment">; stringmid has different position semantics</span>
+                <span class="Comment">; than stringgetpos. strange...</span>
+                pos += 1
+<span class="Type">                stringmid,</span> nextchar, title, <span class="Constant">%pos%</span>, 1
+                substr = <span class="Constant">%substr%%nextchar%</span>
+             }
+<span class="Type">             </span><span class="Statement">else</span>
+             {
+<span class="Type">                stringgetpos,</span> pos, title, <span class="Constant">%substr%</span>
+<span class="Statement">                if</span> pos = -1
+<span class="Type">                    break</span>
+             }
+        }
+
+<span class="Statement">        if</span> pos = -1
+<span class="Type">            break</span>
+<span class="Type">        </span><span class="Statement">else</span>
+            completion = <span class="Constant">%completion%%nextchar%</span>
+    }
+
+<span class="Statement">    if</span> completion &lt;&gt;
+<span class="Type">        GuiControl,</span>, Edit1, <span class="Constant">%search%[%completion%</span>]
+
+<span class="Statement">return</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; Delete last search char and update the window list</span>
+<span class="Comment">;</span>
+<span class="Statement">DeleteSearchChar:</span>
+
+<span class="Statement">if</span> search =
+<span class="Type">    </span><span class="Statement">return</span>
+
+<span class="Type">StringTrimRight,</span> search, search, 1
+<span class="Type">GuiControl,</span>, Edit1, <span class="Constant">%search%</span>
+<span class="Type">GoSub,</span> RefreshWindowList
+
+<span class="Statement">return</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; Activate selected window</span>
+<span class="Comment">;</span>
+<span class="Statement">ActivateWindow:</span>
+
+<span class="Type">Gui,</span> submit
+<span class="Type">stringtrimleft,</span> window_id, idarray<span class="Constant">%index%</span>, 0
+<span class="Type">WinActivate,</span> <span class="Special">ahk_id</span> <span class="Constant">%window_id%</span>
+
+<span class="Statement">return</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; Activate selected window in the background</span>
+<span class="Comment">;</span>
+<span class="Statement">ActivateWindowInBackground:</span>
+
+<span class="Type">guicontrolget,</span> index,, ListBox1
+<span class="Type">stringtrimleft,</span> window_id, idarray<span class="Constant">%index%</span>, 0
+
+<span class="Statement">if</span> prev_active_id &lt;&gt; <span class="Constant">%window_id%</span>
+{
+<span class="Type">    WinActivate,</span> <span class="Special">ahk_id</span> <span class="Constant">%window_id%</span>
+<span class="Type">    WinActivate,</span> <span class="Special">ahk_id</span> <span class="Constant">%switcher_id%</span>
+    prev_active_id = <span class="Constant">%window_id%</span>
+}
+
+<span class="Statement">return</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; Activate selected window in the background if the option is enabled.</span>
+<span class="Comment">; If an activation delay is set then a timer is started instead of</span>
+<span class="Comment">; activating the window immediately.</span>
+<span class="Comment">;</span>
+<span class="Statement">ActivateWindowInBackgroundIfEnabled:</span>
+
+<span class="Statement">if</span> activateselectioninbg =
+<span class="Type">    </span><span class="Statement">return</span>
+
+<span class="Comment">; Don't do it just after the switcher is activated. It is confusing</span>
+<span class="Comment">; if active window is changed immediately.</span>
+<span class="Type">WinGet,</span> id, ID, <span class="Special">ahk_id</span> <span class="Constant">%switcher_id%</span>
+<span class="Statement">if</span> id =
+<span class="Type">    </span><span class="Statement">return</span>
+
+<span class="Statement">if</span> bgactivationdelay =
+    GoSub ActivateWindowInBackground
+<span class="Statement">else</span>
+<span class="Type">    settimer,</span> BgActivationTimer, <span class="Constant">%bgactivationdelay%</span>
+
+<span class="Statement">return</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; Check if the user is idle and if so activate the currently selected</span>
+<span class="Comment">; window in the background</span>
+<span class="Comment">;</span>
+<span class="Statement">BgActivationTimer:</span>
+
+<span class="Type">settimer,</span> BgActivationTimer, off
+
+GoSub ActivateWindowInBackground
+
+<span class="Statement">return</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; Stop background window activation timer if necessary and exit</span>
+<span class="Comment">;</span>
+<span class="Statement">CleanExit:</span>
+
+<span class="Type">settimer,</span> BgActivationTimer, off
+
+<span class="Type">exit</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; Cancel keyboard input if GUI is closed.</span>
+<span class="Comment">;</span>
+<span class="Statement">GuiClose:</span>
+
+<span class="Type">send,</span> <span class="Special">{esc}</span>
+
+<span class="Statement">return</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; Handle mouse click events on the list box</span>
+<span class="Comment">;</span>
+<span class="Statement">ListBoxClick:</span>
+
+<span class="Statement">if</span> A_GuiControlEvent = Normal
+<span class="Type">    send,</span> <span class="Special">{enter}</span>
+
+<span class="Statement">return</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; Move switcher window horizontally</span>
+<span class="Comment">;</span>
+<span class="Comment">; Input: direction - 1 for right, -1 for left</span>
+<span class="Comment">;</span>
+<span class="Statement">MoveSwitcher:</span>
+
+direction *= 100
+<span class="Type">WinGetPos,</span> x, y, width, , <span class="Special">ahk_id</span> <span class="Constant">%switcher_id%</span>
+x += <span class="Constant">%direction%</span>
+
+<span class="Statement">if</span> x &lt; 0
+    x = 0
+<span class="Statement">else</span>
+{
+   SysGet screensize, MonitorWorkArea
+   screensizeRight -= <span class="Constant">%width%</span>
+<span class="Statement">   if</span> x &gt; <span class="Constant">%screensizeRight%</span>
+      x = <span class="Constant">%screensizeRight%</span>
+}
+
+prevdelay = <span class="Constant">%A_WinDelay%</span>
+<span class="Type">SetWinDelay,</span> -1
+<span class="Type">WinMove,</span> <span class="Special">ahk_id</span> <span class="Constant">%switcher_id%, , %x%, %y%</span>
+<span class="Type">SetWinDelay,</span> <span class="Constant">%prevdelay%</span>
+
+<span class="Statement">return</span>
+
+<span class="Comment">;----------------------------------------------------------------------</span>
+<span class="Comment">;</span>
+<span class="Comment">; Close the switcher window if the user activated an other window</span>
+<span class="Comment">;</span>
+<span class="Statement">CloseIfInactive:</span>
+
+<span class="Statement">ifwinnotactive,</span> <span class="Special">ahk_id</span> <span class="Constant">%switcher_id%</span>
+<span class="Type">    send,</span> <span class="Special">{esc}</span>
+
+<span class="Statement">return</span>
+
+<span class="Comment">;; !v is appsKey</span>
+
+<span class="Statement">!v::</span><span class="Type">appsKey</span>
+
+DetectHiddenWindows On
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; go to Opus</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Statement">!x::</span>
+<span class="Statement">IfWinExist,</span> <span class="Special">ahk_class</span> dopus.lister
+{
+<span class="Type">WinActivate</span>
+}
+<span class="Statement">else</span>
+{
+<span class="Type">Run,</span> &quot;C:\Program Files\Directory Opus\DOpus.exe&quot;
+<span class="Type">WinWait,</span> <span class="Special">ahk_class</span> dopus.lister
+<span class="Type">WinActivate</span>
+}
+<span class="Statement">Return</span>
+
+
+<span class="Comment">; !d::</span>
+<span class="Comment">; process2check = acrobat.exe</span>
+<span class="Comment">; startup = &quot;C:\Program Files\Adobe\Acrobat 7.0\Acrobat\acrobat.exe&quot;</span>
+<span class="Comment">;</span>
+<span class="Type">process,</span> exist, <span class="Constant">%process2check%</span>
+PID=<span class="Constant">%errorlevel%</span>
+
+<span class="Statement">if</span> PID=0
+<span class="Type">  Run,</span> <span class="Constant">%startup%</span>
+<span class="Statement">else</span>
+<span class="Type">  WinActivate,</span> <span class="Special">ahk_pid</span> <span class="Constant">%PID%</span>
+<span class="Statement">return</span>
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; alt D go to acrobat DOESNT WORK</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; !d::</span>
+<span class="Comment">; process2check = acrobat.exe</span>
+<span class="Comment">; startup = &quot;C:\Program Files\Adobe\Acrobat 7.0\Acrobat\acrobat.exe&quot;</span>
+<span class="Comment">; process, exist, %process2check%,</span>
+<span class="Comment">; if %ErrorLevel% = 0</span>
+<span class="Comment">; {</span>
+<span class="Comment">;   Run, %startup%</span>
+<span class="Comment">;   return</span>
+<span class="Comment">; }</span>
+<span class="Comment">; else</span>
+<span class="Comment">; {</span>
+<span class="Comment">;  ; MsgBox Acrobat is %ErrorLevel%</span>
+<span class="Comment">;  ; SetTitleMatchMode, 2</span>
+<span class="Comment">;  WinActivate, ahk_pid %ErrorLevel%,</span>
+<span class="Comment">;  ;WinMaximize, ahk_pid %ErrorLevel%,</span>
+<span class="Comment">; ; WinShow, ahk_pid %ErrorLevel%         ; it doesn't work if minimized</span>
+<span class="Comment">;  ;WinWaitActive, ahk_pid %ErrorLevel%,</span>
+<span class="Comment">; ;   WinSet, Top, , ahk_pid %ErrorLevel%, , ,</span>
+<span class="Comment">; }</span>
+<span class="Comment">; return</span>
+<span class="Comment">;</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; alt + o goes to opera</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; !o::</span>
+<span class="Comment">; process2check = opera.exe</span>
+<span class="Comment">; startup = &quot;C:\Program Files\opera9TP2\opera.exe&quot;</span>
+<span class="Comment">; process, exist, %process2check%,</span>
+<span class="Comment">; if %ErrorLevel% = 0</span>
+<span class="Comment">; {</span>
+<span class="Comment">;   Run, %startup%</span>
+<span class="Comment">;   return</span>
+<span class="Comment">; }</span>
+<span class="Comment">; else</span>
+<span class="Comment">; {</span>
+<span class="Comment">;  ; SetTitleMatchMode, 2</span>
+<span class="Comment">;  WinActivate, ahk_pid %ErrorLevel%,</span>
+<span class="Comment">;  ;WinMaximize, ahk_pid %ErrorLevel%,</span>
+<span class="Comment">;  ;WinShow, ahk_pid %ErrorLevel%         ; it doesn't work if minimized</span>
+<span class="Comment">;  ;WinWaitActive, ahk_pid %ErrorLevel%,</span>
+<span class="Comment">; ;   WinSet, Top, , ahk_pid %ErrorLevel%, , ,</span>
+<span class="Comment">; }</span>
+<span class="Comment">; return</span>
+<span class="Comment">; ;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; ; vimTalkstoR</span>
+<span class="Comment">; ;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">;</span>
+<span class="PreProc">#WinActivateForce</span>
+<span class="Comment">;SetTitleMatchMode, 2</span>
+<span class="Comment">; TO DO: fix the &quot;return to parent&quot; thing</span>
+
+<span class="Statement">F3::</span>
+WinGet vimWinID, ID, A           <span class="Comment">; save current window ID to return here later</span>
+<span class="Statement">IfWinExist,</span>R Console
+{
+   Send ^c                    <span class="Comment">; copy selection to clipboard</span>
+   WinActivate <span class="Comment">; ahk_class RGui</span>
+   WinGet WinRID, ID, A
+   Send <span class="Special">^v</span>
+}
+
+Sleep 30                      <span class="Comment">; wait until the data is pasted (normally not needed)</span>
+WinActivate <span class="Special">ahk_id</span> <span class="Constant">%vimWinID%</span>    <span class="Comment">; go back to the original window</span>
+<span class="Comment">;WinWaitActive                ; wait until original is active (normally not needed)</span>
+<span class="Statement">Return</span>
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; type in CMU VPN</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Statement">^/::</span>Send ********<span class="Special">{enter}</span>
+<span class="Statement">Return</span>
+
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; maps capslock to esc OLD -outdated: now there is the #IfWinActive directive</span>
+<span class="Comment">; to make shortcuts application specific</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; Assign a hotkey to minimize the active window.</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Statement">^Up::</span><span class="Type">WinMaximize,</span> A
+<span class="Statement">^Down::</span><span class="Type">WinMinimize,</span> A
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; fake middle-click with kb</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Statement">^F12::</span><span class="Type">Send,</span> <span class="Special">{Mbutton}</span>
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; fake altTab right hand</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+
+<span class="Statement">RControl &amp; RShift::</span>AltTab <span class="Comment">; Hold down right-control then press right-shift repeatedly to move forward.</span>
+<span class="Statement">RControl &amp; Enter::</span>ShiftAltTab <span class="Comment">; Without even having to release right-control, press Enter to reverse direction.The other Alt-tab actions available are:</span>
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; alt b go to my notes on telefonos.txt</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Statement">!b::</span>
+<span class="Statement">IfWinExist,</span> telefonos.txt
+{
+<span class="Type">WinActivate</span>
+}
+<span class="Statement">else</span>
+{
+<span class="Type">Run,</span> &quot;C:\Program Files\Vim\vim70e\gvim.exe&quot; &quot;E:\jose\telefonos.txt&quot;
+<span class="Type">WinWait,</span> telefonos.txt
+<span class="Type">WinActivate</span>
+}
+<span class="Statement">return</span>
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; alt q vim as external email editor</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; ^d::</span>
+<span class="Comment">; tempmail = &quot;e:\temp\tempClipboard.eml&quot;</span>
+<span class="Comment">; WinGet operaID, ID, A           ; save current window ID to return here later</span>
+<span class="Comment">; Send, ^a</span>
+<span class="Comment">; Send, ^c</span>
+<span class="Comment">; FileAppend, &quot;Scrat&quot;, %tempmail%</span>
+<span class="Comment">; Run, % &quot;C:\Program Files\Vim\vim70e\gvim.exe e:\temp\tempClipboard.eml&quot;  ;use vim to edit t</span>
+<span class="Comment">; WinWaitClose tempClipboard.eml   ;wait till vim is closed, then paste clipboard</span>
+<span class="Comment">; WinActivate ahk_id %operaID%    ; go back to the original window</span>
+<span class="Comment">; Send ^v</span>
+<span class="Comment">;</span>
+<span class="Comment">; ; reinstate clipboard</span>
+<span class="Comment">; ;FileRead, Clipboard, %tempmail%</span>
+<span class="Comment">; ;FileDelete, %tempmail%</span>
+<span class="Comment">; ; we return focus to the application we had before, and paste there</span>
+<span class="Comment">; ;send ^v</span>
+<span class="Comment">; return</span>
+<span class="Comment">;</span>
+
+<span class="Statement">^4::</span><span class="Type">FileAppend,</span> <span class="Constant">%Clipboard%</span>, &quot;e:\temp\y.eml&quot;
+
+
+<span class="Comment">; alternatively</span>
+<span class="Comment">; select all, copy, call vim -clip with a shortcut, paste again</span>
+
+<span class="Comment">; alternatively, use clipboard var, save in temp file. vim edits that, puts it</span>
+<span class="Comment">; back in the clipboard, and we paste it</span>
+<span class="Comment">; ClipboardAll may also be saved to a file (in this mode, FileAppend always</span>
+<span class="Comment">; overwrites any existing file):</span>
+<span class="Comment">; FileAppend, %ClipboardAll%, C:\Company Logo.clip</span>
+<span class="Comment">; ; The file extension does not matter.</span>
+<span class="Comment">;</span>
+<span class="Comment">; To later load the file back onto the clipboard (or into a variable), follow this</span>
+<span class="Comment">; example:</span>
+<span class="Comment">; FileRead, Clipboard, *c C:\Company Logo.clip ; Note the use of *c,</span>
+<span class="Comment">; which must precede the filename.</span>
+<span class="Comment">;</span>
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; alt C goes to locate (defined in locate itself)</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; we need to send the focus to the results window with a key press</span>
+<span class="Statement">!Space::</span> mouseClick, left , 375, 329
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; alt M go to Media Monkey : ahk_class TFMainWindow, when minimized ahk_class Shell_TrayWnd</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; send rightclick and R for next</span>
+
+<span class="Statement">!m::</span>
+process2check = MediaMonkey.exe
+startup = C:\Program Files\MediaMonkey\MediaMonkey.exe
+<span class="Type">process,</span> exist, <span class="Constant">%process2check%</span>,
+<span class="Statement">if</span> <span class="Constant">%ErrorLevel%</span> = 0
+{
+<span class="Type">  Run,</span> <span class="Constant">%startup% %safeFile%</span>
+<span class="Type">  </span><span class="Statement">return</span>
+}
+<span class="Statement">else</span>
+{
+<span class="Type">   WinActivate,</span> MediaMonkey
+   <span class="Comment">;SetTitleMatchMode, 2</span>
+   <span class="Comment">; WinActivate, ahk_pid %ErrorLevel%,</span>
+   <span class="Comment">; WinShow, ahk_pid %ErrorLevel%</span>
+   <span class="Comment">; WinWaitActive, ahk_pid %ErrorLevel%,</span>
+   <span class="Comment">; WinSet, Top, , ahk_pid %ErrorLevel%, , ,</span>
+}
+
+
+
+<span class="Comment">;IfWinExist, MediaMonkey</span>
+<span class="Comment">;{</span>
+<span class="Comment">;WinActivate</span>
+<span class="Comment">;}</span>
+<span class="Comment">;else</span>
+<span class="Comment">;{</span>
+<span class="Comment">;Run, &quot;C:\Program Files\MediaMonkey\MediaMonkey.exe&quot;</span>
+<span class="Comment">;WinWait, MediaMonkey</span>
+<span class="Comment">;WinActivate</span>
+<span class="Comment">;}</span>
+<span class="Statement">return</span>
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; right double_click opens with vim</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+
+<span class="Statement">~RButton::</span>
+<span class="Statement">   If</span> (A_PriorHotKey = A_ThisHotKey and A_TimeSincePriorHotkey &lt; 500) {
+      Sleep 200   <span class="Comment">; wait for right-click menu, fine tune for your PC</span>
+      Send v      <span class="Comment">; open with vim is v in the  context menu</span>
+   }
+<span class="Statement">Return</span>
+
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; gets path in opus</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Statement">F7::</span>
+clipboard =
+<span class="Type">Send,</span> <span class="Special">^c</span>
+<span class="Type">ClipWait,</span> 2
+<span class="Type">Sort,</span> clipboard  <span class="Comment">; This also converts to text (full path and name of each file).</span>
+<span class="Statement">return</span>
+
+
+
+
+
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; go to mail in opera</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">;rightclick in tray logo, press M</span>
+
+<span class="Comment">;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Comment">;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Comment">;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Comment">;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="Comment">;;</span>
+<span class="Comment">;; APPLICATION SPECIFIC SHORTCUTS</span>
+<span class="Comment">;;</span>
+<span class="Comment">;;;;;;;;;;===================================;;;;;;;;;;;;;</span>
+
+<span class="Comment">; autoscroll in opera</span>
+<span class="PreProc">#IfWinActive</span>, <span class="Special">ahk_class</span> OpWindow
+<span class="Statement">F1::</span><span class="Type">MouseClick,</span> Middle, , , 1
+<span class="Statement">return</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; in AdobeAcrobat</span>
+<span class="Comment">; ; scroll to F1</span>
+<span class="Comment">; a - z are the scrollwheel (6 lines)</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="PreProc">#IfWinActive</span>, <span class="Special">ahk_class</span> AdobeAcrobat
+<span class="Statement">F1::</span>Send <span class="Special">^+h</span>
+<span class="Comment">; mouseweel scroll with keys (pressing winkey #)</span>
+<span class="Statement">'::</span><span class="Type">MouseClick,</span> WheelUp, , , 6
+<span class="Statement">/::</span><span class="Type">MouseClick,</span> WheelDown, , , 6
+<span class="Statement">Return</span>
+
+<span class="Comment">; alt+s save file in acrobat</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Statement">!s::</span>
+Send <span class="Special">^+s</span>
+Send e:\jose\newCPS<span class="Special">{enter}</span> <span class="Comment">;; selects newCPS</span>
+<span class="Statement">return</span>
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; shorcuts to use Opus's file completion to have the closest to the perfect</span>
+<span class="Comment">; shell under windows</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="PreProc">#IfWinActive</span>, <span class="Special">ahk_class</span> dopus.lister
+<span class="Comment">; tab completion (only in this app, map tab to right arrow)</span>
+<span class="Comment">; Tab::Right</span>
+<span class="Comment">; escape goes to the location bar (right now it's F2)</span>
+<span class="Statement">Esc::</span><span class="Type">F2</span>
+<span class="Statement">return</span>
+
+
+
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="Comment">; format text to 80-column in vim (one paragraph)</span>
+<span class="Comment">;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="PreProc">#IfWinActive</span>, <span class="Special">ahk_class</span> Vim
+<span class="Statement">^~::</span>
+Send ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<span class="Statement">^Space::</span>
+Send <span class="Special">{ESC}{ESC}</span>v<span class="Special">{}</span>}gqi
+
+<span class="Comment">;;{down}</span>
+<span class="Statement">return</span>
+
+   <span class="Comment">;; Context Sensitive Help in Any Editor -- by Rajat</span>
+   <span class="Comment">;;</span>
+
+   <span class="Comment">; <a href="http://www.autohotkey.com">http://www.autohotkey.com</a></span>
+   <span class="Comment">; This script makes Ctrl+2 (or another hotkey of your choice) show the help file</span>
+   <span class="Comment">; page for the selected AutoHotkey command or keyword. If nothing is selected,</span>
+   <span class="Comment">; the command name will be extracted from the beginning of the current line.</span>
+
+   <span class="Comment">; The hotkey below uses the clipboard to provide compatibility with the maximum</span>
+   <span class="Comment">; number of editors (since ControlGet doesn't work with most advanced editors).</span>
+   <span class="Comment">; It restores the original clipboard contents afterward, but as plain text,</span>
+   <span class="Comment">; which seems better than nothing.</span>
+
+<span class="Statement">   $^2::</span>
+   <span class="Comment">; The following values are in effect only for the duration of this hotkey thread.</span>
+   <span class="Comment">; Therefore, there is no need to change them back to their original values</span>
+   <span class="Comment">; because that is done automatically when the thread ends:</span>
+   SetWinDelay 10
+   SetKeyDelay 0
+<span class="Type">   AutoTrim,</span> On
+
+<span class="Statement">   if</span> A_OSType = WIN32_WINDOWS  <span class="Comment">; Windows 9x</span>
+<span class="Type">      Sleep,</span> 500  <span class="Comment">; Give time for the user to release the key.</span>
+
+   C_ClipboardPrev = <span class="Constant">%clipboard%</span>
+   clipboard =
+   <span class="Comment">; Use the highlighted word if there is one (since sometimes the user might</span>
+   <span class="Comment">; intentionally highlight something that isn't a command):</span>
+<span class="Type">   Send,</span> <span class="Special">^c</span>
+<span class="Type">   ClipWait,</span> 0.1
+<span class="Statement">   if</span> ErrorLevel &lt;&gt; 0
+   {
+      <span class="Comment">; Get the entire line because editors treat cursor navigation keys differently:</span>
+<span class="Type">      Send,</span> <span class="Special">{home}+{end}^c</span>
+<span class="Type">      ClipWait,</span> 0.2
+<span class="Statement">      if</span> ErrorLevel &lt;&gt; 0  <span class="Comment">; Rare, so no error is reported.</span>
+      {
+         clipboard = <span class="Constant">%C_ClipboardPrev%</span>
+<span class="Type">         </span><span class="Statement">return</span>
+      }
+   }
+   C_Cmd = <span class="Constant">%clipboard%</span>  <span class="Comment">; This will trim leading and trailing tabs &amp; spaces.</span>
+   clipboard = <span class="Constant">%C_ClipboardPrev%</span>  <span class="Comment">; Restore the original clipboard for the user.</span>
+<span class="Type">   </span><span class="Statement">Loop</span><span class="Type">,</span> parse, C_Cmd, <span class="Constant">%A_Space%</span><span class="Special">`,</span>  <span class="Comment">; The first space or comma is the end of the command.</span>
+   {
+      C_Cmd = <span class="Constant">%A_LoopField%</span>
+      break <span class="Comment">; i.e. we only need one interation.</span>
+   }
+<span class="Statement">   IfWinNotExist,</span> AutoHotkey Help
+   {
+      <span class="Comment">; Use non-abbreviated root key to support older versions of AHK:</span>
+<span class="Type">      RegRead,</span> ahk_dir, HKEY_LOCAL_MACHINE, SOFTWARE\AutoHotkey, InstallDir
+<span class="Statement">      if</span> ErrorLevel &lt;&gt; 0
+      {
+         <span class="Comment">; Older versions of AHK might not have the above registry entry,</span>
+         <span class="Comment">; so use a best guess location instead:</span>
+         ahk_dir = <span class="Constant">%ProgramFiles%</span>\AutoHotkey
+      }
+      ahk_help_file = <span class="Constant">%ahk_dir%</span>\AutoHotkey.chm
+<span class="Statement">      IfNotExist,</span> <span class="Constant">%ahk_help_file%</span>
+      {
+<span class="Type">         MsgBox,</span> Could not find the help file: <span class="Constant">%ahk_help_file%</span>.
+<span class="Type">         </span><span class="Statement">return</span>
+      }
+<span class="Type">      Run,</span> <span class="Constant">%ahk_help_file%</span>
+<span class="Type">      WinWait,</span> AutoHotkey Help
+   }
+   <span class="Comment">; The above has set the &quot;last found&quot; window which we use below:</span>
+<span class="Type">   WinActivate</span>
+<span class="Type">   WinWaitActive</span>
+<span class="Type">   StringReplace,</span> C_Cmd, C_Cmd, #, <span class="Special">{#}</span>
+<span class="Type">   send,</span> !n<span class="Special">{home}+{end}</span><span class="Constant">%C_Cmd%</span><span class="Special">{enter}</span>
+<span class="Type">   </span><span class="Statement">return</span>
+
+
+<span class="Comment">; Locate 32</span>
+<span class="Comment">; according to the author:</span>
+<span class="Comment">;Technically speaking, locate uses one hidden window to handle the tray icon. The title of</span>
+<span class="Comment">;that window is &quot;Locate ST&quot; (maybe that is that &quot;name&quot;) and the name of its class is</span>
+<span class="Comment">;&quot;LOCATEAPPST&quot;. If you send a message with an id 0x8065 to that window, the main</span>
+<span class="Comment">;dialog will be opened. Or you can just run locate32.exe which does same.</span>
+<span class="Comment">;!c::</span>
+<span class="Comment">;IfWinExist, Locate</span>
+<span class="Comment">;{</span>
+<span class="Comment">;SendMessage, 0x8065</span>
+<span class="Comment">;}</span>
+<span class="Comment">;else</span>
+<span class="Comment">;{</span>
+<span class="Comment">;Run, &quot;C:\Program Files\locate\locate32.exe&quot;</span>
+<span class="Comment">;}</span>
+<span class="Comment">;return</span>
+
+</pre>
+</body>
+</html>

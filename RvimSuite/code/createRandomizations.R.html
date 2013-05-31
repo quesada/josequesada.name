@@ -1,0 +1,461 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>E:\jose\relativeJudment\numerosity\createRandomizations.R.html</title>
+<meta name="Generator" content="Vim/7.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+.Type { color: #2e8b57; font-weight: bold; }
+.Special { color: #6a5acd; }
+.SpecialKey { color: #0000ff; }
+.Constant { color: #c00058; }
+.Statement { color: #804040; font-weight: bold; }
+pre { color: #000000; background-color: #ffdab9; }
+body { color: #000000; background-color: #ffdab9; }
+.Comment { color: #406090; }
+.Normal { color: #000000; background-color: #ffdab9; }
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="Comment"># createRandomizations.R -- children Numerosity, from the absolute judgement as</span>
+<span class="Comment"># relative judgement series</span>
+
+<span class="Comment"># @Author:      Jose Quesada (quesadaj@gmail.com)</span>
+<span class="Comment"># @Website:     <a href="http://www.andrew.cmu.edu/~jquesada">http://www.andrew.cmu.edu/~jquesada</a></span>
+<span class="Comment"># @License:     GPL: <a href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a></span>
+<span class="Comment"># @Created:     03-Apr-2006.</span>
+<span class="Comment"># @Last Change: 03-Apr-2006 11:33:03 PM.</span>
+<span class="Comment"># @Revision:    0.143</span>
+<span class="Comment">#</span>
+<span class="Comment"># = Description</span>
+<span class="Comment"># = Usage</span>
+<span class="Comment"># = TODO</span>
+<span class="Comment"># = CHANGES</span>
+<span class="Comment"># = files used:</span>
+
+<span class="Comment"># Createrandomizations:</span>
+<span class="Comment"># we want a particular item to be in either win or lose contexts</span>
+<span class="Comment"># say we have numerosities from 7 to 17.</span>
+<span class="Comment"># e.g., two items of numerosity 10 will be preferred differently depending on</span>
+<span class="Comment"># the contexts they have appeared on.</span>
+
+<span class="Comment"># The same item cannot be a context and a target</span>
+
+<span class="Comment"># how much is the difference (just noticeable difference?) between a target and</span>
+<span class="Comment"># a context so we can say that they are noticeable?</span>
+<span class="Comment"># In hotOrNot, it was defined as percentiles</span>
+<span class="Comment"># losers are from 8 to 18; We start at 8 to avoid subitization altogether</span>
+<span class="Comment"># targets are 28 to 38</span>
+<span class="Comment"># winners are 48 to 58</span>
+
+<span class="Comment"># equality. What should be considered &quot;same&quot; ? exactly the same number of dots</span>
+
+<span class="Comment"># the idea is to manipulate the rank of a particular stimulus. To generate</span>
+<span class="Comment"># stimuli we use R because it is better suited to work with matrices and arrays</span>
+<span class="Comment"># VB sucks as arrays like no other language I know, see</span>
+
+<span class="Comment"># the visual basic program will display the pictures of the dot clouds generated</span>
+<span class="Comment"># by R.</span>
+
+
+<span class="Comment"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Comment"># generateCloud.</span>
+<span class="Comment"># It makes sure that the points are non-overlapping</span>
+<span class="Comment"># note: ids are padded</span>
+<span class="Comment"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="Normal">generateCloud</span> = <span class="Type">function</span> <span class="Special">(</span><span class="Normal">outdir</span><span class="Special">,</span> <span class="Normal">type</span><span class="Special">,</span> <span class="Normal">id</span><span class="Special">,</span> <span class="Normal">n</span><span class="Special">){</span>
+   <span class="Comment"># create a filename</span>
+   <span class="Normal">filename</span> = <span class="SpecialKey">paste</span><span class="Special">(</span><span class="Normal">outdir</span><span class="Special">,</span> <span class="Constant">&quot;/&quot;</span><span class="Special">,</span> <span class="Normal">type</span><span class="Special">,</span> <span class="Constant">&quot;/&quot;</span><span class="Special">,</span> <span class="Normal">id</span><span class="Special">,</span> <span class="Constant">&quot;-&quot;</span><span class="Special">,</span> <span class="Normal">n</span><span class="Special">,</span> <span class="Constant">&quot;.jpg&quot;</span><span class="Special">,</span> <span class="Normal">sep</span>=<span class="Constant">&quot;&quot;</span><span class="Special">)</span>
+
+   <span class="Normal">safe</span> = <span class="Constant">100</span> <span class="Comment"># in case there are many duplicates</span>
+   <span class="Normal">x</span> = <span class="SpecialKey">unique</span><span class="Special">(</span><span class="SpecialKey">sort</span><span class="Special">(</span><span class="SpecialKey">round</span><span class="Special">(</span><span class="SpecialKey">runif</span><span class="Special">(</span><span class="Normal">n</span> + <span class="Normal">safe</span><span class="Special">)</span>*<span class="Constant">100</span><span class="Special">,</span><span class="Constant">0</span><span class="Special">)))</span>
+   <span class="Normal">x</span> = <span class="SpecialKey">sample</span><span class="Special">(</span><span class="Normal">x</span><span class="Special">,</span> <span class="Normal">n</span><span class="Special">)</span>
+   <span class="Normal">y</span> = <span class="SpecialKey">unique</span><span class="Special">(</span><span class="SpecialKey">sort</span><span class="Special">(</span><span class="SpecialKey">round</span><span class="Special">(</span><span class="SpecialKey">runif</span><span class="Special">(</span><span class="Normal">n</span> + <span class="Normal">safe</span><span class="Special">)</span>*<span class="Constant">100</span><span class="Special">,</span><span class="Constant">0</span><span class="Special">)))</span>
+   <span class="Normal">y</span> = <span class="SpecialKey">sample</span><span class="Special">(</span><span class="Normal">y</span><span class="Special">,</span> <span class="Normal">n</span><span class="Special">)</span>
+   <span class="Normal">dat</span> = <span class="SpecialKey">cbind</span><span class="Special">(</span><span class="Normal">x</span><span class="Special">,</span><span class="Normal">y</span><span class="Special">)</span>
+   <span class="SpecialKey">jpeg</span><span class="Special">(</span><span class="Normal">filename</span> = <span class="Normal">filename</span><span class="Special">,</span> <span class="Type">width</span> = <span class="Constant">300</span><span class="Special">,</span> <span class="Type">height</span> = <span class="Constant">300</span><span class="Special">,</span>
+         <span class="Normal">pointsize</span> = <span class="Constant">12</span><span class="Special">,</span> <span class="Normal">bg</span> = <span class="Constant">&quot;white&quot;</span><span class="Special">,</span> <span class="Normal">res</span> = <span class="Constant">NA</span><span class="Special">)</span>
+   <span class="SpecialKey">par</span><span class="Special">(</span> <span class="Normal">mar</span>=<span class="SpecialKey">c</span><span class="Special">(</span><span class="Constant">.1</span><span class="Special">,</span> <span class="Constant">.1</span><span class="Special">,</span> <span class="Constant">.1</span><span class="Special">,</span> <span class="Constant">.1</span><span class="Special">)</span> <span class="Special">)</span>
+   <span class="SpecialKey">plot</span><span class="Special">(</span><span class="Normal">dat</span><span class="Special">,</span> <span class="Normal">pch</span>=<span class="Constant">19</span><span class="Special">,</span> <span class="Normal">axes</span>=<span class="Normal">F</span><span class="Special">,</span> <span class="Normal">xaxt</span>=<span class="Constant">&quot;n&quot;</span><span class="Special">,</span> <span class="Normal">yaxt</span>=<span class="Constant">&quot;n&quot;</span><span class="Special">,</span> <span class="Normal">xlab</span>=<span class="Constant">&quot;&quot;</span><span class="Special">,</span> <span class="Normal">ylab</span>=<span class="Constant">&quot;&quot;</span><span class="Special">,</span> <span class="Normal">tcl</span>=<span class="Constant">0</span><span class="Special">)</span>
+   <span class="SpecialKey">dev.off</span><span class="Special">()</span>
+<span class="Special">}</span>
+
+
+<span class="Comment"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Comment"># generateBlocks.</span>
+<span class="Comment"># returns a table of 10 blocks (rows) defined by &quot;filler1X&quot;, &quot;filler1Y&quot;, &quot;filler2X&quot;,</span>
+<span class="Comment">#&quot;filler2Y&quot;, &quot;filler3X&quot;, &quot;filler3Y&quot;,   &quot;loser&quot;, &quot;winner&quot;, &quot;A&quot;, &quot;B&quot;</span>
+<span class="Comment">#</span>
+<span class="Comment"># the location of A and B within the block will be determined in a different</span>
+<span class="Comment"># function, generateRndSuj</span>
+<span class="Comment"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Normal">generateBlocks</span> = <span class="Type">function</span><span class="Special">(</span> <span class="Normal">targets</span><span class="Special">,</span> <span class="Normal">losers</span><span class="Special">,</span> <span class="Normal">winners</span><span class="Special">,</span> <span class="Normal">fillers</span> <span class="Special">){</span>
+   <span class="Comment"># randomly relocate the fillers for the first part of the matrix</span>
+   <span class="Normal">fillers</span>    = <span class="SpecialKey">sample</span><span class="Special">(</span><span class="Normal">fillers</span><span class="Special">,</span> <span class="SpecialKey">length</span><span class="Special">(</span><span class="Normal">fillers</span><span class="Special">))</span>
+   <span class="Normal">winners</span>    = <span class="SpecialKey">sample</span><span class="Special">(</span><span class="Normal">winners</span><span class="Special">,</span> <span class="SpecialKey">length</span><span class="Special">(</span><span class="Normal">winners</span><span class="Special">))</span>
+   <span class="Normal">losers</span>     = <span class="SpecialKey">sample</span><span class="Special">(</span><span class="Normal">losers</span><span class="Special">,</span> <span class="SpecialKey">length</span><span class="Special">(</span><span class="Normal">losers</span><span class="Special">))</span>
+
+   <span class="Normal">fill</span>          = <span class="Type">matrix</span><span class="Special">(</span><span class="Normal">fillers</span><span class="Special">,</span> <span class="Constant">10</span><span class="Special">,</span> <span class="Constant">6</span><span class="Special">)</span>
+   <span class="Normal">tarTwoCol</span>  = <span class="Type">matrix</span><span class="Special">(</span><span class="Normal">targets</span><span class="Special">,</span> <span class="SpecialKey">length</span><span class="Special">(</span><span class="Normal">targets</span><span class="Special">)</span>/<span class="Constant">2</span><span class="Special">,</span> <span class="Constant">2</span><span class="Special">,</span> <span class="Normal">byrow</span>=<span class="Normal">T</span><span class="Special">)</span>
+   <span class="Normal">rnd</span>        = <span class="SpecialKey">cbind</span><span class="Special">(</span><span class="Normal">fill</span><span class="Special">,</span> <span class="Normal">losers</span><span class="Special">,</span> <span class="Normal">winners</span><span class="Special">,</span> <span class="Normal">tarTwoCol</span> <span class="Special">)</span>
+   <span class="SpecialKey">colnames</span><span class="Special">(</span><span class="Normal">rnd</span><span class="Special">)</span> = <span class="SpecialKey">c</span><span class="Special">(</span><span class="Constant">&quot;filler1X&quot;</span><span class="Special">,</span> <span class="Constant">&quot;filler1Y&quot;</span><span class="Special">,</span> <span class="Constant">&quot;filler2X&quot;</span><span class="Special">,</span> <span class="Constant">&quot;filler2Y&quot;</span><span class="Special">,</span> <span class="Constant">&quot;filler3X&quot;</span><span class="Special">,</span> <span class="Constant">&quot;filler3Y&quot;</span><span class="Special">,</span>
+      <span class="Constant">&quot;loser&quot;</span><span class="Special">,</span> <span class="Constant">&quot;winner&quot;</span><span class="Special">,</span> <span class="Constant">&quot;A&quot;</span><span class="Special">,</span> <span class="Constant">&quot;B&quot;</span><span class="Special">)</span>
+   <span class="Statement">return</span><span class="Special">(</span><span class="Normal">rnd</span><span class="Special">)</span>
+<span class="Special">}</span>
+
+
+
+<span class="Comment"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Comment"># reverse</span>
+<span class="Comment"># swaps (x,y) to (y,x)</span>
+<span class="Comment"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="Normal">reverse</span> = <span class="Type">function</span> <span class="Special">(</span> <span class="Normal">d</span> <span class="Special">){</span>
+   <span class="Statement">return</span><span class="Special">(</span> <span class="SpecialKey">sort</span><span class="Special">(</span><span class="Normal">d</span><span class="Special">,</span> <span class="Normal">decreasing</span>=<span class="Normal">T</span><span class="Special">)</span> <span class="Special">)</span>
+<span class="Special">}</span>
+
+<span class="Comment"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Comment"># checkMissing</span>
+<span class="Comment"># test if there is a missing value</span>
+<span class="Comment"># returns the number of missing vals</span>
+<span class="Comment"># test: a      = c(1,2,3,NA,4,NA,NA)</span>
+<span class="Comment"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Normal">checkMissing</span> = <span class="Type">function</span><span class="Special">(</span> <span class="SpecialKey">data</span> <span class="Special">)</span> <span class="Special">{</span>
+   <span class="Normal">boola</span> = <span class="SpecialKey">is.na</span><span class="Special">(</span><span class="SpecialKey">data</span><span class="Special">)</span>
+   <span class="Normal">b</span>       = <span class="SpecialKey">ifelse</span><span class="Special">(</span><span class="Normal">boola</span><span class="Special">,</span><span class="Constant">1</span><span class="Special">,</span><span class="Constant">0</span><span class="Special">)</span>
+   <span class="Statement">return</span><span class="Special">(</span><span class="SpecialKey">sum</span><span class="Special">(</span><span class="Normal">b</span><span class="Special">))</span>
+<span class="Special">}</span>
+
+
+<span class="Comment"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Comment"># expandBlock</span>
+<span class="Comment"># input:    conditions, a binary vector of the counterbalancing conditions c(&quot;slot&quot;,&quot;screenPos&quot;,&quot;context&quot;)</span>
+<span class="Comment">#           currentBlock (a list of ids for filler1X, filler1Y, ... loser,</span>
+<span class="Comment">#           winner, A, B)</span>
+<span class="Comment"># output:   an expanded vector for the block (cloudsPerBlock = 10) containing</span>
+<span class="Comment">#           filenames</span>
+<span class="Comment"># since there are 4 different pools of clouds, (target, loser, winner, filler)</span>
+<span class="Comment"># we have to either refer to them as &quot;filler/1-25.jpg&quot; or we move them all to an</span>
+<span class="Comment"># &quot;all&quot; folder and refer to them as 1-25-filler. First option sounds cleaner.</span>
+<span class="Comment"># however, we implement both because the second option has the advantage that</span>
+<span class="Comment"># one can identify clouds that are &quot;out of column&quot; easily.</span>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<span class="Normal">expandBlock</span> = <span class="Type">function</span><span class="Special">(</span> <span class="Normal">conditions</span><span class="Special">,</span> <span class="Normal">currentBlock</span> <span class="Special">){</span>
+   <span class="Normal">conditions</span>    = <span class="SpecialKey">as.data.frame</span><span class="Special">(</span><span class="SpecialKey">t</span><span class="Special">(</span><span class="Normal">conditions</span><span class="Special">))</span>
+   <span class="Comment"># note that right now the currentBlock contains ids; we need filenames</span>
+   <span class="Comment"># load dir vectors to covert from id to filename</span>
+   <span class="Normal">targetfn</span> = <span class="SpecialKey">dir</span><span class="Special">(</span><span class="SpecialKey">paste</span><span class="Special">(</span> <span class="Normal">outdir</span><span class="Special">,</span> <span class="Constant">&quot;/target&quot;</span><span class="Special">,</span> <span class="Normal">sep</span>=<span class="Constant">&quot;&quot;</span><span class="Special">))</span>
+   <span class="Normal">loserfn</span> = <span class="SpecialKey">dir</span><span class="Special">(</span><span class="SpecialKey">paste</span><span class="Special">(</span> <span class="Normal">outdir</span><span class="Special">,</span> <span class="Constant">&quot;/loser&quot;</span><span class="Special">,</span> <span class="Normal">sep</span>=<span class="Constant">&quot;&quot;</span><span class="Special">))</span>
+   <span class="Normal">winnerfn</span> = <span class="SpecialKey">dir</span><span class="Special">(</span><span class="SpecialKey">paste</span><span class="Special">(</span> <span class="Normal">outdir</span><span class="Special">,</span> <span class="Constant">&quot;/winner&quot;</span><span class="Special">,</span> <span class="Normal">sep</span>=<span class="Constant">&quot;&quot;</span><span class="Special">))</span>
+   <span class="Normal">fillerfn</span> = <span class="SpecialKey">dir</span><span class="Special">(</span><span class="SpecialKey">paste</span><span class="Special">(</span> <span class="Normal">outdir</span><span class="Special">,</span> <span class="Constant">&quot;/fillers&quot;</span><span class="Special">,</span> <span class="Normal">sep</span>=<span class="Constant">&quot;&quot;</span><span class="Special">))</span>
+
+   <span class="Comment"># translate ids to filenames</span>
+   <span class="Normal">currentBlockFn</span> = <span class="SpecialKey">c</span><span class="Special">(</span><span class="Normal">fillerfn</span><span class="Special">[</span><span class="Normal">currentBlock</span><span class="Special">[</span><span class="Constant">1</span><span class="Special">:</span><span class="Constant">6</span><span class="Special">]]</span><span class="Special">,</span> <span class="Normal">loserfn</span><span class="Special">[</span><span class="Normal">currentBlock</span><span class="Special">[</span><span class="Constant">7</span><span class="Special">]]</span><span class="Special">,</span>
+   <span class="Normal">winnerfn</span><span class="Special">[</span><span class="Normal">currentBlock</span><span class="Special">[</span><span class="Constant">8</span><span class="Special">]]</span><span class="Special">,</span> <span class="Normal">targetfn</span><span class="Special">[</span><span class="Normal">currentBlock</span><span class="Special">[</span><span class="Constant">9</span><span class="Special">:</span><span class="Constant">10</span><span class="Special">]])</span>
+
+   <span class="Comment"># operate with shorter names</span>
+   <span class="Normal">nam</span> = <span class="SpecialKey">names</span><span class="Special">(</span><span class="Normal">currentBlockFn</span><span class="Special">)</span> = <span class="SpecialKey">names</span><span class="Special">(</span><span class="Normal">currentBlock</span><span class="Special">)</span>
+   <span class="Statement">for</span><span class="Special">(</span><span class="Normal">i</span> <span class="Statement">in</span> <span class="Constant">1</span><span class="Special">:</span><span class="SpecialKey">length</span><span class="Special">(</span><span class="Normal">currentBlockFn</span><span class="Special">))</span> <span class="Special">{</span> <span class="Comment">#-- Create objects in the workspace from</span>
+      <span class="SpecialKey">assign</span><span class="Special">(</span><span class="Normal">nam</span><span class="Special">[</span><span class="Normal">i</span><span class="Special">]</span><span class="Special">,</span> <span class="Normal">currentBlockFn</span><span class="Special">[</span><span class="Normal">i</span><span class="Special">])</span>    <span class="Comment"># attach would do the same</span>
+   <span class="Special">}</span>
+
+   <span class="Comment"># the test pair ABpair is randomly assigned to screen positions</span>
+   <span class="Normal">ABpair</span>=<span class="SpecialKey">c</span><span class="Special">(</span><span class="Normal">A</span><span class="Special">,</span><span class="Normal">B</span><span class="Special">)</span>
+   <span class="Statement">if</span><span class="Special">(</span><span class="SpecialKey">runif</span><span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> &gt; <span class="Constant">.5</span><span class="Special">){</span><span class="Normal">ABpair</span> = <span class="Normal">reverse</span><span class="Special">(</span><span class="Normal">ABpair</span><span class="Special">)}</span>
+
+   <span class="Comment"># context</span>
+   <span class="Statement">if</span><span class="Special">(</span> <span class="Normal">conditions</span>$<span class="Normal">context</span> == <span class="Constant">1</span><span class="Special">){</span> <span class="Comment"># A is seen in a winning context</span>
+      <span class="Normal">Apair</span> = <span class="SpecialKey">c</span><span class="Special">(</span><span class="Normal">A</span><span class="Special">,</span> <span class="Normal">loser</span><span class="Special">)</span>
+      <span class="Normal">Bpair</span> = <span class="SpecialKey">c</span><span class="Special">(</span><span class="Normal">B</span><span class="Special">,</span> <span class="Normal">winner</span><span class="Special">)</span>
+   <span class="Special">}</span><span class="Statement">else</span><span class="Special">{</span>
+      <span class="Normal">Apair</span> = <span class="SpecialKey">c</span><span class="Special">(</span><span class="Normal">A</span><span class="Special">,</span> <span class="Normal">winner</span><span class="Special">)</span>
+      <span class="Normal">Bpair</span> = <span class="SpecialKey">c</span><span class="Special">(</span><span class="Normal">B</span><span class="Special">,</span> <span class="Normal">loser</span><span class="Special">)</span>
+   <span class="Special">}</span>
+   <span class="Comment"># screen positition</span>
+   <span class="Statement">if</span><span class="Special">(</span> <span class="Normal">conditions</span>$<span class="Normal">screenPos</span> == <span class="Constant">2</span><span class="Special">){</span> <span class="Comment"># swap A to the right position</span>
+      <span class="Normal">Apair</span> = <span class="Normal">reverse</span><span class="Special">(</span><span class="Normal">Apair</span><span class="Special">)</span>
+      <span class="Normal">Bpair</span> = <span class="Normal">reverse</span><span class="Special">(</span><span class="Normal">Bpair</span><span class="Special">)</span>
+   <span class="Special">}</span>
+   <span class="Comment">#slot in the sequence</span>
+   <span class="Statement">if</span><span class="Special">(</span> <span class="Normal">conditions</span>$<span class="Type">slot</span> == <span class="Constant">1</span><span class="Special">){</span> <span class="Comment"># Is A seen first in the sequence, or second?</span>
+      <span class="Normal">newSeq</span> = <span class="SpecialKey">c</span><span class="Special">(</span> <span class="Normal">filler1X</span><span class="Special">,</span> <span class="Normal">filler1Y</span> <span class="Special">,</span> <span class="Normal">Apair</span><span class="Special">,</span> <span class="Normal">filler2X</span><span class="Special">,</span> <span class="Normal">filler2Y</span><span class="Special">,</span> <span class="Normal">Bpair</span><span class="Special">,</span> <span class="Normal">filler3X</span><span class="Special">,</span>
+         <span class="Normal">filler3Y</span><span class="Special">,</span> <span class="Normal">ABpair</span> <span class="Special">)</span>
+   <span class="Special">}</span><span class="Statement">else</span><span class="Special">{</span>
+      <span class="Normal">newSeq</span> = <span class="SpecialKey">c</span><span class="Special">(</span> <span class="Normal">filler1X</span><span class="Special">,</span> <span class="Normal">filler1Y</span> <span class="Special">,</span> <span class="Normal">Bpair</span><span class="Special">,</span> <span class="Normal">filler2X</span><span class="Special">,</span> <span class="Normal">filler2Y</span><span class="Special">,</span> <span class="Normal">Apair</span><span class="Special">,</span> <span class="Normal">filler3X</span><span class="Special">,</span>
+         <span class="Normal">filler3Y</span><span class="Special">,</span> <span class="Normal">ABpair</span> <span class="Special">)</span>
+   <span class="Special">}</span>
+   <span class="Comment"># DEBUG: add before return:</span>
+   <span class="Normal">chk</span> = <span class="Normal">checkMissing</span><span class="Special">(</span><span class="Normal">newSeq</span><span class="Special">)</span>
+   <span class="Statement">if</span><span class="Special">(</span><span class="Normal">chk</span> &gt; <span class="Constant">0</span><span class="Special">){</span>
+      <span class="SpecialKey">print</span><span class="Special">(</span><span class="Normal">currentBlock</span><span class="Special">)</span>
+      <span class="SpecialKey">print</span><span class="Special">(</span><span class="Normal">currentBlockFn</span><span class="Special">)</span>
+      <span class="SpecialKey">print</span> <span class="Special">(</span><span class="Normal">newSeq</span><span class="Special">)</span>
+   <span class="Special">}</span>
+   <span class="Statement">return</span><span class="Special">(</span><span class="Normal">newSeq</span><span class="Special">)</span>
+<span class="Special">}</span>
+
+<span class="Comment">#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Comment"># generateVariations</span>
+<span class="Comment"># returns a variations (randomized per row, that is suj) matrix</span>
+<span class="Comment"># uses:  the suj. block id vector</span>
+<span class="Comment">#        the blocks matrix , which assigns ids to the role of filler, A, B,</span>
+<span class="Comment">#        winner, loser depending on the block</span>
+<span class="Comment">#</span>
+<span class="Comment"># returns: a variation matrix</span>
+<span class="Comment"># each cell contains &quot;block-variation&quot;</span>
+<span class="Comment"># then these will be expanded into filenames</span>
+<span class="Comment"># the block id will be separated and passed to expandBlock.</span>
+<span class="Comment"># the variation id will be used to take a variation from blockRules and pass it</span>
+<span class="Comment"># to expandBlock as well</span>
+<span class="Comment">#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Normal">generateVariations</span> = <span class="Type">function</span><span class="Special">(</span><span class="Normal">sjBlockIds</span><span class="Special">,</span> <span class="Normal">blocks</span><span class="Special">,</span> <span class="Normal">nVariations</span><span class="Special">){</span>
+   <span class="Normal">nblocks</span>          = <span class="SpecialKey">nrow</span><span class="Special">(</span><span class="Normal">blocks</span><span class="Special">)</span>
+   <span class="Normal">blocksVariedNb</span>   = <span class="Normal">nblocks</span> * <span class="Normal">nVariations</span>
+   <span class="Normal">variationMatrix</span>  = <span class="Type">matrix</span><span class="Special">(</span><span class="Constant">NA</span><span class="Special">,</span> <span class="Normal">nSuj</span><span class="Special">,</span> <span class="Normal">blocksVariedNb</span><span class="Special">)</span>
+
+   <span class="Comment"># before you expand, you have to randomize the session of variations</span>
+   <span class="Comment"># (for that particular i)</span>
+   <span class="Comment"># RANDOMIZE LOOP randomize per line the variationMatrix, then use expandBlock, not before</span>
+   <span class="Comment"># i=j=k=1 #debug line</span>
+   <span class="Statement">for</span> <span class="Special">(</span><span class="Normal">i</span> <span class="Statement">in</span> <span class="Constant">1</span><span class="Special">:</span><span class="Normal">nSuj</span><span class="Special">){</span> <span class="Comment"># SUBJECT</span>
+      <span class="Normal">currentSjRnd</span> = <span class="Normal">sjBlockIds</span><span class="Special">[</span><span class="Normal">i</span><span class="Special">,</span><span class="Special">]</span> <span class="Comment"># sjBlockIds contains orderings in the</span>
+      <span class="Normal">lastIndex</span> = <span class="Constant">0</span>                  <span class="Comment"># sequence</span>
+      <span class="Statement">for</span> <span class="Special">(</span><span class="Normal">j</span> <span class="Statement">in</span> <span class="Constant">1</span><span class="Special">:</span><span class="Normal">nblocks</span><span class="Special">){</span><span class="Comment">#BLOCK</span>
+         <span class="Normal">currentBlock</span> = <span class="Normal">blocks</span><span class="Special">[</span><span class="Normal">currentSjRnd</span><span class="Special">[</span><span class="Normal">j</span><span class="Special">]</span><span class="Special">,</span><span class="Special">]</span>
+         <span class="Statement">for</span> <span class="Special">(</span><span class="Normal">k</span> <span class="Statement">in</span> <span class="Constant">1</span><span class="Special">:</span><span class="Normal">nVariations</span><span class="Special">){</span> <span class="Comment"># VARIATION</span>
+            <span class="Normal">variation</span> = <span class="SpecialKey">paste</span><span class="Special">(</span><span class="Normal">j</span><span class="Special">,</span> <span class="Normal">k</span><span class="Special">,</span> <span class="Normal">sep</span>=<span class="Constant">&quot;-&quot;</span><span class="Special">)</span>
+            <span class="Normal">index</span> = <span class="Special">(</span><span class="Normal">lastIndex</span> + <span class="Normal">k</span><span class="Special">)</span>
+            <span class="SpecialKey">cat</span> <span class="Special">(</span><span class="Constant">&quot;sj &quot;</span><span class="Special">,</span> <span class="Normal">i</span><span class="Special">,</span> <span class="Constant">&quot; index &quot;</span><span class="Special">,</span> <span class="Normal">index</span><span class="Special">,</span> <span class="Normal">sep</span>= <span class="Constant">' '</span><span class="Special">)</span>
+            <span class="Normal">variationMatrix</span><span class="Special">[</span><span class="Normal">i</span><span class="Special">,</span> <span class="Normal">index</span> <span class="Special">]</span>   = <span class="Normal">variation</span>
+            <span class="SpecialKey">cat</span><span class="Special">(</span><span class="Constant">&quot;variation: &quot;</span> <span class="Special">,</span> <span class="Normal">variation</span><span class="Special">,</span> <span class="Constant">&quot;\n&quot;</span><span class="Special">)</span>
+         <span class="Special">}</span>
+         <span class="Normal">lastIndex</span>=<span class="Normal">index</span>
+      <span class="Special">}</span>
+      <span class="Comment"># now randomize the variations.</span>
+      <span class="Normal">variationMatrix</span><span class="Special">[</span><span class="Normal">i</span><span class="Special">,</span><span class="Special">]</span>= <span class="SpecialKey">sample</span><span class="Special">(</span><span class="Normal">variationMatrix</span><span class="Special">[</span><span class="Normal">i</span><span class="Special">,</span><span class="Special">])</span>
+   <span class="Special">}</span>
+   <span class="Statement">return</span><span class="Special">(</span><span class="Normal">variationMatrix</span><span class="Special">)</span>
+<span class="Special">}</span>
+<span class="Comment">#(foo = generateVariations (sjBlockIds, blocks, nVariations))</span>
+
+<span class="Comment"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Comment"># generateRndSuj</span>
+<span class="Comment"># generates nSuj randomizations of the blocks defined in blocks. It performs the</span>
+<span class="Comment"># fancy counterbalancing using generateVariations(). It then expands the ids</span>
+<span class="Comment"># into filenames using expandBlock() and flattens that into a row of filenames.</span>
+<span class="Comment"># input  :     path, blocks, sjBlockIds, nSuj</span>
+<span class="Comment"># output :     sjSessions</span>
+<span class="Comment">#</span>
+<span class="Comment"># returns sjSessions, a matrix of nSuj x (nblocks x ids)</span>
+<span class="Comment"># the cells contain cloud.jpg files</span>
+<span class="Comment"># it writes a variation table (fundamental)</span>
+<span class="Comment">#</span>
+<span class="Comment"># The design for a Block is:</span>
+<span class="Comment"># filler pair</span>
+<span class="Comment"># 1) A with a loser</span>
+<span class="Comment"># filler pair</span>
+<span class="Comment"># 2) B with a winner</span>
+<span class="Comment"># filler pair</span>
+<span class="Comment"># A and B</span>
+<span class="Comment"># counterbalance: where A and B appear (i.e., left or right)</span>
+<span class="Comment"># Also, the slot number 1,2 for A and B</span>
+<span class="Comment"># Then randomize blocks of course.</span>
+<span class="Comment">#</span>
+<span class="Comment"># the counterbalancing happens with 3 factors (2 x 2 x 2) = 8 possibilities</span>
+<span class="Comment"># so each block (10) has to be presented 12 times. that makes a session 120</span>
+<span class="Comment"># blocks, that is 960 cloud pairs to judge. At say 1 second per pair, that is</span>
+<span class="Comment"># 960/60 = 13 min.</span>
+
+<span class="Comment"># the function creates a variations table</span>
+<span class="Comment"># variations are combinations (paste) of block and block rules e.g., 1-1..</span>
+<span class="Comment"># 1-8, 10-1, ... 10-8, where a 'rule' is a row in the counterbalancing table</span>
+
+<span class="Comment"># so randomize the 80 blockVariations, not the blocks, for a sj sequence</span>
+<span class="Comment">#&quot;slot&quot; = AisFirst, AisSecond,&quot;screenPos&quot; = AisLeft, AisSecond, &quot;contex t&quot;</span>
+
+<span class="Comment"># each participant has a randomization of blocks, and then this is expanded</span>
+<span class="Comment"># into a randomization of clouds; with the rules especified in blockRules,</span>
+<span class="Comment"># there are 8 different randomizations possible</span>
+
+<span class="Comment"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Normal">generateRndSuj</span> = <span class="Type">function</span><span class="Special">(</span> <span class="Normal">path</span><span class="Special">,</span> <span class="Normal">blocks</span><span class="Special">,</span> <span class="Normal">sjBlockIds</span><span class="Special">,</span> <span class="Normal">nSuj</span> <span class="Special">)</span> <span class="Special">{</span>
+   <span class="Comment"># create the block rules (counterbalancing slot, screen position, and w-l</span>
+   <span class="SpecialKey">library</span><span class="Special">(</span><span class="Normal">gregmisc</span><span class="Special">)</span>
+   <span class="Normal">blockRules</span> = <span class="Normal">permutations</span><span class="Special">(</span><span class="Constant">2</span><span class="Special">,</span><span class="Constant">2</span><span class="Special">,</span> <span class="SpecialKey">rep</span>=<span class="Normal">T</span><span class="Special">)</span>
+   <span class="Normal">blockRules</span> = <span class="SpecialKey">rbind</span><span class="Special">(</span><span class="Normal">blockRules</span><span class="Special">,</span> <span class="Normal">blockRules</span><span class="Special">)</span>
+   <span class="Normal">blockRules</span> = <span class="SpecialKey">cbind</span><span class="Special">(</span><span class="Normal">blockRules</span><span class="Special">,</span> <span class="SpecialKey">rep</span><span class="Special">(</span><span class="Constant">1</span><span class="Special">:</span><span class="Constant">2</span><span class="Special">,</span><span class="Normal">each</span>=<span class="Constant">4</span><span class="Special">))</span>
+   <span class="SpecialKey">colnames</span><span class="Special">(</span><span class="Normal">blockRules</span><span class="Special">)</span> = <span class="SpecialKey">c</span><span class="Special">(</span><span class="Constant">&quot;slot&quot;</span><span class="Special">,</span><span class="Constant">&quot;screenPos&quot;</span><span class="Special">,</span><span class="Constant">&quot;context&quot;</span><span class="Special">)</span>
+   <span class="Normal">nVariations</span> = <span class="SpecialKey">nrow</span><span class="Special">(</span><span class="Normal">blockRules</span><span class="Special">)</span>
+   <span class="Normal">cloudsPerBlock</span> = <span class="SpecialKey">ncol</span><span class="Special">(</span><span class="Normal">blocks</span><span class="Special">)</span> + <span class="Constant">2</span>
+   <span class="Comment"># +2 since A + B will be presented with a context, but also as a pair at end</span>
+   <span class="Normal">nblocks</span>       = <span class="SpecialKey">nrow</span><span class="Special">(</span><span class="Normal">blocks</span><span class="Special">)</span>
+   <span class="Normal">sessionSize</span>      = <span class="Normal">nblocks</span> * <span class="Normal">cloudsPerBlock</span> * <span class="Normal">nVariations</span>
+
+   <span class="Normal">sjSessions</span>          = <span class="Type">matrix</span><span class="Special">(</span><span class="Constant">NA</span><span class="Special">,</span> <span class="Constant">0</span><span class="Special">,</span> <span class="Normal">sessionSize</span><span class="Special">)</span>
+   <span class="Normal">sjBlocksExpanded</span> = <span class="Type">matrix</span><span class="Special">(</span><span class="Constant">NA</span><span class="Special">,</span> <span class="SpecialKey">ncol</span><span class="Special">(</span><span class="Normal">variationMatrix</span><span class="Special">)</span><span class="Special">,</span> <span class="Normal">cloudsPerBlock</span> + <span class="Constant">6</span><span class="Special">)</span>
+   <span class="SpecialKey">colnames</span><span class="Special">(</span><span class="Normal">sjBlocksExpanded</span><span class="Special">)</span> = <span class="SpecialKey">colnames</span><span class="Special">(</span><span class="Normal">sjBlocksExpanded</span><span class="Special">)</span> =
+   <span class="SpecialKey">c</span><span class="Special">(</span><span class="Constant">&quot;sj&quot;</span><span class="Special">,</span> <span class="Constant">&quot;block&quot;</span><span class="Special">,</span> <span class="Constant">&quot;variation&quot;</span><span class="Special">,</span> <span class="Constant">&quot;slot&quot;</span><span class="Special">,</span> <span class="Constant">&quot;screenPos&quot;</span><span class="Special">,</span> <span class="Constant">&quot;context&quot;</span><span class="Special">,</span> <span class="SpecialKey">paste</span><span class="Special">(</span><span class="Constant">&quot;pos&quot;</span><span class="Special">,</span> <span class="Constant">1</span><span class="Special">:</span><span class="Constant">12</span><span class="Special">,</span><span class="Normal">sep</span>=<span class="Constant">&quot;&quot;</span><span class="Special">))</span>
+
+   <span class="Comment"># create a variations table RANDOMIZATION happens here</span>
+   <span class="Normal">variationMatrix</span> = <span class="Normal">generateVariations</span> <span class="Special">(</span><span class="Normal">sjBlockIds</span><span class="Special">,</span> <span class="Normal">blocks</span><span class="Special">,</span> <span class="Normal">nVariations</span><span class="Special">)</span>
+   <span class="SpecialKey">write.table</span><span class="Special">(</span> <span class="Normal">variationMatrix</span><span class="Special">,</span> <span class="Constant">&quot;variationMatrix.csv&quot;</span><span class="Special">,</span> <span class="SpecialKey">quote</span> =<span class="Normal">F</span><span class="Special">,</span> <span class="SpecialKey">row.names</span>=<span class="Normal">F</span><span class="Special">,</span> <span class="Normal">col.names</span>=<span class="Normal">F</span><span class="Special">,</span> <span class="Normal">sep</span>=<span class="Constant">&quot;,&quot;</span><span class="Special">)</span>
+
+   <span class="Comment"># EXPAND LOOP: translates variations into sequences of cloud filenames</span>
+   <span class="Statement">for</span> <span class="Special">(</span><span class="Normal">i</span> <span class="Statement">in</span> <span class="Constant">1</span><span class="Special">:</span><span class="Normal">nSuj</span><span class="Special">){</span> <span class="Comment"># SUBJECT</span>
+      <span class="Statement">for</span> <span class="Special">(</span><span class="Normal">j</span> <span class="Statement">in</span> <span class="Constant">1</span><span class="Special">:</span><span class="SpecialKey">ncol</span><span class="Special">(</span><span class="Normal">variationMatrix</span><span class="Special">)</span> <span class="Special">){</span> <span class="Comment">#80 columns, 10 blocks * 8 variations</span>
+      <span class="Comment"># parse the cell value (j-k)</span>
+         <span class="Normal">temp</span> = <span class="SpecialKey">as.integer</span><span class="Special">(</span><span class="SpecialKey">unlist</span><span class="Special">(</span><span class="SpecialKey">strsplit</span><span class="Special">(</span><span class="Normal">variationMatrix</span><span class="Special">[</span><span class="Normal">i</span><span class="Special">,</span><span class="Normal">j</span><span class="Special">]</span><span class="Special">,</span> <span class="Constant">&quot;-&quot;</span><span class="Special">)))</span>
+         <span class="Normal">blockId</span>        = <span class="Normal">temp</span><span class="Special">[</span><span class="Constant">1</span><span class="Special">]</span>
+         <span class="Normal">k</span>              = <span class="Normal">temp</span><span class="Special">[</span><span class="Constant">2</span><span class="Special">]</span> <span class="Comment"># variation</span>
+         <span class="Normal">currentBlock</span>   = <span class="Normal">blocks</span><span class="Special">[</span><span class="Normal">blockId</span><span class="Special">,</span><span class="Special">]</span>
+         <span class="Normal">conditions</span>     = <span class="Normal">blockRules</span><span class="Special">[</span><span class="Normal">k</span><span class="Special">,</span><span class="Special">]</span>
+         <span class="Comment"># now expand</span>
+         <span class="Normal">sjBlocksExpanded</span><span class="Special">[</span><span class="Normal">j</span><span class="Special">,</span><span class="Special">]</span> = <span class="SpecialKey">c</span><span class="Special">(</span> <span class="Normal">i</span><span class="Special">,</span> <span class="Normal">j</span><span class="Special">,</span> <span class="Normal">k</span><span class="Special">,</span> <span class="Normal">conditions</span><span class="Special">,</span> <span class="Normal">expandBlock</span><span class="Special">(</span> <span class="Normal">conditions</span><span class="Special">,</span><span class="Normal">currentBlock</span><span class="Special">))</span>
+         <span class="SpecialKey">cat</span><span class="Special">(</span><span class="Constant">&quot;for row &quot;</span><span class="Special">,</span> <span class="Normal">i</span><span class="Special">,</span><span class="Constant">&quot;column&quot;</span><span class="Special">,</span> <span class="Normal">j</span><span class="Special">,</span> <span class="Constant">&quot;of the variation matrix, we have</span>
+<span class="Constant">         a cell that ask expandBlock for block id&quot;</span><span class="Special">,</span> <span class="Normal">blockId</span><span class="Special">,</span> <span class="Constant">&quot;and a variation&quot;</span><span class="Special">,</span>
+         <span class="Normal">k</span><span class="Special">,</span> <span class="Constant">&quot;\n&quot;</span><span class="Special">)</span>
+         <span class="SpecialKey">cat</span><span class="Special">(</span><span class="Constant">&quot;There are&quot;</span><span class="Special">,</span> <span class="Normal">checkMissing</span><span class="Special">(</span><span class="Normal">sjBlocksExpanded</span><span class="Special">)</span><span class="Special">,</span> <span class="Constant">&quot;NAs\n-------------\n&quot;</span><span class="Special">)</span>
+      <span class="Special">}</span>
+
+      <span class="Comment"># we can 'stretch' the sjBlocksExpanded matrix into a single row (a session)</span>
+      <span class="Normal">ses</span>          =  <span class="SpecialKey">c</span><span class="Special">(</span><span class="SpecialKey">t</span><span class="Special">(</span><span class="Normal">sjBlocksExpanded</span><span class="Special">[</span><span class="Special">,</span><span class="Constant">7</span><span class="Special">:</span><span class="SpecialKey">ncol</span><span class="Special">(</span><span class="Normal">sjBlocksExpanded</span><span class="Special">)]))</span>
+      <span class="Normal">sjSessions</span>   = <span class="SpecialKey">rbind</span><span class="Special">(</span> <span class="Normal">sjSessions</span><span class="Special">,</span> <span class="Normal">ses</span><span class="Special">)</span>
+   <span class="Special">}</span>
+   <span class="Statement">return</span><span class="Special">(</span><span class="Normal">sjSessions</span><span class="Special">)</span>
+<span class="Special">}</span>
+
+
+<span class="Comment"># /-------- END FUNCTION DECLARATIONS -----------/</span>
+
+<span class="Comment"># =============================================================</span>
+<span class="Comment">#     MAIN   CREATE PLOTS (CLOUDS) NUMEROSITY (do it for sticks as well)</span>
+<span class="Comment"># problem: steps of 1 are not really distinguishable</span>
+<span class="Comment"># although according to the RJM, small steps make magnitude values more</span>
+<span class="Comment"># distinguishable</span>
+
+<span class="Comment"># actually the winner and loser could be one single item, maybe (simpler design)</span>
+<span class="Comment"># DO NOT RUN SINCE I CHANGED SOME FILENAMES BY HAND</span>
+<span class="Comment"># =============================================================</span>
+<span class="Comment"># PLOTS</span>
+
+<span class="Comment"># define global path</span>
+<span class="Comment">#path          = &quot;E:/jose/relativeJudment/numerosity/ChildNumerosityPresentStimuliRelativeJdg/numerosity/&quot;</span>
+<span class="Comment">#outdir     = paste(path, &quot;/materials/jpg&quot;, sep=&quot;&quot;)</span>
+<span class="Comment">#nblocks    = 10</span>
+<span class="Comment">#ntargets      = 2 * nblocks  # size of the sets (ten with winners, ten with losers)</span>
+<span class="Comment">#nfillers      = 3 * 2 * nblocks # need 3 pairs of non-repeated clouds for fillers</span>
+<span class="Comment">#nwinners   = nlosers = ntargets/2</span>
+<span class="Comment">#targets    = 1:ntargets</span>
+<span class="Comment">#fillers    = 1:nfillers</span>
+<span class="Comment">#winners    = 1:nwinners</span>
+<span class="Comment">#losers     = 1:nlosers</span>
+
+<span class="Comment"># create a set of n numerosities.</span>
+<span class="Comment"># target numerosities</span>
+<span class="Comment">#targetNdots = sort(rep(28:37, 2)) # rep 2 because half will go with winners and half with losers</span>
+<span class="Comment">#type  = &quot;target&quot;</span>
+<span class="Comment">#for ( id in 1:length(targetNdots) ){</span>
+   <span class="Comment">#generateCloud (outdir, type, id, targetNdots[id])</span>
+<span class="Comment">#}</span>
+
+<span class="Comment"># context numerosities</span>
+<span class="Comment">#loserNdots    = 8:17</span>
+<span class="Comment">#type  = &quot;loser&quot;</span>
+<span class="Comment">#for ( id in 1:length(loserNdots) ){</span>
+   <span class="Comment">#generateCloud (outdir, type, id, loserNdots[id])</span>
+<span class="Comment">#}</span>
+
+<span class="Comment">#winnerNdots   = 48:57</span>
+<span class="Comment">#type  = &quot;winner&quot;</span>
+<span class="Comment">#for ( id in 1:length(winnerNdots) ){</span>
+   <span class="Comment">#generateCloud (outdir, type, id, winnerNdots[id])</span>
+<span class="Comment">#}</span>
+<span class="Comment"># Filler: a pair of pics where the distance is not controlled. They cannot be any of the</span>
+<span class="Comment"># ones in the target interval ( 28 to 38 ).</span>
+<span class="Comment">#fillerNdots   = rep(c(8:27, 39:58), 10)</span>
+<span class="Comment">#fillerNdots   = sample(fillerNdots, nfillers)</span>
+
+<span class="Comment">#type  = &quot;fillers&quot;</span>
+<span class="Comment">#for ( id in 1:length(fillerNdots) ){</span>
+   <span class="Comment">#generateCloud (outdir, type, id, fillerNdots[id])</span>
+<span class="Comment">#}</span>
+
+
+<span class="Comment"># =============================================================</span>
+<span class="Comment">#     MAIN   RANDOMIZATIONS; BLOCK GENERATION</span>
+<span class="Comment"># the constraint is that by the time a stimuli is presented paired with a peer</span>
+<span class="Comment"># it has to must have been seen in company of a loser or winner</span>
+<span class="Comment"># =============================================================</span>
+
+<span class="Normal">path</span>        = <span class="Constant">&quot;E:/jose/relativeJudment/numerosity/ChildNumerosityPresentStimuliRelativeJdg/numerosity/&quot;</span>
+
+<span class="Normal">outdir</span>            = <span class="SpecialKey">paste</span><span class="Special">(</span><span class="Normal">path</span><span class="Special">,</span> <span class="Constant">&quot;/materials/jpg&quot;</span><span class="Special">,</span> <span class="Normal">sep</span>=<span class="Constant">&quot;&quot;</span><span class="Special">)</span>
+<span class="Normal">randomizationsdir</span> = <span class="SpecialKey">paste</span><span class="Special">(</span><span class="Normal">path</span><span class="Special">,</span> <span class="Constant">&quot;/materials/randomizations&quot;</span><span class="Special">,</span> <span class="Normal">sep</span>=<span class="Constant">&quot;&quot;</span><span class="Special">)</span>
+<span class="SpecialKey">setwd</span><span class="Special">(</span><span class="Normal">randomizationsdir</span><span class="Special">)</span>
+
+<span class="Normal">nblocks</span>     = <span class="Constant">10</span>
+<span class="Normal">ntargets</span>    = <span class="Constant">2</span> * <span class="Normal">nblocks</span> <span class="Comment"># size of the sets (ten with winners, ten with losers)</span>
+<span class="Normal">nfillers</span>    = <span class="Constant">3</span> * <span class="Constant">2</span> * <span class="Normal">nblocks</span>   <span class="Comment"># need 3 pairs of non-repeated clouds for fillers</span>
+<span class="Normal">nwinners</span>    = <span class="Normal">nlosers</span> = <span class="Normal">ntargets</span>/<span class="Constant">2</span>
+<span class="Normal">targets</span>     = <span class="Constant">1</span><span class="Special">:</span><span class="Normal">ntargets</span>
+<span class="Normal">fillers</span>     = <span class="Constant">1</span><span class="Special">:</span><span class="Normal">nfillers</span>
+<span class="Normal">winners</span>     = <span class="Constant">1</span><span class="Special">:</span><span class="Normal">nwinners</span>
+<span class="Normal">losers</span>      = <span class="Constant">1</span><span class="Special">:</span><span class="Normal">nlosers</span>
+<span class="Normal">nSuj</span>        = <span class="Constant">60</span>
+
+<span class="Comment"># generate blocks (all participants will see these pairs, but in different</span>
+<span class="Comment"># order). Keep the orders in a file.</span>
+<span class="Comment">#</span>
+<span class="Comment"># A _block_ is defined as: filler, A-loser, filler, B-winner, filler, A-B.</span>
+<span class="Comment">#</span>
+<span class="Comment"># A _filler_ is a pair of  two random values. the random values cannot be two of the</span>
+<span class="Comment"># targets, but anything from outisde the target interval is fine</span>
+<span class="Comment">#</span>
+<span class="Comment"># Filler: a pair of pics where the distance is not controlled. They cannot be any of the</span>
+<span class="Comment"># ones in the target interval ( 28 to 38 ).</span>
+<span class="Comment"># To avoid mere exposure effects, all target images are presented twice. E.g. :</span>
+<span class="Comment"># A is presented in A-loser, A-B. (twice)</span>
+<span class="Comment"># winner, loser and fillers are presented once. (may be an issue)</span>
+<span class="Comment"># All participants should experience all the same blocks.</span>
+<span class="Comment"># A block is then defined also by the fillers. the fillers are again the same for</span>
+<span class="Comment"># each participant that experiences that block.</span>
+<span class="Normal">blocks</span> = <span class="Normal">generateBlocks</span> <span class="Special">(</span> <span class="Normal">targets</span><span class="Special">,</span> <span class="Normal">losers</span><span class="Special">,</span> <span class="Normal">winners</span><span class="Special">,</span> <span class="Normal">fillers</span> <span class="Special">)</span>
+<span class="Normal">blocks</span>
+
+<span class="Comment"># create a randomization of blocks per participant</span>
+<span class="Comment"># sjBlockIds contains ORDER e.g, block3 goes first, then block4, etc</span>
+<span class="Comment"># NOTE: what really matters is not how the blocks are randomized but how the</span>
+<span class="Comment"># variations of the blocks are randomized</span>
+
+<span class="Comment"># this might be totally unnecessary, as the block order is not kept when</span>
+<span class="Comment"># presenting estimuli to participants: see generateVariations(). It just</span>
+<span class="Comment"># randomizes the entire list of files to be presented no matter what the</span>
+<span class="Comment"># sjBlockIds sequence was. The whole concept of block dissapears as we get the</span>
+<span class="Comment"># different variations.</span>
+
+<span class="Normal">sjBlockIds</span>           = <span class="Type">matrix</span><span class="Special">(</span><span class="Constant">NA</span><span class="Special">,</span> <span class="Normal">nSuj</span><span class="Special">,</span> <span class="Normal">nblocks</span><span class="Special">)</span>
+<span class="Statement">for</span> <span class="Special">(</span><span class="Normal">i</span> <span class="Statement">in</span> <span class="Constant">1</span><span class="Special">:</span><span class="Normal">nSuj</span><span class="Special">){</span>
+   <span class="Normal">sjBlockIds</span><span class="Special">[</span><span class="Normal">i</span><span class="Special">,</span><span class="Special">]</span> =<span class="SpecialKey">sample</span><span class="Special">(</span><span class="Constant">1</span><span class="Special">:</span><span class="Normal">nblocks</span><span class="Special">,</span> <span class="Normal">nblocks</span><span class="Special">)</span>
+<span class="Special">}</span>
+<span class="Comment"># we need to keep the block randomizations that we used</span>
+<span class="SpecialKey">write.table</span><span class="Special">(</span> <span class="Normal">sjBlockIds</span><span class="Special">,</span> <span class="Constant">&quot;sjBlockIds.csv&quot;</span><span class="Special">,</span> <span class="SpecialKey">quote</span> =<span class="Normal">F</span><span class="Special">,</span> <span class="SpecialKey">row.names</span>=<span class="Normal">F</span><span class="Special">,</span> <span class="Normal">col.names</span>=<span class="Normal">F</span><span class="Special">,</span> <span class="Normal">sep</span>=<span class="Constant">&quot;,&quot;</span><span class="Special">)</span>
+
+<span class="Comment"># create an entire session by generating the clouds out of the block pattern</span>
+<span class="Comment"># that is different for each participant. THere are 8 variations of a block (due</span>
+<span class="Comment"># to counterbalancing of screen postion, seq. position, etc.</span>
+<span class="Comment"># so the randomization is of block variations not blocks</span>
+
+<span class="Normal">sjSessions</span> = <span class="Normal">generateRndSuj</span> <span class="Special">(</span> <span class="Normal">path</span><span class="Special">,</span> <span class="Normal">blocks</span><span class="Special">,</span> <span class="Normal">sjBlockIds</span><span class="Special">,</span> <span class="Normal">nSuj</span> <span class="Special">)</span>
+
+<span class="Comment">#save the table. This is the end result of this program</span>
+<span class="SpecialKey">write.table</span><span class="Special">(</span><span class="Normal">sjSessions</span><span class="Special">,</span> <span class="Constant">&quot;sjSessions.csv&quot;</span><span class="Special">,</span> <span class="Normal">sep</span>=<span class="Constant">&quot;,&quot;</span><span class="Special">,</span> <span class="SpecialKey">row.names</span>=<span class="Normal">F</span><span class="Special">,</span> <span class="Normal">col.names</span>=<span class="Normal">F</span><span class="Special">,</span>
+            <span class="SpecialKey">quote</span> =<span class="Normal">F</span><span class="Special">)</span>
+
+
+</pre>
+</body>
+</html>

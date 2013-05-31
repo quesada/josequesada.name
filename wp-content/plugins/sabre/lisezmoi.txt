@@ -1,0 +1,221 @@
+Sabre 0.7.3 par Dlo 
+
+Plugin Name: SABRE
+Plugin URI: http://didier.lorphelin.free.fr/blog/index.php/wordpress/sabre/
+Description: Simple Anti Bot Registration Engine
+Version: 0.7.3
+Author: Didier Lorphelin
+Author URI:
+Copyright :Sabre est édité sous licence GPL
+
+
+1. A quoi ça sert ?
+
+Sabre est l'acronyme de Simple Anti Bot Registration Engine.
+Il s'agit d'un ensemble de mesures destinées à protéger le blog de l'inscription automatique par des robots de spam.
+
+Vous avez laissé la possibilité à vos visiteurs de s’inscrire sur votre blog et vous vous retrouvez envahi de faux utilisateurs créés automatiquement par des spammeurs ? Sabre est la solution pour stopper définitivement ces visiteurs non humains !
+
+Liste des fonctions disponibles:
+
+Ajout d’un captcha dans le formulaire d’inscription 
+Sélection de la complexité du captcha
+Sélection de la couleur de fond de l'image du captcha 
+Ajout d’un test de calcul dans le formulaire d’inscription 
+Sélection de la complexité du calcul 
+Possibilité de choisir le test à afficher ou de laisser le hasard décider 
+Tests non obstrusifs de détection d’inscription humaine ou non 
+Blocage de l’inscription si Javascript non supporté par le navigateur 
+Blocage de l’inscription si l’adresse IP du visiteur est sur des listes de bannissement
+L'administrateur du blog peut valider les inscriptions 
+L'utilisateur peut valider son inscription en cliquant sur un lien envoyé par mail 
+Nombre de jours modulable pour valider l’inscription sur le blog par l'utilisateur. Passé ce délai et faute de confirmation, le compte créé devient inutilisable 
+Empêcher la connexion avec le compte créé en attendant la confirmation de l'utilisateur
+Permettre à l’utilisateur de choisir son mot de passe à l’inscription
+Demander à l'utilisateur de confirmer son accord sur les conditions d'utilisation du blog 
+Affichage des statistiques de Sabre sur le tableau de bord du blog 
+Toutes ces fonctions sont activées par paramétrage. Sabre s’adapte donc à la stratégie de protection de votre blog.
+
+
+
+2. Prérequis
+
+    * WordPress: Sabre requiert l'utilisation de WP 2.5 (ou supérieur). Il n'est pas compatible avec les versions antérieures de WordPress.
+    * Pour les versions de WordPress jusqu'à la 2.3.3, utiliser Sabre 0.6.3.
+
+3. Installation
+
+   1. Télécharger le fichier compressé.
+   2. Décompresser et copier tous les fichiers du répertoire /sabre (y compris les sous-répertoires) dans le répertoire wp-content/plugins/sabre de WordPress.
+   3. Le fichier sabre-fr_FR.mo qui se trouve dans le répertoire "languages" permet d'avoir la version française de Sabre. Pour localiser Sabre dans une autre langue, créer un fichier sabre-codelangue.po à partir du fichier sabre.pot avec PoEdit. Vous pouvez également trouver des fichiers de traduction (.mo et .po) en diverses langues sur la page des questions fréquentes de Sabre.
+   4. Activer Sabre en cliquant sur l'option "Activer" du plugin listé dans l'onglet Plugins du panneau d'administration.
+
+En cas de mise à jour d'une version antérieure, ne pas oublier de commencer par désactiver Sabre avant d'écraser les fichiers existants avec les nouveaux. Ensuite, réactiver le plugin pour que Sabre puisse faire les mises à jour nécessaires.
+
+4. Documentation
+
+L'intégralité des fonctions de Sabre se retrouvent dans l'onglet Gérer/Sabre du panneau d'administration.
+
+L'interface de Sabre est divisée en cinq onglets :
+1) Onglet "Options générales"
+
+On y trouve quelques informations chiffrées sur le nombre d'inscriptions valides, invalides et en attente de confirmation.
+
+Les options de paramétrage de Sabre:
+
+1a) Options du Captcha
+
+Cliquer sur la case à cocher "Activer le captcha" pour ajouter l'affichage, dans le formulaire d'inscription , d'une chaîne de caractères que l'utilisateur devra recopier.
+Les autres paramètres du captcha permettent de définir la longueur de la chaîne de caractères générée, les caractères autorisés ainsi que le nombre et le type des objets graphiques qui vont "masquer" la chaîne.
+Le captcha est basé sur QuickCaptcha 1.0 de Web 1 Marketing, Inc sous licence GNU GPL.
+
+1b) Options du test de calcul
+
+Cliquer sur la case à cocher "Activer le test mathématique" pour ajouter l'affichage, dans le formulaire d'inscription , d'une opération dont l'utilisateur devra donner le résultat.
+L'autre paramètre permet de définir les opérations qui pourront être utilisées. Les opérations autorisées sont l'addition, la soustraction et la multiplication. Le plugin choisit au hasard deux chiffres compris entre 1 et 20 et une des opérations autorisées.
+
+1c) Séquence des tests
+
+Choisir "Tous" pour ajouter tous les tests actifs au formulaire d'inscription.
+Choisir "Au hasard" et le plugin choisira aléatoirement l'un des tests actif ou non.
+
+1d) Options furtives
+
+Cliquer sur la case à cocher "Activer le test furtif" pour activer une série de tests internes qui tenteront de déterminer si l'inscription est bien faite par un humain. Ces test n'interagissent pas avec l'utilisateur et passeront inaperçu dans le cas d'un enregistrement fait par une personne "normale".
+Ces tests inclus:
+- Contrôle que le formulaire est bien chargé avant de recevoir la réponse.
+- Contrôle que l'adresse IP ne change pas entre l'envoi et la réception du formulaire.
+- Contrôle que le navigateur utilisé supporte le Javascript car beaucoup de robots de spam n'ont pas cette capacité. Il est possible de refuser l'inscription dans ce cas en cliquant sur la case à cocher "Bloquer si Javascript non supporté".
+- Contrôle que le support du Javascript n'est pas simulé.
+- Contrôle que l'inscription est terminée dans un temps maximum. Il est possible de modifier cette valeur (en seconde) dans "Expiration de session". Veiller à maintenir cette valeur aussi petite que possible pour des raisons de sécurité mais suffisante pour qu'une personne puisse remplir le formulaire avant d'expiration du délai. Valeur par défaut : 5 minutes (300 secondes).
+- Contrôle que le formulaire est rempli par un être humain qui doit passer un certain temps dessus. Les robots de spam sont bien sûr beaucoup plus rapide qu'un homme pour remplir un formulaire et l'envoyer. On décide donc du temps minimum (en secondes) qu'il faut pour le remplir dans "Vitesse maxi". Valeur par défaut : 5 secondes.
+- Contrôle que l'adresse IP n'est pas bannie par des serveurs DNSBL. Il est possible d'activer ce contrôle en cliquant sur la case à cocher "Vérifier DNS Blacklists". 
+
+1e) Options de la confirmation d'inscription
+
+Sélectionner l'option voulue dans la liste déroulante "Activer la confirmation" pour obliger l'utilisateur ou l'administrateur à confirmer la demande d'inscription.
+
+- Aucune: Pas de confirmation demandée.
+- Par l'utilisateur: L'utilisateur doit confirmer son inscription. Quand cette option est activée, l'utilisateur qui s'inscrit reçoit son identifiant et son mot de passe par mail comme d'habitude. Il lui est demandé en plus de confirmer son inscription avant x jours en cliquant sur un lien ajouté au mail. Pendant le délai de grâce, le compte de l'utilisateur est en attente de confirmation mais il peut se connecter au blog. S'il n'a pas confirmé son inscription dans le délai imparti, il lui sera impossible de se connecter avec son compte.
+- Par l'administrateur: L'administrateur du blog doit confirmer l'inscription. Quand cette option est activée, l'utilisateur qui s'inscrit reçoit son identifiant et son mot de passe par mail comme d'habitude. Tant que son inscription n'est pas validée par l'administrateur, le compte ne peut pas être utilisé pour se connecter au blog. Dès validation de son inscription par l'administrateur, l'utilisateur reçoit un mail de confirmation.
+
+Les trois paramètres suivants sont utilisés seulement si la confirmation doit être faite par l'utilisateur.
+  
+"Nombre de jours" permet de fixer le délai maximum de confirmation (en jour) avant désactivation du compte.
+En cliquant sur la case "Interdire l'utilisation anticipée", l'utilisateur devra confirmer son inscription avant de pouvoir se connecter.
+Pour recevoir un mail quand un utilisateur confirme son inscription, il faut cliquer sur la case "Envoyer un mail si confirmation".
+
+Pour supprimer automatiquement le compte utilisateur quand l'inscription est annulée, il faut cliquer sur la case "Supprimer les utilisateurs non enregistrés". Cette option sera prise en compte lors d'une désinscription manuelle ou quand le délai de confirmation sera dépassé. Il faut garder à l'esprit que les articles et liens créés par cet utilisateur seront supprimés en même temps. 
+
+A NOTER : Les utilisateurs ayant la capacité "edit_users" ne sont pas soumis au contrôle de confirmation de leur compte. Il sera donc toujours possible de se connecter avec le profil admin créé par défaut à l'installation de WordPress.
+
+1f) Options des conditions d'utilisation
+Cliquer sur la case à cocher "Activer l'accord d'utilisation" si vous voulez demander à l'utilisateur de confirmer son accord sur les conditions d'utilisation du blog lors de son inscription.
+
+Taper le titre du texte dans la zone "Nom de l'accord". Exemple: Avertissement, Conditions Générales, Accord de licence, etc...
+
+Taper le texte de l'accord dans la zone "Texte de l'accord". Les balises HTML ne sont pas admises.
+
+1g) Options diverses
+Cliquer sur la case à cocher "Mot de passe de l'utilisateur" si vous voulez laisser le choix du mot de passe à l'utilisateur lors de son inscription. Dans le cas contraire, WordPress génèrera un mot de passe aléatoire.
+
+Cliquer sur la case à cocher "Inclure la bannière" pour ajouter une référence et un lien vers le site de Sabre au bas du formulaire d'inscription. C'est à vous de décider si vous voulez faire de la publicité pour Sabre !
+
+Cliquer sur la case à cocher "Afficher sur le tableau de bord" pour ajouter un widget sur le tableau de bord de votre blog avec les principales statistiques de Sabre.
+
+Cliquer sur la case à cocher "Supprimer Sabre" si vous voulez supprimer toutes les informations créées par Sabre (table et options) quand le plugin est désactivé.
+ATTENTION : N'utilisez cette option que si vous avez décidé de ne plus utiliser Sabre ou si vous désirez purger complètement la table et restaurer toutes les options par défaut.
+
+NE PAS OUBLIER DE SAUVEGARDER LES OPTIONS APRES LES AVOIR MODIFIEES EN CLIQUANT SUR LE BOUTON "ENREGISTRER LES OPTIONS"
+
+2) Onglet "Inscriptions bloquées"
+
+Liste des inscriptions non valides avec la cause du refus. Le nombre d'inscriptions refusées depuis votre dernière visite est indiqué entre parenthèses dans l'onglet.
+
+Il est possible de supprimer l'historique en tapant le nombre de jour de rétention (20 jours par défaut) et en appuyant sur "Supprimer". Il est également possible de demander à Sabre de faire cette suppression automatiquement avec la même fréquence en cliquant sur la case à cocher.
+
+3) Onglet "Inscriptions autorisées"
+
+Liste des inscriptions acceptées définitivement (statut = ok). L'identifiant de l'utilisateur créé est affiché et permet d'accéder directement à sa fiche en cliquant dessus. Le nombre d'inscriptions acceptées depuis votre dernière visite est indiqué entre parenthèse dans l'onglet.
+
+Il est également possible d'inscrire manuellement un utilisateur WordPress existant en donnant son nom ou l'ensemble des utilisateurs déjà créés en cliquant la case à cocher et en appuyant enfin sur le bouton "Ajouter".
+
+Pour supprimer l'inscription d'utilisateurs, sélectionner-les dans la liste en cliquant sur les cases à cocher correspondantes puis sur le bouton "Désinscrire".
+
+4) Onglet "Inscriptions à confirmer"
+
+Liste des inscriptions en attente de confirmation (statut = to confirm). L'identifiant de l'utilisateur créé est affiché et permet d'accéder directement à sa fiche en cliquant dessus. Le nombre d'inscriptions à confirmer depuis votre dernière visite est indiqué entre parenthèse dans l'onglet.
+
+Deux boutons sont disponibles quand la confirmation est à faire par l'administrateur du blog:
+
+La confirmation des inscriptions se fait en sélectionnant les comptes dans la liste et en appuyant enfin sur le bouton "Confirmer".
+
+Le refus des inscriptions se fait en sélectionnant les comptes dans la liste et en appuyant enfin sur le bouton "Refuser".
+
+5) Onglet "A propos"
+
+Un texte plein de profondeur sur l'auteur et son oeuvre. Une lecture passionnante à ne manquer sous aucun prétexte !
+
+6) Historique
+v. 0.7.3
+     Ajout d'un paramètre pour choisir la couleur du fond de l'image du captcha.
+     Ajout d'un paramètre pour demander à l'utilisateur d'accepter les conditions d'utilisation du blog lors de l'inscription.
+     Mise en compatibilité avec la possibilité offerte par WordPress 2.6 de localiser le répertoire wp-content dans un endroit personnel.
+
+v. 0.7.2
+     Ajout d'un paramètre pour permettre à l'administrateur du blog de valider les inscriptions.
+     Révision de l'interface d'administration pour gérer les confirmations
+     Ajout d'un onglet "Inscriptions à confirmer"
+
+v. 0.7.1
+     Ajout d'un paramètre pour afficher les statistiques de Sabre sur le tableau de bord du blog.
+     Ajout d'un paramètre pour laisser l'utilisateur choisir son mot de passe lors de l'inscription.
+
+v. 0.7.0
+     Cette version n'est compatible qu'avec WordPress 2.5 et ne peut être utilisée avec des versions antérieures.
+     Refonte complète du panneau d'administration avec le nouveau design de l'administration de WordPress.
+     L'inscription manuel d'un utilisateur existant se fait maintenant en donnant son nom au lieu de son ID car celui-ci n'est plus affiché dans WordPress 2.5.
+     Ajout d'un paramètre pour envoyer un mail à l'administrateur en cas de confirmation d'inscription. 
+ 
+v. 0.6.3
+     Mise à jour pour la version 2.3.3 de WordPress
+
+v. 0.6.2
+     Ajout d'un paramètre pour contrôler si l'adresse IP est bannie par des serveurs DNSBL.
+
+v. 0.6.1
+     Modification de la structure de la table de Sabre car certaine version de MySql n'autorise pas les valeurs par défaut pour les colonnes de type text. Ceci peut empêcher la création de la table durant l'initialisation de Sabre.
+
+v. 0.6.0
+     Ajout d'un paramètre pour supprimer automatiquement le compte utilisateur quand son inscription est annulée. 
+     Ajout d'un paramètre pour faire figurer une référence à Sabre au bas du formulaire d'inscription.
+     Ajout d'un paramètre pour fixer la période de nettoyage automatique de l'historique.
+     Ajout d'un paramètre pour supprimer toutes les informations de Sabre quand le plugin est désactivé. Ceci nettoiera votre blog WordPress de toute référence à Sabre si vous décidez de ne plus l'utiliser.
+     Amélioration des performances en n'effectuant pas les tests si des erreurs ont déjà été détectées avant l'appel de Sabre (par exemple, le nom ou l'adresse mail non renseignés).
+     Amélioration des performances par optimisation du code.
+     Sécurité renforcée de l'accés aux écrans d'administration de Sabre par l'utilisation de la fonction wp_nonce_field. 
+
+v. 0.4.2
+     Correction d'un bogue dans la sauvegarde du nombre de jours pour la confirmation d'inscription.
+
+v. 0.4.1
+     Ajout d'un paramètre pour interdire l'accès au blog avant confirmation de l'inscription. Ajout de la possibilité d'inscrire automatiquement tous les utilisateurs créés. Ajout de messages pour informer du résultat des actions faites pendant l'administration de Sabre.
+
+v. 0.4.0
+     Ajouts de  divers tests non obstructifs pour renforcer l'efficacité de Sabre. Ces tests comprennent:
+- Contrôle que le formulaire est bien chargé avant de recevoir la réponse.
+- Contrôle que l'adresse IP ne change pas entre l'envoi et la réception du formulaire.
+- Contrôle que le navigateur utilisé supporte le Javascript car beaucoup de robots de spam n'ont pas cette capacité.
+- Contrôle que le support du Javascript n'est pas simulé.
+- Contrôle que l'inscription est terminée dans un temps maximum.
+- Contrôle que le formulaire est rempli par un être humain qui doit passer un certain temps dessus.
+Les profils qui ne sont pas soumis au contrôle d'inscription sont testés sur leur droit "edit_users" et non plus sur leur niveau. Ceci permet d'assurer que tous les profils avec des droits élevés peuvent se connecter après l'installation de Sabre.
+
+v. 0.2.2
+     Optimisations et découpage du source en plusieurs fichiers pour diminuer la charge serveur. Amélioration du nettoyage automatique.
+
+V. 0.2.1
+     Ajout de la fonction "Random" pour présenter aléatoirement le test ajouté au formulaire d'inscription. Ajout de la suppression manuelle de l'historique.
+
+V. 0.1.1
+     Première version publique

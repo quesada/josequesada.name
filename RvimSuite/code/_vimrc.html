@@ -1,0 +1,464 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>C:\Program Files\Vim\_vimrc.html</title>
+<meta name="Generator" content="Vim/7.0">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+.Normal { color: #000000; background-color: #ffdab9; }
+.Identifier { color: #008080; }
+.Todo { color: #0000ff; background-color: #ffff00; }
+.Type { color: #2e8b57; font-weight: bold; }
+.Constant { color: #c00058; }
+.Special { color: #6a5acd; }
+.PreProc { color: #cd00cd; }
+pre { color: #000000; background-color: #ffdab9; }
+body { color: #000000; background-color: #ffdab9; }
+.Comment { color: #406090; }
+.Statement { color: #804040; font-weight: bold; }
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="Comment">&quot; _vimrc -- my vimrc as of 2006</span>
+<span class="Comment">&quot; @Author:      Jose Quesada (mailto:quesadaj@gmail.com)</span>
+<span class="Comment">&quot; @Website:     <a href="http://www.andrew.cmu.edu/~jquesada">http://www.andrew.cmu.edu/~jquesada</a></span>
+<span class="Comment">&quot; @License:     GPL: <a href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a></span>
+<span class="Comment">&quot; @Created:     05-Apr-2006.</span>
+<span class="Comment">&quot; @Last Change: 05-Apr-2006.</span>
+
+<span class="Comment">&quot; To use it, copy it to</span>
+<span class="Comment">&quot;     for Unix and OS/2:  ~/.vimrc</span>
+<span class="Comment">&quot;   for MS-DOS and Win32:  $VIM\_vimrc</span>
+
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Comment">&quot; settings</span>
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Comment">&quot; Use Vim settings, rather then Vi settings (much better!).</span>
+<span class="Comment">&quot; This must be first, because it changes other options as a side effect.</span>
+<span class="Statement">set</span> <span class="PreProc">textwidth</span>=80        <span class="Comment">&quot; 80 columns wide text is good</span>
+
+<span class="Statement">set</span> <span class="PreProc">nocompatible</span>
+<span class="Statement">set</span> <span class="PreProc">history</span>=50          <span class="Comment">&quot; keep 50 lines of command line history</span>
+<span class="Statement">set</span> <span class="PreProc">ruler</span>               <span class="Comment">&quot; show the cursor position all the time</span>
+<span class="Statement">set</span> <span class="PreProc">showcmd</span>             <span class="Comment">&quot; display incomplete commands</span>
+<span class="Statement">set</span> <span class="PreProc">showmode</span>            <span class="Comment">&quot; display the mode you are in everytime</span>
+<span class="Statement">set</span> <span class="PreProc">mouse</span>=a             <span class="Comment">&quot; mouse works in all modes</span>
+<span class="Statement">set</span> <span class="PreProc">incsearch</span>           <span class="Comment">&quot; do incremental searching</span>
+<span class="Statement">set</span> <span class="PreProc">showmatch</span>           <span class="Comment">&quot; balancing brackets like in emacs</span>
+<span class="Statement">set</span> <span class="PreProc">wrap</span><span class="PreProc">!</span>               <span class="Comment">&quot; linewrapping off</span>
+<span class="Statement">set</span> <span class="PreProc">ignorecase</span>          <span class="Comment">&quot; evident</span>
+<span class="Statement">set</span> <span class="PreProc">nostartofline</span>       <span class="Comment">&quot;to keep the cursor at the same horizontal location when</span>
+<span class="Comment">&quot;set expandtab          &quot; Expand &lt;Tab&gt; to spaces in Insert mode</span>
+<span class="Statement">set</span> <span class="PreProc">tabstop</span>=3           <span class="Comment">&quot; number of spaces that a &lt;Tab&gt; in the file counts for</span>
+<span class="Statement">set</span> <span class="PreProc">laststatus</span>=1        <span class="Comment">&quot; show status line only if there are more than one windows</span>
+<span class="Statement">set</span> <span class="PreProc">shiftwidth</span>=3        <span class="Comment">&quot; size of tabs by default</span>
+<span class="Statement">set</span> <span class="PreProc">backup</span>              <span class="Comment">&quot;  backUps!!</span>
+<span class="Statement">set</span> <span class="PreProc">title</span>               <span class="Comment">&quot;see filename in Xterm title</span>
+<span class="Statement">set</span> <span class="PreProc">guifont</span>=Fixedsys<span class="Statement">:</span>h11<span class="Statement">:</span>w6 <span class="Comment">&quot;enlarge fonts for high resolutions!</span>
+<span class="Statement">imap</span> <span class="Special">&lt;</span><span class="Special">F10</span><span class="Special">&gt;</span> <span class="Special">&lt;</span><span class="Special">esc</span><span class="Special">&gt;</span>/\%81c   &quot; Highlight all characters at column #81 (all longer than 80 characters)
+<span class="Statement">imap</span> ZZ <span class="Special">&lt;</span><span class="Special">esc</span><span class="Special">&gt;</span>:wq!<span class="Special">&lt;</span><span class="Special">cr</span><span class="Special">&gt;</span>   &quot; ZZ saves and leaves as well in insert mode
+<span class="Statement">let</span> Tlist_Ctags_Cmd <span class="Statement">=</span> <span class="Constant">'/usr/local/bin/ctags'</span> <span class="Comment">&quot;  CTAGS</span>
+
+<span class="Statement">set</span> <span class="PreProc">wildignore</span>=*.o<span class="Statement">,</span>*.obj<span class="Statement">,</span>*.bak<span class="Statement">,</span>*.exe
+
+<span class="Comment">&quot; configure TOhtml</span>
+<span class="Comment">&quot;</span> <span class="PreProc">NOTE:</span><span class="Comment"> it interaracts with TSkeleton, it doesn't work for now</span>
+<span class="Statement">let</span> html_use_css <span class="Statement">=</span><span class="Constant">1</span>
+
+<span class="Comment">&quot; noremap ;; ;</span>
+<span class="Comment">&quot; map ; :</span>
+<span class="Comment">&quot; &quot; edit command-line</span>
+<span class="Comment">&quot; map q; q:</span>
+<span class="Comment">&quot;</span>
+<span class="Comment">&quot; use a single dir for swapfiles</span>
+<span class="Comment">&quot; set dir=e:\\jose\\swapFileVim</span>
+
+<span class="Comment">&quot; reload docs</span>
+<span class="Comment">&quot; helptags $VIM/vimfiles/doc</span>
+
+<span class="Comment">&quot; WIKIFIED behavior</span>
+<span class="Comment">&quot; move in CamelCaseWords from C to W e.g. using c-arrows</span>
+
+<span class="Statement">nnoremap</span> <span class="Special">&lt;</span><span class="Special">silent</span><span class="Special">&gt;</span><span class="Special">&lt;</span><span class="Special">C-Left</span><span class="Special">&gt;</span>  :<span class="Special">&lt;</span><span class="Special">C-u</span><span class="Special">&gt;</span>cal search('\&lt;<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\U\@&lt;=\u<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\u\ze\%(\U\&amp;\&gt;\@!\)<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\%^','bW')<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+<span class="Statement">nnoremap</span> <span class="Special">&lt;</span><span class="Special">silent</span><span class="Special">&gt;</span><span class="Special">&lt;</span><span class="Special">C-Right</span><span class="Special">&gt;</span> :<span class="Special">&lt;</span><span class="Special">C-u</span><span class="Special">&gt;</span>cal search('\&lt;<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\U\@&lt;=\u<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\u\ze\%(\U\&amp;\&gt;\@!\)<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\%$','W')<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+<span class="Statement">inoremap</span> <span class="Special">&lt;</span><span class="Special">silent</span><span class="Special">&gt;</span><span class="Special">&lt;</span><span class="Special">C-Left</span><span class="Special">&gt;</span>  <span class="Special">&lt;</span><span class="Special">C-o</span><span class="Special">&gt;</span>:cal search('\&lt;<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\U\@&lt;=\u<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\u\ze\%(\U\&amp;\&gt;\@!\)<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\%^','bW')<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+<span class="Statement">inoremap</span> <span class="Special">&lt;</span><span class="Special">silent</span><span class="Special">&gt;</span><span class="Special">&lt;</span><span class="Special">C-Right</span><span class="Special">&gt;</span> <span class="Special">&lt;</span><span class="Special">C-o</span><span class="Special">&gt;</span>:cal search('\&lt;<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\U\@&lt;=\u<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\u\ze\%(\U\&amp;\&gt;\@!\)<span class="Special">\&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>\%$','W')<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+
+
+<span class="Comment">&quot; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="Comment">&quot; outline</span>
+<span class="Comment">&quot;&quot; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="Comment">&quot; do not work for me</span>
+<span class="Comment">&quot; Alt-shift-keyboardPlus  open current fold                  *tvo-&lt;M-S-kPlus&gt;*</span>
+<span class="Comment">&quot;  Alt-shift-keyboardMinus close current fold</span>
+
+<span class="Comment">   &quot; defaults:</span>
+   <span class="Statement">let</span> no_otl_maps<span class="Statement">=</span><span class="Constant">0</span>
+   <span class="Statement">let</span> no_otl_insert_maps<span class="Statement">=</span><span class="Constant">0</span>
+
+<span class="Comment">   &quot; no bold headers</span>
+   <span class="Statement">let</span> otl_bold_headers<span class="Statement">=</span><span class="Constant">0</span>
+<span class="Comment">   &quot; support viki (learn)</span>
+<span class="Comment">&quot; enable local links to other files, easily tranformed into html</span>
+<span class="Comment">&quot; requires viki.vim</span>
+<span class="Comment">&quot; for outlines mainly; any other file ok too since it's minor</span>
+<span class="Comment">&quot; autocmd FileType otl      call VikiMinorMode(1)</span>
+   <span class="Statement">let</span> otl_use_viki<span class="Statement">=</span><span class="Constant">1</span>
+
+<span class="Comment">   &quot; leave and enter in the position we left, with folding, etc remembered</span>
+   <span class="Statement">au</span> <span class="Type">BufWinLeave</span> *.otl <span class="Statement">mkview</span>
+   <span class="Statement">au</span> <span class="Type">BufWinEnter</span> *.otl <span class="Statement">silent</span> <span class="Statement">loadview</span>
+   <span class="Statement">let</span> maplocalleader <span class="Statement">=</span> <span class="Constant">&quot;,&quot;</span>
+
+<span class="Comment">&quot; </span><span class="Todo">TODO</span><span class="Comment"> get highlighting for R, test tcomments</span>
+
+<span class="Comment">&quot; Use CTRL-T for opening new tabs</span>
+<span class="Statement">noremap</span>     <span class="Special">&lt;</span><span class="Special">C-T</span><span class="Special">&gt;</span>               :tabnew<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+<span class="Statement">vnoremap</span>    <span class="Special">&lt;</span><span class="Special">C-T</span><span class="Special">&gt;</span>               <span class="Special">&lt;</span><span class="Special">C-C</span><span class="Special">&gt;</span>:tabnew<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+<span class="Statement">inoremap</span>    <span class="Special">&lt;</span><span class="Special">C-T</span><span class="Special">&gt;</span>               <span class="Special">&lt;</span><span class="Special">C-O</span><span class="Special">&gt;</span>:tabnew<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+
+<span class="Comment">&quot; ALTERNATIVE USES OF TAB</span>
+<span class="Comment">&quot; idea from emacs: tab anywhere in the line does esc + V + =</span>
+<span class="Comment">&quot; </span><span class="Todo">TODO</span>
+
+<span class="Comment">&quot; tab completion</span>
+<span class="Comment">&quot; if at the begining of the line, tab, otherwise completion c-p (nice !)</span>
+<span class="Statement">function</span> InsertTabWrapper<span class="Statement">()</span>
+      <span class="Statement">let</span> col <span class="Statement">=</span> <span class="Identifier">col</span><span class="Statement">(</span><span class="Constant">'.'</span><span class="Statement">)</span> <span class="Statement">-</span> <span class="Constant">1</span>
+      <span class="Statement">if</span> !<span class="Statement">col</span> <span class="Statement">||</span> <span class="Identifier">getline</span><span class="Statement">(</span><span class="Constant">'.'</span><span class="Statement">)</span>[<span class="Statement">col</span> <span class="Statement">-</span> <span class="Constant">1</span>] <span class="Statement">!~</span> <span class="Constant">'\k'</span>
+          <span class="Statement">return</span> <span class="Constant">&quot;\&lt;tab&gt;&quot;</span>
+      <span class="Statement">else</span>
+          <span class="Statement">return</span> <span class="Constant">&quot;\&lt;c-p&gt;&quot;</span>
+      <span class="Statement">endif</span>
+<span class="Statement">endfunction</span>
+
+<span class="Comment">&quot;then define the appropriate mapping:</span>
+<span class="Statement">inoremap</span> <span class="Special">&lt;</span><span class="Special">tab</span><span class="Special">&gt;</span> <span class="Special">&lt;</span><span class="Special">c-r</span><span class="Special">&gt;</span>=InsertTabWrapper()<span class="Special">&lt;</span><span class="Special">cr</span><span class="Special">&gt;</span>
+
+
+<span class="Comment">&quot; reload personal list of spelling</span>
+<span class="Comment">&quot;:mkspell C:/Program\ Files/Vim/vimfiles/spell/en.latin1.add</span>
+
+<span class="Comment">&quot; note: create unique list from telefonos.txt and stick it in my personal</span>
+<span class="Comment">&quot; speller</span>
+<span class="Comment">&quot;</span>
+<span class="Comment">&quot; activate spelling</span>
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Statement">if</span> <span class="Identifier">has</span><span class="Statement">(</span><span class="Constant">&quot;spell&quot;</span><span class="Statement">)</span>
+<span class="Comment">  &quot; turn spelling on by default</span>
+  <span class="Statement">set</span> <span class="PreProc">spell</span>
+
+<span class="Comment">  &quot; toggle spelling with F4 key</span>
+  <span class="Statement">map</span> <span class="Special">&lt;</span><span class="Special">F4</span><span class="Special">&gt;</span> :set spell!<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>:echo &quot;Spell Check: &quot; . strpart(&quot;OffOn&quot;, 3 * &amp;spell, 3)<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+
+<span class="Comment">  &quot; they were using white on white</span>
+  <span class="Statement">highlight</span> PmenuSel <span class="Type">ctermfg</span>=black <span class="Type">ctermbg</span>=lightgray
+
+<span class="Comment">  &quot; limit it to just the top 10 items</span>
+  <span class="Statement">set</span> <span class="PreProc">sps</span>=best<span class="Statement">,</span>10
+<span class="Statement">endif</span>
+
+<span class="Comment">&quot; activate spelling</span>
+<span class="Statement">map</span> <span class="Special">&lt;</span><span class="Special">F4</span><span class="Special">&gt;</span> :set spell!<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;&lt;</span><span class="Special">Bar</span><span class="Special">&gt;</span>:echo &quot;Spell Check: &quot; . strpart(&quot;OffOn&quot;, 3 * &amp;spell, 3)<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+
+<span class="Comment">&quot; highlight the current line</span>
+<span class="Statement">if</span> <span class="Statement">version</span> <span class="Statement">&gt;=</span> <span class="Constant">700</span>
+   <span class="Statement">set</span> <span class="PreProc">cursorline</span>
+<span class="Comment">   &quot;set cursorcolumn</span>
+<span class="Statement">endif</span>
+
+<span class="Comment">&quot; fundamental to interact with other programs:</span>
+<span class="Comment">&quot; insert hard \r in the long lines; this is done in visual mode by gq</span>
+
+<span class="Comment">&quot; and the reverse (to spit into word easily, for example)</span>
+<span class="Statement">map</span> <span class="Special">&lt;</span><span class="Special">F6</span><span class="Special">&gt;</span> :s/\n/ /g<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+
+<span class="Comment">&quot; this is to work with extremely long lines, (small fonts, no wrap)</span>
+
+<span class="Statement">function</span>! Smallfonts<span class="Statement">()</span>
+   <span class="Statement">setlocal</span> <span class="PreProc">textwidth</span>=0
+   <span class="Statement">set</span> <span class="PreProc">guifont</span>=Andale_Mono<span class="Statement">:</span>h7<span class="Statement">:</span>cANSI
+   <span class="Statement">set</span> <span class="PreProc">columns</span>=196
+   <span class="Statement">set</span> <span class="PreProc">lines</span>=62
+<span class="Statement">endfunction</span>
+
+<span class="Statement">map</span> <span class="Special">&lt;</span><span class="Special">F5</span><span class="Special">&gt;</span> : call Smallfonts()<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+
+<span class="Comment">&quot; tip: load actionscript syntax highlighting</span>
+<span class="Comment">&quot; source c:/Program\ Files/vim/vimfiles\syntax\actionscript.vim</span>
+<span class="Statement">au</span> <span class="Type">BufNewFile</span>,<span class="Type">BufRead</span> *.as <span class="Statement">setf</span> actionscript
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Comment">&quot; syntax highligting prefs. and keyboard shortcuts</span>
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Statement">map</span> <span class="Special">&lt;</span><span class="Special">S-tab</span><span class="Special">&gt;</span> :b #<span class="Special">&lt;</span><span class="Special">cr</span><span class="Special">&gt;</span>                         &quot; !!alternate buffers
+
+
+<span class="Comment">&quot; CTRL R calculates math operations</span>
+<span class="Statement">ino</span> <span class="Special">&lt;</span><span class="Special">C-E</span><span class="Special">&gt;</span> <span class="Special">&lt;</span><span class="Special">C-O</span><span class="Special">&gt;</span>yiW<span class="Special">&lt;</span><span class="Special">End</span><span class="Special">&gt;</span>=<span class="Special">&lt;</span><span class="Special">C-R</span><span class="Special">&gt;</span>=<span class="Special">&lt;</span><span class="Special">C-R</span><span class="Special">&gt;</span>0<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+
+<span class="Comment">&quot; dont see ^M again</span>
+<span class="Statement">autocmd</span> <span class="Type">BufRead</span> * <span class="Statement">silent</span>! <span class="Constant">%</span><span class="Statement">s</span><span class="Special">/</span>[\r \t]\+$<span class="Special">//</span>
+
+<span class="Comment">&quot; search for more than one word, selection using visual</span>
+<span class="Statement">vmap</span> <span class="Special">&lt;</span><span class="Special">silent</span><span class="Special">&gt;</span> g/    y/<span class="Special">&lt;</span><span class="Special">C-R</span><span class="Special">&gt;</span>=escape(@&quot;, '\\/.*$^~[]')<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+
+<span class="Comment">&quot;  MAKE IT EASY TO UPDATE/RELOAD_vimrc</span>
+<span class="Statement">if</span> <span class="Identifier">has</span> <span class="Statement">(</span><span class="Constant">&quot;win32&quot;</span><span class="Statement">)</span>
+   <span class="Statement">map</span> ,s :source c:/Program\ Files/vim/_vimrc<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+   <span class="Statement">map</span> ,v :e c:/Program\ Files/vim/_vimrc<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+   <span class="Statement">set</span> <span class="PreProc">backupdir</span> =c<span class="Statement">:</span>/Program\ Files/vim/backup <span class="Comment">&quot;where to put backup files, default in the same di</span>
+   <span class="Statement">colors</span> peachpuff
+   <span class="Statement">set</span> <span class="PreProc">guioptions</span>-=T
+   <span class="Statement">set</span> <span class="PreProc">guicursor</span>+=a<span class="Statement">:</span>blinkon0 <span class="Comment">&quot;prevent cursor blinking</span>
+<span class="Statement">else</span>
+
+   <span class="Statement">map</span> ,v :e $HOME/.vimrc                       &quot;  MAKE   IT EASY TO UPDATE/RELOAD_
+   <span class="Statement">map</span> ,h :so $VIMRUNTIME/syntax/hitest.vim     &quot; test syntax
+   <span class="Statement">set</span> <span class="PreProc">backupdir</span> =~/vim62/backup <span class="Comment">&quot;where to put backup files, default in the same di</span>
+<span class="Statement">endif</span>
+<span class="Comment"> &quot; ths</span>
+<span class="Comment"> &quot; Use CTRL-D for saving, also in Insert mode</span>
+<span class="Statement">noremap</span> <span class="Special">&lt;</span><span class="Special">C-D</span><span class="Special">&gt;</span>           :update<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+<span class="Statement">vnoremap</span> <span class="Special">&lt;</span><span class="Special">C-D</span><span class="Special">&gt;</span>          <span class="Special">&lt;</span><span class="Special">C-C</span><span class="Special">&gt;</span>:update<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+<span class="Statement">inoremap</span> <span class="Special">&lt;</span><span class="Special">C-D</span><span class="Special">&gt;</span>          <span class="Special">&lt;</span><span class="Special">C-O</span><span class="Special">&gt;</span>:update<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+
+<span class="Comment">&quot; TIP to export the syntax highlighting to html, run in command mode:</span>
+<span class="Comment">&quot; :runtime! syntax/2html.vim</span>
+
+<span class="Comment">&quot; Note abbreviations for time</span>
+<span class="Statement">iab</span> Cdate <span class="Special">&lt;</span><span class="Special">C-R</span><span class="Special">&gt;</span>=<span class="Identifier">strftime</span><span class="Statement">(</span><span class="Constant">&quot; %d.%m.%y - %H&quot;</span><span class="Statement">)</span><span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+<span class="Statement">iab</span> _lm  <span class="Special">&lt;</span><span class="Special">C-R</span><span class="Special">&gt;</span>=<span class="Constant">&quot; Last Modified: &quot;</span>  <span class="Statement">.</span> <span class="Identifier">strftime</span><span class="Statement">(</span> <span class="Constant">&quot; %a %b %d %H:%M:%S %Y&quot;</span> <span class="Statement">)</span><span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+
+<span class="Comment">&quot; make arrow keys work in visual mode</span>
+<span class="Statement">vmap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>OA k
+<span class="Statement">vmap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>OB j
+<span class="Statement">vmap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>OC l
+<span class="Statement">vmap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>OD h
+<span class="Comment">&quot; simulate shift-arrows (select block in windows) with control-arrows</span>
+<span class="Statement">inoremap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>[A <span class="Special">&lt;</span><span class="Special">C-O</span><span class="Special">&gt;</span>vk
+<span class="Statement">vnoremap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>[A k
+<span class="Statement">inoremap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>[B <span class="Special">&lt;</span><span class="Special">C-O</span><span class="Special">&gt;</span>vj
+<span class="Statement">vnoremap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>[B j
+<span class="Statement">inoremap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>[C <span class="Special">&lt;</span><span class="Special">C-O</span><span class="Special">&gt;</span>vl
+<span class="Statement">vnoremap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>[C l
+<span class="Statement">inoremap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>[D <span class="Special">&lt;</span><span class="Special">C-O</span><span class="Special">&gt;</span>vh
+<span class="Statement">vnoremap</span> <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;</span>[D h
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Comment">&quot;  vim editor itself</span>
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Statement">highlight</span> lineNr <span class="Type">ctermfg</span>=black
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Comment">&quot;  c highlighting stuff</span>
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Statement">autocmd</span> <span class="Type">FileType</span> c <span class="Statement">highlight</span> Statement <span class="Type">ctermfg</span>=red
+<span class="Statement">autocmd</span> <span class="Type">FileType</span> c <span class="Statement">highlight</span> Comment <span class="Type">ctermfg</span>=darkGrey
+<span class="Statement">autocmd</span> <span class="Type">FileType</span> c <span class="Statement">highlight</span> String <span class="Type">ctermfg</span>=green
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Comment">&quot; vim highlighting Stuff</span>
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Statement">highlight</span> vimCommand <span class="Type">ctermfg</span>=red
+<span class="Statement">highlight</span> vimComment <span class="Type">ctermfg</span>=darkGrey
+<span class="Statement">highlight</span> vimOper <span class="Type">ctermfg</span>=black
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Comment">&quot; Perl Stuff</span>
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Comment">&quot; MAKE</span>
+<span class="Comment">&quot; use CTRL+F to make</span>
+<span class="Comment">&quot; use CTRL+E to go to next error</span>
+<span class="Comment">&quot; ues CTRL+D to save</span>
+<span class="Comment">&quot; ALL THOSE KEYS ARE IN VERY CLOSE AND CONVENIENT LOCATIONS IF YOU ARE</span>
+<span class="Comment">&quot; LEFT-HANDLED</span>
+
+<span class="Comment">&quot;  better highlighting</span>
+<span class="Statement">let</span> perl_want_scope_in_variables<span class="Statement">=</span><span class="Constant">1</span>
+<span class="Statement">let</span> perl_extended_vars<span class="Statement">=</span><span class="Constant">1</span>
+<span class="Statement">let</span> perl_include_pod<span class="Statement">=</span><span class="Constant">1</span>
+
+
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Comment">&quot; Perl Stuff</span>
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Comment">&quot;  Better highlight for perl comments</span>
+
+<span class="Statement">set</span> <span class="PreProc">makeprg</span>= <span class="Comment">&quot;E:/Program\ Files/vim/vim62/compiler/vimparse.pl\ %\ $*&quot;</span>
+<span class="Statement">set</span> <span class="PreProc">errorformat</span>=%f<span class="Statement">:</span>%l<span class="Statement">:</span>%m
+
+
+<span class="Comment">&quot; activate folding for perl</span>
+<span class="Statement">if</span> <span class="Statement">version</span> <span class="Statement">&gt;=</span> <span class="Constant">600</span>
+        <span class="Statement">let</span> perl_fold <span class="Statement">=</span> <span class="Constant">1</span>
+<span class="Comment">        &quot; let perl_fold_blocks = 1</span>
+<span class="Statement">endif</span>
+<span class="Comment">&quot;---------------------------------------</span>
+
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Comment">&quot; important behave like windows</span>
+<span class="Comment">&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="Statement">source</span> <span class="PreProc">$VIMRUNTIME</span>/mswin<span class="Statement">.</span><span class="Statement">vim</span>
+
+<span class="Comment">&quot; Comments</span>
+<span class="Comment"> &quot; very simple commentify; for fancier stuff use TComment (mapped as toggle for</span>
+<span class="Comment"> &quot; &lt;c-_&gt;&lt;c-_&gt;.</span>
+<span class="Comment"> &quot; --------------------&quot;</span>
+
+<span class="Statement">function</span>! SemicolonComment<span class="Statement">()</span>
+<span class="Statement">map</span> - :s/^/\; /<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+<span class="Statement">map</span> _ :s/^\s*\; \=//<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+<span class="Statement">set</span> comments<span class="Statement">=</span>:\;
+<span class="Statement">endfunction</span>
+<span class="Statement">autocmd</span> <span class="Type">FileType</span> ahk    <span class="Statement">call</span> <span class="Normal">SemicolonComment</span><span class="Statement">()</span> <span class="Comment">&quot; TCommentDefineType('ahk', '; %s') doesn't work</span>
+
+
+<span class="Comment">&quot; -------------------------------------------------</span>
+<span class="Comment">&quot; generic config (came with vimrc_example)</span>
+<span class="Comment">&quot; -------------------------------------------------</span>
+
+
+<span class="Comment">&quot; When started as </span><span class="Constant">&quot;evim&quot;</span><span class="Comment">, evim.vim will already have done these settings.</span>
+<span class="Statement">if</span> v:progname <span class="Statement">=~?</span> <span class="Constant">&quot;evim&quot;</span>
+  <span class="Statement">finish</span>
+<span class="Statement">endif</span>
+
+<span class="Comment">&quot; allow backspacing over everything in insert mode</span>
+<span class="Statement">set</span> <span class="PreProc">backspace</span>=indent<span class="Statement">,</span>eol<span class="Statement">,</span>start
+
+<span class="Statement">if</span> <span class="Identifier">has</span><span class="Statement">(</span><span class="Constant">&quot;vms&quot;</span><span class="Statement">)</span>
+   <span class="Statement">set</span> <span class="PreProc">nobackup</span>      <span class="Comment">&quot; do not keep a backup file, use versions instead</span>
+<span class="Statement">else</span>
+   <span class="Statement">set</span> <span class="PreProc">backup</span>     <span class="Comment">&quot; keep a backup file</span>
+<span class="Statement">endif</span>
+
+<span class="Comment">&quot; Don't use Ex mode, use Q for formatting</span>
+<span class="Statement">map</span> Q gq
+
+
+
+
+<span class="Comment">&quot; Switch syntax highlighting on, when the terminal has colors</span>
+<span class="Comment">&quot; Also switch on highlighting the last used search pattern.</span>
+<span class="Statement">if</span> &amp;t_Co <span class="Statement">&gt;</span> <span class="Constant">2</span> <span class="Statement">||</span> <span class="Identifier">has</span><span class="Statement">(</span><span class="Constant">&quot;gui_running&quot;</span><span class="Statement">)</span>
+   <span class="Statement">syntax</span> <span class="Type">on</span>
+   <span class="Statement">set</span> <span class="PreProc">hlsearch</span>
+   <span class="Statement">colors</span> peachpuff
+   <span class="Statement">set</span> <span class="PreProc">guifont</span>=Fixedsys<span class="Statement">:</span>h11<span class="Statement">:</span>w6
+   <span class="Statement">set</span> <span class="PreProc">guioptions</span>-=T <span class="Comment">&quot;remove the toolbar, it is useless</span>
+   <span class="Statement">set</span> <span class="PreProc">guicursor</span>+=a<span class="Statement">:</span>blinkon0 <span class="Comment">&quot;prevent cursor blinking</span>
+<span class="Statement">endif</span>
+
+<span class="Comment">&quot; Only do this part when compiled with support for autocommands.</span>
+<span class="Statement">if</span> <span class="Identifier">has</span><span class="Statement">(</span><span class="Constant">&quot;autocmd&quot;</span><span class="Statement">)</span>
+
+<span class="Comment">   &quot; Enable file type detection.</span>
+<span class="Comment">   &quot; Use the default filetype settings, so that mail gets 'tw' set to 72,</span>
+<span class="Comment">   &quot; 'cindent' is on in C files, etc.</span>
+<span class="Comment">   &quot; Also load indent files, to automatically do language-dependent indenting.</span>
+   <span class="Statement">filetype</span> <span class="Type">plugin</span> <span class="Type">indent</span> <span class="Type">on</span>
+
+   <span class="Statement">autocmd</span> <span class="Type">BufEnter</span> * :<span class="Statement">syntax</span> <span class="Type">sync</span> <span class="Type">fromstart</span> <span class="Comment">&quot;  ensure every file does syntax hi</span>
+   <span class="Statement">autocmd</span> <span class="Type">BufEnter</span> * :<span class="Statement">lcd</span> <span class="Identifier">%</span><span class="Identifier">:p:h</span> <span class="Comment">&quot;  switch to current dir</span>
+
+<span class="Comment">   &quot; Put these in an autocmd group, so that we can delete them easily.</span>
+   <span class="Statement">augroup</span> vimrcEx
+      <span class="Statement">au</span>!
+
+<span class="Comment">      &quot; For all text files set 'textwidth' to 78 characters.</span>
+      <span class="Statement">autocmd</span> <span class="Type">FileType</span> text <span class="Statement">setlocal</span> <span class="PreProc">textwidth</span>=80
+
+<span class="Comment">      &quot; When editing a file, always jump to the last known cursor position.</span>
+<span class="Comment">      &quot; Don't do it when the position is invalid or when inside an event handler</span>
+<span class="Comment">      &quot; (happens when dropping a file on gvim).</span>
+      <span class="Statement">autocmd</span> <span class="Type">BufReadPost</span> *
+<span class="Special">          \</span> <span class="Statement">if</span> line(<span class="Constant">&quot;'\&quot;&quot;</span>) <span class="Statement">&gt;</span> <span class="Constant">0</span> <span class="Statement">&amp;&amp;</span> line(<span class="Constant">&quot;'\&quot;&quot;</span>) <span class="Statement">&lt;=</span> line(<span class="Constant">&quot;$&quot;</span>) |
+<span class="Special">          \</span>   exe <span class="Constant">&quot;normal g`\&quot;&quot;</span> |
+<span class="Special">          \</span> <span class="Statement">endif</span>
+
+   <span class="Statement">augroup</span> END
+<span class="Statement">else</span>
+<span class="Comment">   &quot; Copy indent from current line when starting a new line (typing &lt;CR&gt;</span>
+   <span class="Statement">set</span> <span class="PreProc">autoindent</span>    <span class="Comment">&quot; always set autoindenting on</span>
+<span class="Statement">endif</span><span class="Comment"> &quot; has(&quot;autocmd&quot;)</span>
+
+<span class="Comment">&quot;-------------------------------------------------------------------------------</span>
+<span class="Comment">&quot; tskeleton support</span>
+<span class="Comment">&quot; makes headers in comments for files *.r *.txt with author, etc</span>
+<span class="Comment">&quot; it also has some code templates a la</span>
+<span class="Comment">&quot;-------------------------------------------------------------------------------</span>
+<span class="Comment">&quot; the function TSkeletonIncreaseRevisionNumber is suspect of creating trouble</span>
+<span class="Comment">&quot; with otl and others</span>
+<span class="Comment">&quot;    autocmd BufWritePre * call TSkeletonIncreaseRevisionNumber()</span>
+<span class="Statement">let</span> g:tskelUserName        <span class="Statement">=</span> <span class="Constant">&quot;Jose Quesada&quot;</span>
+<span class="Statement">let</span> g:tskelUserEmail       <span class="Statement">=</span> <span class="Constant">&quot;quesada AT gmail.com&quot;</span>
+<span class="Statement">let</span> g:tskelUserWWW         <span class="Statement">=</span> <span class="Constant">&quot;<a href="http://www.andrew.cmu.edu/~jquesada">http://www.andrew.cmu.edu/~jquesada</a>&quot;</span>
+<span class="Statement">let</span> g:tskelLicense         <span class="Statement">=</span> <span class="Constant">&quot;GPL: <a href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a>&quot;</span>
+
+
+<span class="Statement">let</span> g:tskelDir <span class="Statement">=</span> <span class="Constant">'C:/Program Files/Vim/vimfiles/skeletons/'</span> &quot;
+<span class="Statement">autocmd</span> <span class="Type">BufNewFile</span> *.r TSkeletonSetup <span class="Statement">r</span><span class="Statement">.</span><span class="Statement">r</span>
+<span class="Comment">&quot;autocmd BufNewFile *.otl TSkeletonSetup outline.otl</span>
+<span class="Statement">autocmd</span> <span class="Type">BufNewFile</span> *.rb TSkeletonSetup <span class="Statement">ruby</span><span class="Statement">.</span>rb
+
+<span class="Comment">&quot; </span><span class="Todo">TODO</span><span class="Comment"> try snippetsEmu.vim. it seems to be an emulation of textMate (osX)</span>
+
+<span class="Comment">&quot;-------------------------------------------------------------------------------</span>
+<span class="Comment">&quot; perl-support.vim</span>
+<span class="Comment">&quot;-------------------------------------------------------------------------------</span>
+
+<span class="Statement">let</span> g:Perl_AuthorName      <span class="Statement">=</span> <span class="Constant">&quot;Jose Quesada&quot;</span>
+<span class="Statement">let</span> g:Perl_AuthorRef       <span class="Statement">=</span> <span class="Constant">&quot;&quot;</span>
+<span class="Statement">let</span> g:Perl_Email           <span class="Statement">=</span> <span class="Constant">&quot;quesada AT gmail.com&quot;</span>
+<span class="Statement">let</span> g:Perl_Company         <span class="Statement">=</span> <span class="Constant">&quot;Sussex University&quot;</span>
+<span class="Statement">let</span> g:Perl_Project         <span class="Statement">=</span> <span class="Constant">&quot;&quot;</span>
+<span class="Statement">let</span> g:Perl_CopyrightHolder <span class="Statement">=</span> <span class="Constant">&quot;Jose Quesada&quot;</span>
+
+<span class="Statement">let</span> g:Perl_Dictionary_File <span class="Statement">=</span> <span class="PreProc">$HOME</span><span class="Statement">.</span><span class="Constant">&quot;/.vim/wordlists/perl.list&quot;</span>
+
+
+<span class="Comment">&quot; ----------  Insert header into new PERL files  ----------</span>
+<span class="Comment">&quot; ----------  Insert header into new PERL files  ----------</span>
+<span class="Statement">if</span> <span class="Identifier">has</span><span class="Statement">(</span><span class="Constant">&quot;autocmd&quot;</span><span class="Statement">)</span>
+  <span class="Statement">autocmd</span> <span class="Type">BufNewFile</span>  *.\(pl\|pm\)         <span class="Statement">call</span> <span class="Normal">Perl_CommentTemplates</span><span class="Statement">(</span><span class="Constant">'header'</span><span class="Statement">)</span>
+<span class="Statement">endif</span><span class="Comment"> &quot; has(&quot;autocmd&quot;)</span>
+
+<span class="Comment">&quot; Window resizing mappings /*{{{*/</span>
+<span class="Statement">nnoremap</span> <span class="Special">&lt;</span><span class="Special">S-Up</span><span class="Special">&gt;</span>     :normal <span class="Special">&lt;</span><span class="Special">c-r</span><span class="Special">&gt;</span>=Resize('+')<span class="Special">&lt;</span><span class="Special">cr</span><span class="Special">&gt;&lt;</span><span class="Special">cr</span><span class="Special">&gt;</span>
+<span class="Statement">nnoremap</span> <span class="Special">&lt;</span><span class="Special">S-Down</span><span class="Special">&gt;</span>   :normal <span class="Special">&lt;</span><span class="Special">c-r</span><span class="Special">&gt;</span>=Resize('-')<span class="Special">&lt;</span><span class="Special">cr</span><span class="Special">&gt;&lt;</span><span class="Special">cr</span><span class="Special">&gt;</span>
+<span class="Statement">nnoremap</span> <span class="Special">&lt;</span><span class="Special">S-Left</span><span class="Special">&gt;</span>   :normal <span class="Special">&lt;</span><span class="Special">c-r</span><span class="Special">&gt;</span>=Resize('&lt;')<span class="Special">&lt;</span><span class="Special">cr</span><span class="Special">&gt;&lt;</span><span class="Special">cr</span><span class="Special">&gt;</span>
+<span class="Statement">nnoremap</span> <span class="Special">&lt;</span><span class="Special">S-Right</span><span class="Special">&gt;</span>  :normal <span class="Special">&lt;</span><span class="Special">c-r</span><span class="Special">&gt;</span>=Resize('&gt;')<span class="Special">&lt;</span><span class="Special">cr</span><span class="Special">&gt;&lt;</span><span class="Special">cr</span><span class="Special">&gt;</span>
+
+<span class="Comment">&quot; Map F6 for gvim window resizing</span>
+<span class="Comment">&quot; Put this snippet of code in you .vimrc for nice window resizing.</span>
+<span class="Comment">&quot; Press F1 key to toggle between the three settings .</span>
+
+<span class="Statement">nmap</span> <span class="Special">&lt;</span><span class="Special">F6</span><span class="Special">&gt;</span>    :call ResizeWindow()<span class="Special">&lt;</span><span class="Special">CR</span><span class="Special">&gt;</span>
+<span class="Statement">imap</span> <span class="Special">&lt;</span><span class="Special">F6</span><span class="Special">&gt;</span>    <span class="Special">&lt;</span><span class="Special">ESC</span><span class="Special">&gt;&lt;</span><span class="Special">F6</span><span class="Special">&gt;</span>a   &quot; for insert mode
+
+<span class="Statement">function</span>! ResizeWindow<span class="Statement">()</span>
+    <span class="Statement">if</span> <span class="Statement">(</span>has<span class="Statement">(</span><span class="Constant">&quot;gui&quot;</span><span class="Statement">))</span>
+        <span class="Statement">if</span> s:selectedsize <span class="Statement">==</span> <span class="Constant">1</span>
+            <span class="Statement">let</span> s:selectedsize <span class="Statement">=</span> <span class="Constant">2</span>
+    <span class="Statement">set</span> <span class="PreProc">nonumber</span>
+            <span class="Statement">set</span> <span class="PreProc">columns</span>=88  <span class="Comment">&quot; 88 is exactly 80 with :set number</span>
+            <span class="Statement">set</span> <span class="PreProc">lines</span>=35
+        <span class="Statement">elseif</span> s:selectedsize <span class="Statement">==</span> <span class="Constant">2</span>
+    <span class="Statement">set</span> <span class="PreProc">nonumber</span>
+            <span class="Statement">let</span> s:selectedsize <span class="Statement">=</span> <span class="Constant">3</span>
+            <span class="Statement">set</span> <span class="PreProc">columns</span>=98
+            <span class="Statement">set</span> <span class="PreProc">lines</span>=45
+        <span class="Statement">else</span><span class="Comment">  &quot; old school console goodness</span>
+            <span class="Statement">let</span> s:selectedsize <span class="Statement">=</span> <span class="Constant">1</span>
+    <span class="Statement">set</span> <span class="PreProc">nonumber</span>
+            <span class="Statement">set</span> <span class="PreProc">columns</span>=80
+            <span class="Statement">set</span> <span class="PreProc">lines</span>=25
+        <span class="Statement">endif</span>
+    <span class="Statement">endif</span>
+<span class="Statement">endfunction</span>
+<span class="Statement">let</span> s:selectedsize<span class="Statement">=</span><span class="Constant">2</span>
+<span class="Statement">call</span> <span class="Normal">ResizeWindow</span><span class="Statement">()</span>
+
+</pre>
+</body>
+</html>

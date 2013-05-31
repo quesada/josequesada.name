@@ -1,0 +1,862 @@
+concept learning
+================
+
+JOSH
+----------------
+relational systems of concepts : theory theory
+relation
+al concepts: buy sell, predator prey
+
+causal block world : T & Niyogi
+reordering a binary matrix of "attracts" relations, in a way that clusters
+emerge
+
+matrix contains noise
+
+generative model K clusters
+matrix of K x K parameters.
+Each matrix describes the relation of one cluster with all the others.
+
+beta priors
+chinese restaurant process over the class partitions
+potetially infinite nb of clusters
+Expands anderson's rational Categorization model
+
+mat(event, event) <- causes, eats, lives... relational structures
+lives(species, locale)
+features
+has(object,feature)
+
+mat(object, person ,context)
+likes(,,)
+
+model predicts difficuty of each structure by calculating the Bayes factor
+
+oshterson
+features come in clusters
+"coherent covariation"
+e.g., hands, bipedal tree, jungle
+applies(relation,entity, entity) (3d)
+rels = (diagonoses, prevents, treats)
+
+Brad LOVE
+---------------------
+freq perception biases affect al models that use counting of discrete features
+COntinuous models: affected by psychophysic biases
+
+Building
+Relations through
+Instance
+Driven
+gradien
+exemplars
+systems
+
+generalizes ALCOVE
+in alcove sim=exp(-c*distance)
+
+Notion of similarity evolves over learning (representational attention)
+
+Mapping chosen that minimizes distance
+
+distance = distance_entity + distance_feature + distance_relation
+weighted (add to one)
+to a power b
+
+minimal distance alignment
+if shape is relevant, attention is spitted between feature and entity
+
+triangle
+Color(triangle1) = red <- feature
+size(triangle1) = large
+type(triangle1, triangle)
+
+experiment
+FF
+FR
+RR
+
+difficuty:
+				--
+-
+		-
+FF     FR    RR
+F = feature
+R  = relation
+
+
+if not, it is not, feaures get more attention
+
+What seems more dimensions coud be changes in dim attention
+Error-driven learning rules
+attention changes as apposes to qualitatively new representations
+Brad: cluster models are the answer, exemplar models are no good :)
+
+same dimension
+	oOo
+mMm Mmm
+shape, filling diff, but size same
+
+-------------------------
+cross dimension (relations)
+	oOo
+xXx <- only one dim, that is not shared with the referent
+
+
+
+ADAM
+------------------------
+
+Weighted sums work worse than SVM for small stimuli
+They ned 10000 trials per participant.
+
+Intrinisic nouse
+extrinsic noise (mask)
+
+task: discriminate which area is brighter (in a screen divided by half, with a noise mask)
+
+people pay attention to areas that do not convey information
+
+SVM is a technique here, not as a model of cognition
+SVM can be mapped to exemplar and prototype models
+
+look at non-linear decision bounds
+
+
+soutsky
+------------------------------
+developmental work
+
+induction is a function of conceptual knowledge
+conceptual knowledge comes in the form of assumptions
+
+early induction
+is it rule based (category-based)?
+low recognition accuracy
+
+or similarity based?
+The effect of labels
+high recognition expected
+
+Since members of the same category tend to look alike
+how do we separate the effect of labels?
+
+
+task
+animals
+study phase, recognition phase, 14 old - 14 new (critical lures -simiar but nt presented)
+distractor (not similar, not presented)
+
+5yo .73 accuracy
+adults .83
+
+adults don't even look at the cats in the induction condition
+Since children don't have the category, they make many fixations, pay a lot of attention
+
+5 7 11 yo adults
+
+accuracy decreased with age (!) but not in the baseline condition
+you children are very interested in pictures and then encode both item-specific and category level information
+
+exp 2
+-----
+3 boxes
+outline of dog, outline of a lion, and 3rd one with giraffe
+and then asked to move them to a same box
+
+then they are taught that those things that have the same name have the same insides
+
+when taught this, their performance drops to the level of adults
+
+exp 3
+-----
+forced adults to do similarity based inference
+their perfomance increased to the level of children
+===========================
+
+
+===========================
+Bob french
+------------
+reverse of the effect
+dogs are incuded in the category of cats
+
+these kids *3-4 mo) don't have any experience with cats and dogs
+if the two distrubutions don't overlap (extremely different cats and dogs
+the effect dissapears. They are interested in both
+
+But infants have little visual accuity
+That helps to detect characteristics better.
+ver low spatial frequencies
+
+the importance of starting small with images and visal categories
+a = matrix(runif(1000),100,100)
+par(mfrow=c(2,2))
+plot(a)
+rm = rowMeans(a)
+b = a/rm
+plot(b)
+
+
+rm = rowMeans(b)
+b = b/rm
+plot(b)
+
+levandowsky
+----------------
+special issue
+JML
+memory models Heit + levandowsky
+
+knowledge partitioning is general?
+
+Yang a levandowsky (2004)
+
+integral / spearable dimensions
+separable when the processing of one dimension does not interfereing with the processing of the other dimension
+-----------------
+|
+|
+|
+|-------|--------
+
+vs
+-----------------
+|
+|
+|---|------------
+
+they are separable and verbal
+
+circle and angle is another typical one, separable and nonverbal
+integral: square (area), butterfly
+
+other manipulation : rule verbaizable or not
+
+context manipulation is quite selective
+the knowledge partitioning could be a niche phenomenon
+
+ATRIUM = mixture of experts model, with rule modules and exemplar module
+
+Conclussions
+KP is Fundamental to concept aquisition
+	function learning
+	categories
+
+people learn a complex task by beaking it into multiple independent components
+
+ATRIUM models exp. 4 better than GCM
+NOT blending
+
+================
+
+matt jones (texas) ask for presentation
+-----------------
+estimulus generalization depends on perceptual similarity
+
+recency effects *sequential effects* in generalization and categorization
+
+- 	role in probability learning (estes 1957)
+as the # of cues inceases, the preious trial influence decreases
+MAKES SENSE WITH RJM!!!
+stronger generalization for recent trials
+
+10 unidimensional stimuli, 2 categories (how tall rectangles are)
+
+generalizatio adapts to agetgory structure
+support for attentional learning models ( kruschke, love)
+
+conclusion
+more complex that attention allocation; it uses the stucture of the task.
+open questions
+how is selective generalization learned?
+-	 error reduction vs. long-term relevance
+
+
+Raajmakers
+----------------
+latent Markov models in categorization
+representations depend on category structure.
+
+It seems that sequence effects are fashionable in categorization
+jansen and palmieri
+AABBB
+ABBBA
+it starts off with rules and trials the exemplars win
+shift model. shifts from rule to exemplar representation
+
+This is kind of counterintuitive.
+Shouldn't rules develop later, once many exemplars are learned?
+
+the latent variable is the represenational stragetgy (nominal cat. are rule 1, rule2, exemplars)
+3 states
+iniial proabilities and a transition matrix
+	E R1 R2
+E
+R1
+R2
+
+it selects optimal number of states using BIC
+
+what she calls rules is rules + exceptions
+
+COhen
+-----------------
+
+
+feature induction
+trilobytes
+
+4 feature observer
+2 feature observer
+
+Multiple cause vector quantizatin (MCVQ)
+causes:	disjoint subsets of pixels
+states: 	the possible values that a cause can take
+stimuli are black and white matrices (graded) of 4 x 4 squares
+exp 1 2 and 4 features
+x
+
+-----
+	x
+
+
+-----
+x  x
+
+------
+
+x  x
+------
+
+exp 2 five features
+3 feateures for a
+-------
+x
+x
+x
+-------
+
+  x
+  x
+  o
+
+-------
+xxxx
+
+
+-------
+2 for B
+  xxx
+	 x
+  xxx
+
+-------
+
+
+
+xxxxxxx
+-------
+
+Enns
+------
+
+priming and masking are the same task, it depends on which element you ask for
+(irst or second
+\\ faces mad or happy
+
+prime 22ms
+mask 400ms
+
+categorization task
+3 groups
+What emotion? (the other two features are irrelevant.
+What gender?
+What race?
+
+
+emotion group
+having te sae emotion prime-mask are LESSS able to identify the emotion (!)
+sex group
+
+race
+same race in prime and mask hurts performance a ot
+
+
+REPLICATED WITH A PRIMING TASK
+the same feature primes the same feature in the target, not the irrelevant
+ones
+
+Prime-mask similarity is TASK-BASED!!
+Backward masking is not LOW LEVEL
+
+However, diff race makes weak masking
+
+task relevant similarity hinders
+
+the masking task requires "unbinding"
+
+
+Angela Nelson
+------------
+perf
+HF > LF
+in perceptual tasks
+
+opposite in recognition
+
+the mirror effect
+glazer and Adams (1985)
+
+(explain freq. effects)
+
+THey manipulated the expossure)
+
+training sbj with non-word stimuli
+Maddox and Estes, 1997
+
+
+Ask for data
+a context = each choice set.
+
+REM
+words are feature vector
+most common have more common fearures
+
+REM -LexDec
+Wagenmakers (2004)
+
+Feature frequencies ??
+
+- exp2
+epsodic recognition
+Context are presented sequentially
+each study lst 8 trained characters and 8 untrained characters
+(2 for each freq)
+
+in epsodic recognition
+they also get the mirror effect
+recognition was better for LF han HF characters
+
+
+
+exp3
+
+forced choice design
+briefly flashed character, choose one out of two
+Freq of the target inceases, performance inceases
+also, Freq of the foil inceases, performance inceases (!)
+
+They did the perceptual experiment that we wanted to do with random colors
+pure vs. mixed lists = list competition effect.
+it's only in recall
+it's supposed to be due to the context
+
+
+disentangle aoa from word frequency.
+We can do that by running our analyses on diff tasas...
+
+the high fq items can be learned first.
+If you insert the hf ones at later stages of training, that doesn't happen
+
+Flavia Filimon
+--------------------
+group-surface averaging
+they move all the brains (different sizes) that cannot be compared untransformed
+into a common space of "blown" brains.
+Then they average the activations from different subjects
+
+Michael lee
+--------------
+
+SDT models of memory
+ASK FOR THE SLIDES!!!
+
+d'
+
+c = diff between the criterion and the zero-bias point
+
+Beta = x/y its a ratio so no scale
+
+Their approach is exactly the one of ET Jaynes !!!
+viw proability distributions as knowledge
+
+re-parametrization invariance
+SDT model is given by the geometry, and how its behavior is indexed should
+be irrelevant (!)
+
+Jeffreys' Priors give commutativity
+posterior
+|
+likelihood
+|
+data
+
+
+List length effect
+Is it a consequence of interference between lists?
+
+another bayeesisan appro to SDT
+Rouder & Lu
+Gaussian groups
+|
+subjects
+|
+data
+
+Lee and denis
+	STD subjects
+	/\
+data groups
+
+Gorea
+----------
+fixation
+
+two circle cues at the same time, one black, one white
+
+
+then stimuli inside
+
+one of the circles dissapears
+
+The question: was the stimulus in that circle that remains?
+
+
+the observer cannot entertain two simultaoeus distributions
+This is a dual-task situation
+
+They can enterntain two response criteria simultaoeusly as tey do so for equal d'
+with different probabilities of occurence
+Ps1 =!= Ps2
+
+sequentially presented, interspested stimulus
+
+
+George Spearman
+------------------
+defining and usign accurate confidence judgments
+
+
+
+;;;;;;;;;;;;;;;;
+;; replicate CD effects in music
+;;;;;;;;;;;;;;;;
+
+Question: is the corpus representative enough?
+
+
+
+THURSDAY
+
+===================
+
+Reder
+--------------
+interference with the consolidation processes in memory.
+benzodiazepine
+produce ST functional amnesia
+lists learned before and after taking the drug
+the second is remembered worse
+but the first one is actually remembered better than a control!
+
+midazolam
+soluble in water, metabolized very fast (in second)
+few side effects
+
+Design
+
+word pairs
+each one studied for 3 second
+study-test with 2.5 seconds
+
+injection
+
+other list
+
+cued recall on all pairs in random order
+
+3 types of pairs
+practice pairs
+interference pairs = repeated across lists
+control pairs
+
+-
+list 1 predrug, list 2 drug, list 3 drug
+-
+
+if they have aready learned something, the benzodiazepine will strengthen
+
+
+
+sue Becker hypocampus
+---------
+
+EC, CA1, CA3, dentate gyrus => mossy fibers (very potent)
+Dentate gyrus has very sparse neurons but it creates new ones! (neurogenesis)
+One expanation of the plasticity is the neurogenesis
+
+
+Few cells in the Dentate gyrus, but such a powerful connection that affects hypocampus
+the reason there is no catastrophic interference in the hypocampus is that.
+
+Role of the hypocampus in mood
+contextually conditioned fear
+context especificity of extinction (Corcoran and Maren, 2001)
+
+
+Dave Huber
+------------------
+context item effects in episodic memory with Descriptive SM modeling
+
+not process, but descriptive model
+SAM
+as a multinomial sampling model
+S = prob for sampling = 1/length in a pure list
+R =
+
+P(X) = 1-S + S(1-R) = 1-SR
+P(C) =
+
+Order encoding hyposthesis:
+* TEST this wit CD: Having HCD items helps other items in the list (In recognition)
+HF words have faster item encoding , allowing more time for associateive order encoding, which heps other items on a list
+
+
+SAM recall
+-----------
+
+Ben Murdock
+-------------
+TODAM couldn't handle any of the two.
+
+mirror effects and spacing effects may have a common cause.
+Both are leapfrog effect: one item jumps over another (?).
+
+Glanzer : attention likelihood model ALT
+LF and HF words are no different , one just pays attention to LF words more
+
+Forced choice data
+6 conditions
+new vs new
+old vs old
+and all the other combinations
+
+other models haven't tried.
+
+REM
+BCDMEM
+SAC
+ALT => rem and bcdmem pick the likelihood mechanism from ALT.
+ACT-R
+ABLE andrew heatcote
+The action is to find the conditions in which the mirror effect doesn't occur
+
+Mike Kalish
+-------------
+Iterated learning.
+First generation takes knowledge from environment. Maybe random, maybe structured
+
+
+In a bayesian reframing of iterated learning, it converges to the prior
+It's seen as a Markov Chain
+
+This doesn't really require any particular priors (it's true for all)
+VERY COOL ASK FOR PAPER
+
+apply to function learning
+They used the exact same pardaigm of function learning with feedback
+similarity  to previous priod is convergence.
+convetionalization = ?
+
+Gopher
+--------
+training protocols
+
+
+===============================
+
+E. J. Wagenmakers
+
+R.T. Models (trade-off RT and accuracy)
+Random walk (diffusion)
+sequential sampling models
+Bogacz, Brown, Moehlis etc (2005 optimal decision making)
+phase trasition ... what if the relation accuracy-rt is discoontinuous?
+
+only two stable states, jump between the two
+A 3d curve that as one face as S and the other as a simple monotonic curve.
+
+they ask participants
+to be
+75% correct
+but answer as fast as possible
+RWM = adjust bouds of decision process
+PSAT = phase transition model
+
+exp 1:
+under the instrucions 
+A do the switch (PSAT stye)
+B decision criterion, continuous
+
+People show a bimodal dist. under both (!)
+exp 2:
+Hysteresis (?)
+lexical decision
+
+changing slowly the payoffs
+people have to adapt to this.
+This is a way to test Hysteresis
+
+The Markov model for random walk is a lot simpler than the one for phase transitions!
+(twin random walks, linked)
+
+===============
+learning featural models
+Dan Navarro
+similarity Matrices: object by features
+additive clustering only uses A, (the cell where both object have the feature)
+there is gaussian noise
+bayesian ADCLUS model
+How man feature there are?
+
+Some objects can have lots of features, and some others only a few
+
+
+INDIAN BUFFET PROCESS PRIOR
+infinite binary feature sampling, with the assumption that only a few will be used
+ 
+the second objects samples features from the first, and adds some hew features
+It is assumed a poisson (binary) process
+
+The assumption is that the more object/features you see, the better representation we have
+The model saturates
+
+likelihood function for observing any matrix
+
+The distributions of saliences in the environment are exponential
+
+Each object brings new features that are independent (!!) from the previous object.
+No, they are not quite independent.
+
+He presents the matrix of item-item similarities with a lot of noise
+the model doesn't come up with an estimation of nooise
+
+bayesian approach
+more reliable inference
+richer repre
+scalabitity
+
+
+IBP (INDIAN buf
+
+=================
+intuitive experiment design
+
+Jon Nelson
+San diego
+
+experiment = question = test
+
+intuitive statistics
++ 
+optimal experimental design
+= intuitive experiment design
+ 
+
+Freq. questions (women with skirt)
+
+Vuma scenario, bayesian updating
+P(glom)
+P(fizo)
+
+which question to pick to differentiate between them
+
+if answer is drinks tea
+P(glom) = .9997
+P(fizo) = .0003
+This outcome seems very useful
+
+if answer is drinks tea
+P(glom) = .17
+P(fizo) = .82
+This outcome seems a little useful
+
+But how useful is the QUESTION?
+utility(DrinkQuestion) = P(dringTEa) * utility(dringTEa) - [1-p(dringTEa)]*u(doesn't dringTEa)
+
+Goal: find the true hypothesis.
+He is going to consider 6 ideal observers
+1 bayesian diagonosticity
+
+2 
+
+we are looking for a COST FUNCTION
+
+Typical article
+explicitly specify probability model
+pick a utility by fiat (but on't tell subjcts)
+evaluate if people are sensitive to those utilities
+
+What what is the norm? who says?
+G
+Does the literature discriminate between different sampling norms?
+Tasks that he reanalized
+
+-
+-
+-
+-
+-
+-
+
+Is a definitive experiment possible?
+
+E. J.
+--------------------
+
+Problem: rank-order people having RT and accuracy
+
+not a trivial Problem
+use the diffusion model
+
+
+
+Tas difficuty correspond to drift rate
+Conservativeness corresponds to boundary separation
+Nondecision time corresponds to Ter.
+
+EZ diffusion model
+
+
+Lael
+-------------------
+Squire (1989) TV show recall
+
+We need time information for when each artist was listened to
+
+Same with website visits
+GPS
+
+There is lots of Statistical structure that can be exploited by general mechanisms
+
+I have the same pattern in CPS, and music preferences
+
+This is the interaction of people and the wolrd, not just environment structure
+
+TODO in music preferences and CPS
+spacing effect
+Activation decay and time
+
+
+
+This is Zipfs law, but incorporating time (exp. decay of memories)
+
+Perform need odds analyses on the CPS data
+try to find the spacing effect
+get the crossover interaction
+
+Causality?
+MMemory is causing you to do this thing?
+
+

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html>
+  <head>
+    <meta name="generator" content="Otl2HTML by Ned Konz">
+    <title>Outline file instructions.otl</title>
+    <style type="text/css">
+<!-- using CSS file otl.css -->
+<style>
+a         {text-decoration: none}
+a:hover   {color: 0000FF}
+a:link    {color: #3A8ABA}
+a:visited {color: #7c05c1}
+a:visited {color: #3A8ABA}
+
+ p { font-family : palatino linotype, serif;
+     font-size : 12pt;
+     font-style: normal;
+     font-weight: normal;
+     color: 727272;
+		line-height: 135%
+		text-align: justify}
+
+	  h1 { font-family : palatino linotype, serif;
+	  font-size : 15pt;
+     font-style: normal;
+     font-weight: normal;
+     color: 727272;
+     line-height: 100%}
+
+ h3 { font-family : palatino linotype, serif;
+     font-size : 14pt;
+     font-style: normal;
+     font-weight: normal;
+     color: 727272;
+     line-height: 100%}
+
+ ul { font-family : palatino linotype, serif;
+     font-size : 12pt;
+     font-style: normal;
+     font-weight: normal;
+     color: 727272;
+     line-height: 135%}
+  </style>
+
+</HEAD>
+
+    </style>
+  </head>
+  <body>
+<table width="75%" border="0">
+  <tr>
+    <td><img src="vim_header.gif" width="180" height="45"></td>
+    <td><img src="Rlogo.jpg" width="100" height="76"></td>
+    <td><h1>&nbsp;</h1></td>
+  </tr>
+</table>
+<h1 class=t0><strong>R-vim suite</strong></h1>
+<p class=t0>There are many good editors for R (<a href="http://www.sciviews.org/_rgui/projects/Editors.html" target="http://www.sciviews.org/_rgui/projects/Editors.html ">Here</a>
+  is a list). However, I prefer to write R code with vim for many reasons. </p>
+<ul class=t1>
+<li class=t1><p class=t1>fast opening and closing. Ideal for notes and short idea proofs
+</li>
+<li class=t1><p class=t1>best search (highlight of items found) that I know in any editor
+</li>
+<li class=t1><p class=t1>word completion (a la intellisense)
+</li>
+<li class=t1><p class=t1>extensible
+</li>
+<li class=t1><p class=t1>multiplatform
+</li>
+<li class=t1><p class=t1>free, open source
+</li>
+<li class=t1><p class=t1>large community
+</li>
+<li class=t1><p class=t1>I'll never outgrow it
+</li>
+<li class=t1><p class=t1>Fun. Watching a vim guru editing text, one wonders if he has some
+superpowers and is controlling the text with his mind, not his fingers.
+</p></li>
+</ul>
+
+<p>Unfortunately, the vim support for R was a simple syntax file, and not very
+detailed. So I added the features that I was needing and made them available
+here.</p>
+
+<p class=t2><strong>Better syntax highighting with different colors for types</strong>
+  (e.g., matrix, character, etc) functions (e.g., abs, c, etc) and packages. All
+  this is in a vim syntax file, <a href="r.vim.html">r.vim</a>. Simply copy
+  it into your syntax folder in $VIM/, or in windows $VIM/vimfiles (where $VIM
+  is the base directory where vim is installed). I have tested it with vim 7.0d
+  only, but being a simple syntax file it should work with any version.</p>
+<p class=t2>The keywords for functions and packages are adapted from the ones
+  <a href="http://www.sciviews.org/_rgui/projects/R.syn">here.</a> </p>
+<div align="center">
+  <table width="75%" border="0">
+    <tr>
+      <td><div align="center">Here is a picture of how the syntax looks (using
+          peachpuff colors):</div></td>
+    </tr>
+    <tr>
+      <td><div align="center"><img src="synHLscreenshot-small.png" width="495" height="480"></div></td>
+    </tr>
+  </table>
+</div>
+<p class=t2><strong>Code templates [TODO]</strong> in tSkeleton from Rlanguage.tcl.
+  Everytime one creates a new R file with :new a header with personal data appears
+  in the comments, and a small template for loading raw data. </p>
+<p class=t2>The templates are adapted from the ones that Philippe Grosjean (phgrosjean@sciviews.org)
+  created for textPad. To adapt them for vim, I have used TSkeleton.vim and imap.vim.
+  You can get them at http://www.vim.org </p>
+<p class=t2> <strong>Hotkey to send code from Vim to R</strong>. This is an autohotkey
+  script. Autohotkey is a windows scripting language that is based on GUIs and
+  global keystroke plus mouse events. It is a very simple way to connect applications.
+  The script is <a href="SendCodeToR.ahk">Here</a>. You will need <a href="www.autoHotkey.com" >autoHotkey,
+  </a>a free keyboard macro program. Supports hotkeys for keyboard, mouse, and
+  joystick. Can expand abbreviations as you type them.</p>
+<p class=t2>In my case, I use F3, but thiscan easily be redefined. If you do not
+  want to download autohotkey, you can always use <a href="SendCodeToR.exe" target="SendCodeToR.exe">this
+  executable</a>. It works as an icon in the system tray. Simply keep it in any
+  directory and ask windows to run it everytime it starts. The disadvantage to
+  using the executable is that you cannot change the hotkey. For this to work
+  R must be in SDI mode (Edit > preferences > click on the SDI radio button).It
+  may work in MDI mode, but I haven't tried. </p>
+<p class=t2>You have to launch R and wait for the console to be ready before you hit
+the hotkey to send text.
+</p>
+<p class=t2>The way it works: </p>
+<p class=t2>1. Select a block of R code (it can be the whole file). It can be
+  in vim, but the beauty of this is that it works in any other application, including
+  the very own R help window that always displays examples.</p>
+<p class=t2> 2. Hit F3 </p>
+<p class=t2>3. The code will be executed by R, and the focus will be back to the
+  original window (e.g., the editor).</p>
+<p class=t2> 4. Keep editing code with minimal distraction. </p>
+<p class=t2>If you need help, drop me a line.</p>
+<p class=t2>Jose Quesada, April 16, 2006</p>
+</body>
+</html>

@@ -1,0 +1,31 @@
+Interactive Gambit LLC
+
+END USER LICENSE AGREEMENT for Auto Social Poster
+
+PLEASE READ THIS LICENSE CAREFULLY. 
+
+This end-user license agreement ("EULA") is a legal agreement between you (an individual or a single entity) and Interactive Gambit LLC for the Auto Social Poster product identified above. By installing, copying, downloading, accessing or otherwise using the software product, you agree to be bound by the terms of this license agreement.  
+
+
+1. GRANT OF USER LICENSE.
+You have an individual license for The Company's software referenced above, including any text, graphics, images or photographs contained therein. You have the right to install the plugin on personal and/or business related wordpress blogs that belong to, or are owned by you. You do not have the license to install the plugin on blogs not owned by you. 
+
+
+2. COPYRIGHT PROTECTION.
+The software product (including but not limited to any technology, images, audio, text, and “applets” incorporated into the software product) is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. All rights not expressly granted are reserved by Interactive Gambit LLC
+
+
+3. OTHER RESTRICTIONS.
+You may not modify, network, rent, lease, make derivative works of, or otherwise distribute the Product unless authorized; nor can you make the Product available by "bulletin boards," online services, or network links of any kind; nor can you create similar works based upon the Product or Physical Version in whole or in part. 
+
+
+4. LIMITED WARRANTY.
+THE CREATOR AND SELLER OF THIS SOFTWARE EXPRESSLY DISCLAIM ANY WARRANTY FOR THE SOFTWARE PRODUCT. THE SOFTWARE PRODUCT AND ANY RELATED DOCUMENTATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OR MERCHANTABILITY. THE ENTIRE RISK ARISING OUT OF USE OR PERFORMANCE OF THE SOFTWARE PRODUCT REMAINS WITH THE END USER.
+
+
+5. NO DAMAGE LIABILITY.
+IN NO EVENT SHALL THE CREATOR OR SELLER OF THIS SOFTWARE BE LIABLE FOR ANY DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, LOSS OF INFORMATION, BUSINESS INTERRUPTION, OR ANY OTHER LOSS) ARISING OUT OF THE USE OF OR INABILITY TO USE THIS PRODUCT. BECAUSE SOME STATES/JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR CONSEQUENTIAL INCIDENTAL DAMAGES, THE ABOVE LIMITATION MAY NOT APPLY TO YOU.
+
+
+6. GENERAL.
+All questions concerning this Agreement shall be directed to: http://www.mass-automation.com/support
